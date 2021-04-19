@@ -1,0 +1,92 @@
+
+/*
+Partie CSS du site
+*/
+
+/*
+Mettre le texte au milieu dans les tableau
+*/
+.table thead th
+{
+    vertical-align : middle;
+}
+
+.table td, .table th 
+{
+    vertical-align : middle;
+}
+
+/* 
+Mettre les champs de saisi des formulaires en rouge quand l\'utilisateur 
+clique sur les champs
+*/
+.form-control:focus
+{
+    border-color: red;
+    box-shadow: none;
+}
+
+/*
+Mettre le fond en blanc pour le dropdown sur l\'en-tête du site quand l\'utilisateur 
+clique sur l\'un des liens. 
+(par défaut bootstrap met le fond en bleu)
+*/
+.dropdown-item:active
+{
+    background-color: #F8F8F8 !important;
+}
+
+/*
+Mettre les champs de saisi pour la partie google en rouge quand l\'utilisateur clique sur le champ
+(Exemple : champs de saisi sur la page d\'index) 
+*/
+.google-visualization-controls-stringfilter input:focus
+{
+    outline: none !important;
+    border:1px solid red !important;
+    border-radius: 4px;
+    padding:3%; 
+}
+
+/*
+Mettre les champs de saisi quand ils ne sont pas cliqués en gris claire 
+(Exemple : champs de saisi sur la page d\'index)
+*/
+.google-visualization-controls-stringfilter input
+{
+    outline: none !important;
+    border:1px solid lightgrey !important;
+    border-radius: 4px;
+    padding:3%;
+}
+
+/*
+Cacher les flèches quand le type de champ est numérique
+*/
+input[type='number'] 
+{
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button 
+{
+    -webkit-appearance: none;
+}
+
+/*
+Bloquer l'hauteur et longueur du bouton "download to CSV" 
+*/
+#button-csv
+{
+    width : 50% !important;
+    height : 70% !important;
+}
+
+/*
+Changement de couleur des filtres "status" et "sectors" de la page d'accueil
+*/
+.google-visualization-controls-categoryfilter li 
+{
+    background-color:lightgrey !important;
+}
