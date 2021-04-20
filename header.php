@@ -30,7 +30,7 @@ echo '
         </script>
 
         <!-- L\'en-tête du site -->
-        <nav class="navbar navbar-expand-lg navbar-white bg-white mb-3">
+        <nav class="navbar navbar-expand-lg navbar-white bg-white mb-5">
             <a class="navbar-brand" href="https://www.epfl.ch">
                 <img src="medias/epfl_logo.png" alt="epfl" width="100" height="50">
             </a>
@@ -51,13 +51,20 @@ echo '
                                 vu que les données sont seulement affichées s'il y a le nom de la startup en paramètre dans l'url.
                             */
                             echo '
-                            <li class="nav-item dropdown">
-                                <a class="nav-link text-danger dropdown-toggle " id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Pages </a>
-                                <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="index.php">Homepage</a>
-                                    <a class="dropdown-item text-danger" href="add_new_company.php">Add New Company</a>
-                                    <a class="dropdown-item text-danger" href="import_from_csv.php">Import CSV</a>
-                                </div>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger ml-5 mr-5" href="index.php">Homepage</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger ml-5 mr-5" href="add_new_company.php">Add New Company</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger ml-5 mr-5" href="import_from_csv.php">Import CSV</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger ml-5 mr-5" href="#">Graphics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger ml-5 mr-5" href="#">Logs</a>
                             </li>';
                         }  
                     }
