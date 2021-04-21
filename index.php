@@ -46,7 +46,7 @@ if(isset($_SESSION['user']))
 
             //Initialiser les colonnes pour mettre les données
             data.addColumn('string', 'company');
-            data.addColumn('string', 'founding_year');
+            data.addColumn('string', 'founding_date');
             data.addColumn('string', 'web');
             data.addColumn('string', 'rc');
             data.addColumn('string', 'status');
@@ -56,12 +56,12 @@ if(isset($_SESSION['user']))
             $.each(jsonData, function(i, jsonData)
             {
                 var company = jsonData.company;
-                var founding_year = jsonData.founding_year;
+                var founding_date = jsonData.founding_date;
                 var web = jsonData.web;
                 var rc = jsonData.rc;
                 var status = jsonData.status;
                 var sectors = jsonData.sectors;
-                data.addRows([[company, founding_year, web, rc, status, sectors]]);
+                data.addRows([[company, founding_date, web, rc, status, sectors]]);
             });
             
             //Initialiser les deux champs de recherche d\'une entreprise ou d\'une unité 
