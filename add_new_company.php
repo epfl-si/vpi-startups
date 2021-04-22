@@ -65,9 +65,9 @@ if(isset($_SESSION['user']))
                 </div>
                 <!-- Combobox pour afficher tout les types d\'une startup -->
                 <div class="form-group row">
-                    <label for="type" class="col-sm-4 col-form-label">Type Startup</label>
+                    <label for="type_startup" class="col-sm-4 col-form-label">Type Startup</label>
                     <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type" id="type">
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_startup" id="type_startup">
                             <option name="NULL" value="NULL" disabled selected>Select a type</option>
                             <option name="none" value="None">None</option>';
                             $type_data = $db-> query('SELECT type_startup FROM type_startup');
@@ -84,7 +84,7 @@ if(isset($_SESSION['user']))
                 <div class="form-group row">
                     <label for="category" class="col-sm-4 col-form-label">Category</label>
                     <div class="col-sm-6">
-                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="category id="category>
+                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="category" id="category">
                         <option name="NULL" value="NULL" disabled selected>Select a category</option>';
                         $category_data = $db-> query('SELECT category FROM category');
                         $data_category = $category_data -> fetchAll();
@@ -128,7 +128,7 @@ if(isset($_SESSION['user']))
                 </div>
                 <!-- Combobox pour afficher tout les sectors d\'une startup -->
                 <div class="form-group row">
-                    <label for="sectors" class="col-sm-4 col-form-label">Sectors </label>
+                    <label for="sector" class="col-sm-4 col-form-label">Sectors </label>
                     <div class="col-sm-6">
                         <select class="form-control" class="selectpicker" data-dropup-auto="true" name="sector" id="sector">
                             <option name="NULL" value="NULL" disabled selected>Select a sector</option>';
@@ -215,8 +215,8 @@ if(isset($_SESSION['user']))
                     <div class="col-sm-6">
                         <select class="form-control" class="selectpicker" data-dropup-auto="true" name="prof_as_founder" id="prof_as_founder">
                             <option name="NULL" value="NULL" disabled selected>Select option</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
                         </select>
                     </div>
                 </div>
@@ -226,8 +226,24 @@ if(isset($_SESSION['user']))
                     <div class="col-sm-6">
                         <select class="form-control" class="selectpicker" data-dropup-auto="true" name="gender" id="gender">
                             <option name="NULL" value="NULL" disabled selected>Select option</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Champ pour le type de personne de la startup-->
+                <div class="form-group row">
+                    <label for="type_of_person" class="col-sm-4 col-form-label">Type of Person </label>
+                    <div class="col-sm-6">
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_of_person" id="type_of_person">
+                            <option name="NULL" value="NULL" disabled selected>Select a type of person</option>';
+                            $type_of_person_data = $db-> query('SELECT type_of_person FROM type_of_person');
+                            $data_type_of_person = $type_of_person_data -> fetchAll();
+                            foreach ($data_type_of_person as $type_of_person)
+                            {
+                                echo '<option value="'.$type_of_person['type_of_person'].'">'.$type_of_person['type_of_person'].'</option>';
+                            }
+                        echo '
                         </select>
                     </div>
                 </div>
@@ -334,7 +350,7 @@ if(isset($_SESSION['user']))
                       
             $("#submit_new_company").click(function() 
             {
-
+                
 
                 //Initialiser une variable valid à false pour tester les regex avant d\'écrire dans la base de données
                 var valid="false";
@@ -358,7 +374,7 @@ if(isset($_SESSION['user']))
                 var epfl_grant_after_check = document.getElementById("epfl_grant").value;  
                 
                 //Récuperer la valeur du champs avec l\'id awards_competitions
-                var awards_competitions_after_check = document.getElementById("awards_competitions").value;  
+                var awards_competition_after_check = document.getElementById("awards_competitions").value;  
                 
                 //Récuperer la valeur du champs avec l\'id key_words
                 var key_words_after_check = document.getElementById("key_words").value;   
@@ -370,7 +386,7 @@ if(isset($_SESSION['user']))
                 var firstname_after_check = document.getElementById("firstname").value;
                 
                 //Récuperer la valeur du champs avec l\'id function
-                var function_after_check = document.getElementById("function_startup").value;
+                var function_startup_after_check = document.getElementById("function_startup").value;
                 
                 //Récuperer la valeur du champs avec l\'id email
                 var email_after_check = document.getElementById("email").value;
@@ -399,29 +415,20 @@ if(isset($_SESSION['user']))
                 //Si les regex ont été respectées, alors il démarre l\'écriture des données dans la base de données
                 
                 //Mettre dans des variables les valeurs des comboboxes
-                var selected_status = document.querySelectorAll("#status option:checked");
-                var values_status = Array.from(selected_status).map(el => el.value);
 
-                var selected_type_startup = document.querySelectorAll("#type_startup option:checked");
-                var values_type_startup = Array.from(selected_type_startup).map(el => el.value);
-
-                var selected_sector = document.querySelectorAll("#sector option:checked");
-                var values_sector = Array.from(selected_sector).map(el => el.value);
-
-                var selected_category = document.querySelectorAll("#category option:checked");
-                var values_category = Array.from(selected_category).map(el => el.value);
+                var status = document.getElementById("status").value;
+                var type_startup = document.getElementById("type_startup").value;
+                var sector = document.getElementById("sector").value;
+                var category = document.getElementById("category").value;
+                var ceo_education_level = document.getElementById("ceo_education_level").value;
+                var prof_as_founder = document.getElementById("prof_as_founder").value;
+                var gender = document.getElementById("gender").value;
+                var type_of_person = document.getElementById("type_of_person").value;
+                var stage_of_investment = document.getElementById("stage_of_investment").value;
+                var type_of_investment = document.getElementById("type_of_investment").value;
 
                 var selected_impact_sdg = document.querySelectorAll("#impact_sdg option:checked");
                 var values_impact_sdg = Array.from(selected_impact_sdg).map(el => el.value);
-
-                var selected_ceo_education_level = document.querySelectorAll("#ceo_education_level option:checked");
-                var values_ceo_education_level = Array.from(selected_ceo_education_level).map(el => el.value);
-
-                var selected_prof_as_founder = document.querySelectorAll("#prof_as_founder option:checked");
-                var values_prof_as_founder = Array.from(selected_prof_as_founder).map(el => el.value);
-
-                var selected_gender = document.querySelectorAll("#gender option:checked");
-                var values_gender = Array.from(selected_gender).map(el => el.value);
 
                 var selected_faculty_schools = document.querySelectorAll("#faculty_schools option:checked");
                 var values_faculty_schools = Array.from(selected_faculty_schools).map(el => el.value);
@@ -429,16 +436,9 @@ if(isset($_SESSION['user']))
                 var selected_founders_country = document.querySelectorAll("#founders_country option:checked");
                 var values_founders_country = Array.from(selected_founders_country).map(el => el.value);
 
-                var selected_stage_of_investment = document.querySelectorAll("#stage_of_investment option:checked");
-                var values_stage_of_investment = Array.from(selected_stage_of_investment).map(el => el.value);
-
-                var selected_type_of_investment = document.querySelectorAll("#type_of_investment option:checked");
-                var values_type_of_investment = Array.from(selected_type_of_investment).map(el => el.value);
-
 
                 //Tester si toutes les regex du formulaire ont été respectées
                 var resultat_form = form_add_new_company.checkValidity();
-                
                 //Si les regex ont été respectées
                 if(resultat_form == true)
                 {
@@ -446,7 +446,7 @@ if(isset($_SESSION['user']))
                     var valid="true";
                     
                     if (valid == "true")
-                    {   console.log(company_name_after_check);
+                    {   
                         //Ecrire des données saisies par l\'utilisateur dans la base de données
                         $.ajax
                         ({
@@ -459,30 +459,32 @@ if(isset($_SESSION['user']))
                                 founding_date:founding_date_after_check,
                                 web:web_after_check,
                                 rc:rc_after_check,
-                                status:values_status,
+                                status:status,
                                 exit_year:exit_year_after_check,
-                                type_startup:values_type_startup,
-                                category:values_category,
+                                type_startup:type_startup,
+                                category:category,
                                 epfl_grant:epfl_grant_after_check,
                                 impact_sdg:values_impact_sdg,
-                                sector:values_sector,
+                                sector:sector,
                                 key_words:key_words_after_check,
-                                ceo_education_level:values_ceo_education_level,
+                                awards_competition:awards_competition_after_check,
+                                ceo_education_level:ceo_education_level,
                                 founders_country:values_founders_country,
                                 name:name_after_check,
                                 firstname:firstname_after_check,
-                                function_startups:function_after_check,
+                                function_startup:function_startup_after_check,
                                 email:email_after_check,
-                                prof_as_founder:values_prof_as_founder,
-                                gender:values_gender,
+                                prof_as_founder:prof_as_founder,
+                                gender:gender,
+                                type_of_person:type_of_person,
                                 faculty_schools:values_faculty_schools,
                                 laboratory:laboratory_after_check,
                                 prof:prof_after_check,
                                 amount:amount_after_check,
                                 investment_date:investment_date_after_check,
                                 investor:investor_after_check,
-                                type_of_investment:values_type_of_investment,
-                                stage_of_investment:values_stage_of_investment,
+                                type_of_investment:type_of_investment,
+                                stage_of_investment:stage_of_investment,
                                 short_description:short_description_after_check,
                             },
                             success:function(data)
