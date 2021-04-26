@@ -60,9 +60,16 @@ echo '
                             <li class="nav-item">
                                 <a class="nav-link text-danger ml-5 mr-5" href="import_from_csv.php">Import CSV</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-danger ml-5 mr-5" href="graphics.php">Graphics</a>
-                            </li>
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="Charts" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Charts
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="Charts">
+                                    <a class="dropdown-item" href="number_of_startups_by_year.php">Action</a>
+                                    <a class="dropdown-item" href="startups_by_sectors.php">Another action</a>
+                                    <a class="dropdown-item" href="funds_by_sector">Something else here</a>
+                                </div>
+                            </div>
                             <li class="nav-item">
                                 <a class="nav-link text-danger ml-5 mr-5" href="#">Logs</a>
                             </li>';
