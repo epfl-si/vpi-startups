@@ -13,7 +13,8 @@ echo '
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <title> Project Startups </title>
     </head>
@@ -25,7 +26,7 @@ echo '
             */
             if ( window.history.replaceState ) 
             {
-            window.history.replaceState( null, null, window.location.href );
+                window.history.replaceState( null, null, window.location.href );
             }
         </script>
 
@@ -39,6 +40,7 @@ echo '
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto">';
+
                     //Il affiche seulement le menu si l'utilisateur est connecté
                     if(isset($_SESSION['user']))
                     {
@@ -52,26 +54,25 @@ echo '
                             */
                             echo '
                             <li class="nav-item">
-                                <a class="nav-link text-danger ml-5 mr-5" href="index.php">Homepage</a>
+                                <a class="nav-link text-danger" href="index.php">Homepage</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger ml-5 mr-5" href="add_new_company.php">Add New Company</a>
+                                <a class="nav-link text-danger" href="add_new_company.php">Add New Company</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger ml-5 mr-5" href="import_from_csv.php">Import CSV</a>
+                                <a class="nav-link text-danger" href="import_from_csv.php">Import CSV</a>
                             </li>
-                            <div class="dropdown">
-                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="Charts" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Charts
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="Charts">
-                                    <a class="dropdown-item" href="number_of_startups_by_year.php">Action</a>
-                                    <a class="dropdown-item" href="startups_by_sectors.php">Another action</a>
-                                    <a class="dropdown-item" href="funds_by_sector">Something else here</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Charts </a>
+                                <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="number_of_startups_by_year.php">Number of startups by year</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="startups_by_sectors.php">Startups by sector</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="funds_by_sector.php
+                                    ">Funds by sector</a>
                                 </div>
-                            </div>
+                            </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger ml-5 mr-5" href="#">Logs</a>
+                                <a class="nav-link text-danger" href="#">Logs</a>
                             </li>';
                         }  
                     }
