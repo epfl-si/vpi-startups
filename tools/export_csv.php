@@ -12,11 +12,6 @@ $file = fopen("../csv_imported/csv_".$today.".csv", "w+");
 $filename = "csv_".$today.".csv";
 $filepath = "../csv_imported/csv_".$today.".csv";
 
-
-//Prendre les données de startup de la base de données 
-$startup = $db->prepare("SELECT * FROM startup INNER JOIN startup_person ON startup.id_startup = startup_person.fk_startup INNER JOIN person ON startup_person.fk_person = person.id_person");
-$startup->execute();
-
 //Supprimer le code HTML du fichier csv
 ob_end_clean();
 
@@ -31,13 +26,11 @@ catch  (Exception $e)
     echo 'Exception reçue : ',  $e->getMessage(), "\n";
 }
 
-//Mettre les données dans le fichier csv
-while ($row = $startup->fetch(PDO::FETCH_NAMED)) 
+//Prendre les données de startup de la base de données 
+$startups = $db->query("SELECT * FROM startup INNER JOIN startup_person ON startup.id_startup = startup_person.fk_startup INNER JOIN person ON startup_person.fk_person = person.id_person");
+$startup = $startups->fetchAll();
+foreach ($startup as $row)
 {
-    //Mettre les données de la base de données dans le fichier CSV
-    $id_startup = $db ->query('SELECT id_startup FROM startup');
-    $startup_id = $id_startup->fetch();
-
     $fk_status = $db ->query('SELECT status FROM status WHERE id_status ="'.$row['fk_status'].'"');
     $status = $fk_status->fetch();
 
@@ -62,24 +55,21 @@ while ($row = $startup->fetch(PDO::FETCH_NAMED))
     $fk_type_of_investment= $db ->query('SELECT type_of_investment FROM type_of_investment WHERE id_type_of_investment ="'.$funding['fk_type_of_investment'].'"');
     $type_of_investment = $fk_type_of_investment->fetch();
 
-    $fk_person= $db ->query('SELECT name,firstname,person_function,email,prof_as_founder,gender,fk_type_of_person FROM person INNER JOIN startup_person ON person.id_person = startup_person.fk_person');
-    $person = $fk_person->fetch();
-
-    $fk_type_of_person= $db ->query('SELECT type_of_person FROM type_of_person WHERE id_type_of_person="'.$person['fk_type_of_person'].'"');
+    $fk_type_of_person= $db ->query('SELECT type_of_person FROM type_of_person WHERE id_type_of_person="'.$row['fk_type_of_person'].'"');
     $type_of_person = $fk_type_of_person->fetch();
 
-    $founders_countries= $db ->query('SELECT GROUP_CONCAT(founders_country) AS country FROM startup INNER JOIN startup_founders_country ON startup.id_startup = startup_founders_country.fk_startup INNER JOIN founders_country ON founders_country.id_founders_country = startup_founders_country.fk_founders_country GROUP BY company');
+    $founders_countries= $db ->query('SELECT GROUP_CONCAT(founders_country SEPARATOR ";") AS country FROM startup INNER JOIN startup_founders_country ON startup.id_startup = startup_founders_country.fk_startup INNER JOIN founders_country ON founders_country.id_founders_country = startup_founders_country.fk_founders_country WHERE id_startup="'.$row['id_startup'].'" GROUP BY company');
     $founders_country = $founders_countries->fetch();
 
-    $impacts_sdg= $db ->query('SELECT GROUP_CONCAT(impact_sdg) AS impact FROM startup INNER JOIN startup_impact_sdg ON startup.id_startup = startup_impact_sdg.fk_startup INNER JOIN impact_sdg ON impact_sdg.id_impact_sdg = startup_impact_sdg.fk_impact_sdg GROUP BY company');
+    $impacts_sdg= $db ->query('SELECT GROUP_CONCAT(impact_sdg SEPARATOR ";") AS impact FROM startup INNER JOIN startup_impact_sdg ON startup.id_startup = startup_impact_sdg.fk_startup INNER JOIN impact_sdg ON impact_sdg.id_impact_sdg = startup_impact_sdg.fk_impact_sdg WHERE id_startup="'.$row['id_startup'].'" GROUP BY company');
     $impact_sdg = $impacts_sdg->fetch();
 
-    $faculties_schools= $db ->query('SELECT GROUP_CONCAT(faculty_schools) AS schools FROM startup INNER JOIN startup_faculty_schools ON startup.id_startup = startup_faculty_schools.fk_startup INNER JOIN faculty_schools ON faculty_schools.id_faculty_schools = startup_faculty_schools.fk_faculty_schools GROUP BY company');
+    $faculties_schools= $db ->query('SELECT GROUP_CONCAT(faculty_schools SEPARATOR ";") AS schools FROM startup INNER JOIN startup_faculty_schools ON startup.id_startup = startup_faculty_schools.fk_startup INNER JOIN faculty_schools ON faculty_schools.id_faculty_schools = startup_faculty_schools.fk_faculty_schools WHERE id_startup="'.$row['id_startup'].'" GROUP BY company');
     $faculty_schools = $faculties_schools->fetch();
 
 
     //Mettre le contenu de la base de données dans un array pour ensuite le mettre dans le fichier de téléchargement
-    $text = array($row['company'], $row['founding_date'], $row['web'], $row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$person['name'],$person['firstname'], $person['person_function'], $person['email'], $person['prof_as_founder'],$type_of_person['type_of_person'],$type_startup['type_startup'],  $ceo_education_level['ceo_education_level'],  $sectors['sectors'],  $funding['amount'], $funding['investment_date'], $funding['investors'], $stage_of_investment['stage_of_investment'],$type_of_investment['type_of_investment'],$category['category'], $status['status'], $founders_country['country'], $faculty_schools['schools'], $impact_sdg['impact']);
+    $text = array($row['company'], $row['founding_date'], $row['web'], $row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$row['name'],$row['firstname'], $row['row_function'], $row['email'], $row['prof_as_founder'],$row['gender'],$type_of_person['type_of_person'],$type_startup['type_startup'],  $ceo_education_level['ceo_education_level'],  $sectors['sectors'],  $funding['amount'], $funding['investment_date'], $funding['investors'], $stage_of_investment['stage_of_investment'],$type_of_investment['type_of_investment'],$category['category'], $status['status'], $founders_country['country'], $faculty_schools['schools'], $impact_sdg['impact']);
     $text_replace = str_replace('"', '', $text);
     
     try 
@@ -90,8 +80,7 @@ while ($row = $startup->fetch(PDO::FETCH_NAMED))
     {
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
     }
-}
-
+} 
 
 //Dire que le fichier est un csv et mettre les accents de français
 header('Content-type: text/csv; charset=UTF-8');
