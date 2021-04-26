@@ -61,7 +61,7 @@ echo '
                                 <a class="nav-link text-danger ml-5 mr-5" href="import_from_csv.php">Import CSV</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger ml-5 mr-5" href="#">Graphics</a>
+                                <a class="nav-link text-danger ml-5 mr-5" href="graphics.php">Graphics</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-danger ml-5 mr-5" href="#">Logs</a>
