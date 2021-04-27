@@ -32,7 +32,7 @@ $startup = $startups->fetchAll();
 foreach ($startup as $row)
 {
     //Mettre le contenu de la base de données dans un array pour ensuite le mettre dans le fichier de téléchargement
-    $text = array($row['company'], $row['founding_date'], $row['web'], $row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$row['name'],$row['firstname'], $row['row_function'], $row['email'], $row['prof_as_founder'],$row['gender'],$row['type_of_person'],$row['type_startup'],  $row['ceo_education_level'],  $row['sectors'],$category['category'], $row['status'], $row['country'], $row['schools'], $row['impact']);
+    $text = array($row['company'], $row['founding_date'], $row['web'], $row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$row['type_startup'],  $row['ceo_education_level'],  $row['sectors'],$row['category'], $row['status'], $row['country'], $row['schools'], $row['impact']);
     $text_replace = str_replace('"', '', $text);
     
     try 
@@ -46,10 +46,10 @@ foreach ($startup as $row)
 } 
 
 //Dire que le fichier est un csv et mettre les accents de français
-header('Content-type: text/csv; charset=UTF-8');
+//header('Content-type: text/csv; charset=UTF-8');
 
 //Donner le nom au fichier
-header("Content-Disposition: attachment; filename=".$filename);
+//header("Content-Disposition: attachment; filename=".$filename);
 
 //Mettre le contenu du fichier dans le fichier de téléchargement
 readfile($filepath);
