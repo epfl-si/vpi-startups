@@ -11,8 +11,6 @@ if(isset($_SESSION['user']))
 
 
     google.charts.setOnLoadCallback(number_of_startups_by_year);
-    google.charts.setOnLoadCallback(funds_by_sectors);
-
 
     function number_of_startups_by_year()
     {
@@ -32,8 +30,8 @@ if(isset($_SESSION['user']))
     {
         var jsonData = chart_data;
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'unit');
-        data.addColumn('number', 'Download');
+        data.addColumn('string', 'date');
+        data.addColumn('number', 'number of startups');
         $.each(jsonData, function(i, jsonData)
         {
             var founding_date = jsonData.founding_date;
@@ -43,15 +41,9 @@ if(isset($_SESSION['user']))
         var options = 
         {
             title:'Number of Startups by Year',
-            sliceVisibilityThreshold:0.005,
-            is3D: true,
-            pieSliceTextStyle: 
-            {
-                fontSize:'10',
-            },
         };
         
-        var chart = new google.visualization.PieChart(document.getElementById('chart_pie_number_of_startups_by_year'));
+        var chart = new google.visualization.LineChart(document.getElementById('chart_line_number_of_startups_by_year'));
         chart.draw(data, options);
     }
 
@@ -59,7 +51,7 @@ if(isset($_SESSION['user']))
 
     <!-- Partie HTML pour placer les google charts -->
     <div class='container-fluid'>
-        <div id='chart_pie_number_of_startups_by_year' class='mx-auto' style='width:1000px;height:500px;'></div>
+        <div id='chart_line_number_of_startups_by_year' class='mx-auto' style='width:1000px;height:500px;'></div>
     </div>
     ";
     require 'footer.php';
