@@ -16,7 +16,7 @@ $filepath = "../csv_imported/csv_".$today.".csv";
 ob_end_clean();
 
 //Mettre l'en-tête dans le fichier csv
-$header_csv = array("company","founding_date","web","rc","exit_year","epfl_grant","awards_competitions","key_words","laboratory","short_description","name", "firstname", "person_function", "email", "prof_as_founder", "gender", "type_of_person", "type","ceo_education_level","sectors", "amount","investment_date","investors","stage_of_investment","type_of_investment","category", "status","founders_country", "faculty_schools", "impact_sdg");
+$header_csv = array("company","web","founding_date","rc","exit_year","epfl_grant","awards_competitions","key_words","laboratory","short_description","name", "firstname", "person_function", "email", "prof_as_founder", "gender", "type_of_person", "type","ceo_education_level","sectors", "amount","investment_date","investors","stage_of_investment","type_of_investment","category", "status","founders_country", "faculty_schools", "impact_sdg");
 try 
 {
     fputcsv($file, $header_csv);
@@ -69,7 +69,7 @@ foreach ($startup as $row)
 
 
     //Mettre le contenu de la base de données dans un array pour ensuite le mettre dans le fichier de téléchargement
-    $text = array($row['company'], $row['founding_date'], $row['web'], $row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$row['name'],$row['firstname'], $row['row_function'], $row['email'], $row['prof_as_founder'],$row['gender'],$type_of_person['type_of_person'],$type_startup['type_startup'],  $ceo_education_level['ceo_education_level'],  $sectors['sectors'],  $funding['amount'], $funding['investment_date'], $funding['investors'], $stage_of_investment['stage_of_investment'],$type_of_investment['type_of_investment'],$category['category'], $status['status'], $founders_country['country'], $faculty_schools['schools'], $impact_sdg['impact']);
+    $text = array($row['company'],$row['web'], $row['founding_date'],$row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$row['name'],$row['firstname'], $row['row_function'], $row['email'], $row['prof_as_founder'],$row['gender'],$type_of_person['type_of_person'],$type_startup['type_startup'],  $ceo_education_level['ceo_education_level'],  $sectors['sectors'],  $funding['amount'], $funding['investment_date'], $funding['investors'], $stage_of_investment['stage_of_investment'],$type_of_investment['type_of_investment'],$category['category'], $status['status'], $founders_country['country'], $faculty_schools['schools'], $impact_sdg['impact']);
     $text_replace = str_replace('"', '', $text);
     
     try 
