@@ -16,7 +16,7 @@ $filepath = "../csv_imported/csv_".$today.".csv";
 ob_end_clean();
 
 //Mettre l'en-tête dans le fichier csv
-$header_csv = array("company","founding_date","web","rc","exit_year","epfl_grant","awards_competitions","key_words","laboratory","short_description", "type_startup","ceo_education_level","sectors","category", "status","founders_country", "faculty_schools", "impact_sdg");
+$header_csv = array("company","web","founding_date","rc","exit_year","epfl_grant","awards_competitions","key_words","laboratory","short_description", "type_startup","ceo_education_level","sectors","category", "status","founders_country", "faculty_schools", "impact_sdg");
 try 
 {
     fputcsv($file, $header_csv);
@@ -32,7 +32,7 @@ $startup = $startups->fetchAll();
 foreach ($startup as $row)
 {
     //Mettre le contenu de la base de données dans un array pour ensuite le mettre dans le fichier de téléchargement
-    $text = array($row['company'], $row['founding_date'], $row['web'], $row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$row['type_startup'],  $row['ceo_education_level'],  $row['sectors'],$row['category'], $row['status'], $row['country'], $row['schools'], $row['impact']);
+    $text = array($row['company'], $row['web'], $row['founding_date'], $row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$row['type_startup'],  $row['ceo_education_level'],  $row['sectors'],$row['category'], $row['status'], $row['country'], $row['schools'], $row['impact']);
     $text_replace = str_replace('"', '', $text);
     
     try 
