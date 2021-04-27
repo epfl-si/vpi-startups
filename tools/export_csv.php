@@ -46,10 +46,10 @@ foreach ($startup as $row)
 } 
 
 //Dire que le fichier est un csv et mettre les accents de français
-//header('Content-type: text/csv; charset=UTF-8');
+header('Content-type: text/csv; charset=UTF-8');
 
 //Donner le nom au fichier
-//header("Content-Disposition: attachment; filename=".$filename);
+header("Content-Disposition: attachment; filename=".$filename);
 
 //Mettre le contenu du fichier dans le fichier de téléchargement
 readfile($filepath);
