@@ -11,19 +11,20 @@ if(isset($_SESSION['user']))
         echo '
         <div class="container">
             <h5 class="font-weight-bold my-3"> Add new company</h5>
+            <small class="text-danger my-3 row col-12"> * Fields Required </small>
             <form method="post" id="form_add_new_company" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo security_text($_SERVER["PHP_SELF"]); echo'">
                 <!-- Champ pour le nom de la startup -->
                 <div class="form-group row">
-                    <label for="company_name" class="col-sm-4 col-form-label">Company name </label>
+                    <label for="company_name" class="col-sm-4 col-form-label">Company name <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="company_name" id="company_name" pattern="[A-Za-z0-9[\(\-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,300}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 300. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
+                        <input type="text" class="form-control" name="company_name" id="company_name" pattern="[A-Za-z0-9[\(\-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,300}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 300. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;" required>
                     </div>
                 </div>
                 <!-- Champ pour l\'année de création de la startup -->
                 <div class="form-group row">
-                    <label for="founding_date" class="col-sm-4 col-form-label">Founding Date </label>
+                    <label for="founding_date" class="col-sm-4 col-form-label">Founding Date <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                        <input type="number" class="form-control" name="founding_date" id="founding_date" pattern="[0-9]{4}" title="Only numbers, 4 numbers.">
+                        <input type="number" class="form-control" name="founding_date" id="founding_date" pattern="[0-9]{4}" title="Only numbers, 4 numbers." required>
                     </div>
                 </div>
                 <!-- Champ pour l\'url de la startup -->
@@ -42,10 +43,10 @@ if(isset($_SESSION['user']))
                 </div>
                 <!-- Combobox pour afficher tout les status d\'une startup -->
                 <div class="form-group row">
-                    <label for="status" class="col-sm-4 col-form-label">Status</label>
+                    <label for="status" class="col-sm-4 col-form-label">Status <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                        <select class="form-control" name="status" id="status">
-                            <option name="NULL" value="NULL" disabled selected>Select a status</option>';
+                        <select class="form-control" name="status" id="status" required>
+                        <option name="NULL" value="" disabled selected>Select a status</option>';
                             $status_data = $db-> query('SELECT status FROM status');
                             $data_status = $status_data -> fetchAll();
                             foreach ($data_status as $status)
@@ -65,11 +66,10 @@ if(isset($_SESSION['user']))
                 </div>
                 <!-- Combobox pour afficher tout les types d\'une startup -->
                 <div class="form-group row">
-                    <label for="type_startup" class="col-sm-4 col-form-label">Type Startup</label>
+                    <label for="type_startup" class="col-sm-4 col-form-label">Type Startup <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_startup" id="type_startup">
-                            <option name="NULL" value="NULL" disabled selected>Select a type</option>
-                            <option name="none" value="None">None</option>';
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_startup" id="type_startup" required>
+                        <option name="NULL" value="" disabled selected>Select a type of startup</option>';
                             $type_data = $db-> query('SELECT type_startup FROM type_startup');
                             $data_type = $type_data -> fetchAll();
                             foreach ($data_type as $type)
@@ -82,10 +82,10 @@ if(isset($_SESSION['user']))
                 </div>
                 <!-- Champ pour la categorie de la startup -->
                 <div class="form-group row">
-                    <label for="category" class="col-sm-4 col-form-label">Category</label>
+                    <label for="category" class="col-sm-4 col-form-label">Category <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="category" id="category">
-                        <option name="NULL" value="NULL" disabled selected>Select a category</option>';
+                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="category" id="category" required>
+                        <option name="NULL" value="" disabled selected>Select a category</option>';
                         $category_data = $db-> query('SELECT category FROM category');
                         $data_category = $category_data -> fetchAll();
                         foreach ($data_category as $category)
@@ -110,28 +110,13 @@ if(isset($_SESSION['user']))
                     <input type="text" class="form-control" name="awards_competitions" id="awards_competitions" pattern="[A-Za-z0-9[\(\-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,300}" title="Minimum 2 characters and maximum 300. Special characters allowed are &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
                     </div>
                 </div>
-                <!-- Champ pour l\'impact de la startup -->
-                <div class="form-group row">
-                    <label for="impact_sdg" class="col-sm-4 col-form-label">Impact</label>
-                    <div class="col-sm-6">
-                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="impact_sdg" id="impact_sdg" multiple="multiple">
-                        <option name="NULL" value="NULL" disabled selected>Select the impacts</option>';
-                        $impact_sdg_data = $db-> query('SELECT impact_sdg FROM impact_sdg');
-                        $data_impact_sdg = $impact_sdg_data -> fetchAll();
-                        foreach ($data_impact_sdg as $impact_sdg)
-                        {
-                            echo '<option value="'.$impact_sdg['impact_sdg'].'">'.$impact_sdg['impact_sdg'].'</option>';
-                        }
-                    echo '
-                    </select>
-                    </div>
-                </div>
+                
                 <!-- Combobox pour afficher tout les sectors d\'une startup -->
                 <div class="form-group row">
-                    <label for="sector" class="col-sm-4 col-form-label">Sectors </label>
+                    <label for="sector" class="col-sm-4 col-form-label">Sectors <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="sector" id="sector">
-                            <option name="NULL" value="NULL" disabled selected>Select a sector</option>';
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="sector" id="sector" required>
+                            <option name="NULL" value="" disabled selected>Select a sector</option>';
                             $sectors_data = $db-> query('SELECT sectors FROM sectors');
                             $data_sectors = $sectors_data -> fetchAll();
                             foreach ($data_sectors as $sectors)
@@ -151,10 +136,10 @@ if(isset($_SESSION['user']))
                 </div>
                 <!-- Champ pour le niveau d\'études du CEO de la startup -->
                 <div class="form-group row">
-                    <label for="ceo_education_level" class="col-sm-4 col-form-label">CEO Education Level </label>
+                    <label for="ceo_education_level" class="col-sm-4 col-form-label">CEO Education Level <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="ceo_education_level" id="ceo_education_level">
-                            <option name="NULL" value="NULL" disabled selected>Select a ceo education level</option>';
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="ceo_education_level" id="ceo_education_level" required>
+                            <option name="NULL" value="" disabled selected>Select a ceo education level</option>';
                             $ceo_education_level_data = $db-> query('SELECT ceo_education_level FROM ceo_education_level');
                             $data_ceo_education_level = $ceo_education_level_data -> fetchAll();
                             foreach ($data_ceo_education_level as $ceo_education_level)
@@ -167,10 +152,10 @@ if(isset($_SESSION['user']))
                 </div>
                 <!-- Champ pour le pays d\'origine des fondateurs de la startup -->
                 <div class="form-group row">
-                    <label for="founders_country" class="col-sm-4 col-form-label">Founders Country </label>
+                    <label for="founders_country" class="col-sm-4 col-form-label">Founders Country <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="founders_country" id="founders_country" multiple="multiple">
-                            <option name="NULL" value="NULL" disabled selected>Select the countries</option>';
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="founders_country" id="founders_country" multiple="multiple" required>
+                            <option name="NULL" value="" disabled selected>Select the countries</option>';
                             $founders_country_data = $db-> query('SELECT founders_country FROM founders_country');
                             $data_founders_country = $founders_country_data -> fetchAll();
                             foreach ($data_founders_country as $founders_country)
@@ -181,78 +166,12 @@ if(isset($_SESSION['user']))
                         </select>
                     </div>
                 </div>
-                <!-- Champ pour le nom des fondateurs de la startup -->
-                <div class="form-group row">
-                    <label for="name" class="col-sm-4 col-form-label">Name</label>
-                    <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name" id="name" pattern="[A-Za-z[\-\] ]{2,30}" title="Only letters allowed. Minimum 2 characters and maximum 30. Special characters allowed are &quot; -/ &quot;">
-                    </div>
-                </div>
-                <!-- Champ pour le prénom des fondateurs de la startup -->
-                <div class="form-group row">
-                    <label for="firstname" class="col-sm-4 col-form-label">Firstname</label>
-                    <div class="col-sm-6">
-                    <input type="text" class="form-control" name="firstname" id="firstname" pattern="[A-Za-z[\-\] ]{2,30}" title="Only letters allowed. Minimum 2 characters and maximum 30. Special characters allowed are &quot; - &quot;">
-                    </div>
-                </div>
-                <!-- Champ pour la fonction des fondateurs de la startup -->
-                <div class="form-group row">
-                    <label for="function_startup" class="col-sm-4 col-form-label">Function</label>
-                    <div class="col-sm-6">
-                    <input type="text" class="form-control" name="function_startup" id="function_startup" pattern="[A-Za-z[\-\/&\] ]{2,30}" title="Only letters allowed. Minimum 2 characters and maximum 30. Special characters allowed are &quot; -/& &quot;">
-                    </div>
-                </div>
-                <!-- Champ pour email-->
-                <div class="form-group row">
-                    <label for="email" class="col-sm-4 col-form-label">Email</label>
-                    <div class="col-sm-6">
-                    <input type="email" class="form-control" name="email" id="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" title="Write an valid email address.">
-                    </div>
-                </div>
-                <!-- Champ pour le professeur comme fondateur-->
-                <div class="form-group row">
-                    <label for="prof_as_founder" class="col-sm-4 col-form-label">Prof. as founder </label>
-                    <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="prof_as_founder" id="prof_as_founder">
-                            <option name="NULL" value="NULL" disabled selected>Select option</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Champ pour le genre de la personne dans la startup-->
-                <div class="form-group row">
-                    <label for="gender" class="col-sm-4 col-form-label">gender</label>
-                    <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="gender" id="gender">
-                            <option name="NULL" value="NULL" disabled selected>Select option</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Champ pour le type de personne de la startup-->
-                <div class="form-group row">
-                    <label for="type_of_person" class="col-sm-4 col-form-label">Type of Person </label>
-                    <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_of_person" id="type_of_person">
-                            <option name="NULL" value="NULL" disabled selected>Select a type of person</option>';
-                            $type_of_person_data = $db-> query('SELECT type_of_person FROM type_of_person');
-                            $data_type_of_person = $type_of_person_data -> fetchAll();
-                            foreach ($data_type_of_person as $type_of_person)
-                            {
-                                echo '<option value="'.$type_of_person['type_of_person'].'">'.$type_of_person['type_of_person'].'</option>';
-                            }
-                        echo '
-                        </select>
-                    </div>
-                </div>
                 <!-- Champ pour la faculté ou département où appartient la startup-->
                 <div class="form-group row">
-                    <label for="faculty_schools" class="col-sm-4 col-form-label">Faculty / Schools </label>
+                    <label for="faculty_schools" class="col-sm-4 col-form-label">Faculty / Schools <small class="text-danger"> *</small></label>
                     <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="faculty_schools" id="faculty_schools" multiple="multiple">
-                            <option name="NULL" value="NULL" disabled selected>Select the countries</option>';
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="faculty_schools" id="faculty_schools" multiple="multiple" required>
+                            <option name="NULL" value="" disabled selected>Select the countries</option>';
                             $faculty_schools_data = $db-> query('SELECT faculty_schools FROM faculty_schools');
                             $data_faculty_schools = $faculty_schools_data -> fetchAll();
                             foreach ($data_faculty_schools as $faculty_schools)
@@ -263,18 +182,20 @@ if(isset($_SESSION['user']))
                         </select>
                     </div>
                 </div>
-                <!-- Champ pour le nom du laboratoire-->
+                <!-- Champ pour l\'impact de la startup -->
                 <div class="form-group row">
-                    <label for="laboratory" class="col-sm-4 col-form-label">Laboratory</label>
+                    <label for="impact_sdg" class="col-sm-4 col-form-label">Impact <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
-                    <input type="text" class="form-control" name="laboratory" id="laboratory" pattern="[a-zA-Z[()\/\] ]{2,100}" title="Only letters allowed. Minimum 2 characters and maximum 100. Special characters allowed are &quot; ()/ &quot;">
-                    </div>
-                </div>
-                <!-- Champ pour le nom du prof-->
-                <div class="form-group row">
-                    <label for="prof" class="col-sm-4 col-form-label">Prof.</label>
-                    <div class="col-sm-6">
-                    <input type="text" class="form-control" name="prof" id="prof" pattern="[a-zA-Z[\.\] ]{2,100}" title="Only letters allowed. Minimum 2 characters and maximum 100. Special characters allowed are &quot; . &quot;">
+                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="impact_sdg" id="impact_sdg" multiple="multiple" required>
+                        <option name="NULL" value="" disabled selected>Select the impacts</option>';
+                        $impact_sdg_data = $db-> query('SELECT impact_sdg FROM impact_sdg');
+                        $data_impact_sdg = $impact_sdg_data -> fetchAll();
+                        foreach ($data_impact_sdg as $impact_sdg)
+                        {
+                            echo '<option value="'.$impact_sdg['impact_sdg'].'">'.$impact_sdg['impact_sdg'].'</option>';
+                        }
+                    echo '
+                    </select>
                     </div>
                 </div>
                 <!-- Champ pour une description de la startup-->
@@ -284,59 +205,6 @@ if(isset($_SESSION['user']))
                     <input type="text" class="form-control" name="short_description" id="short_description" pattern="[A-Za-z0-9[\(-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 500. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
                     </div>
                 </div>
-                <!-- Champ pour le montant de l\'investissement-->
-                <div class="form-group row">
-                    <label for="amount" class="col-sm-4 col-form-label">Amount of Investment</label>
-                    <div class="col-sm-6">
-                    <input type="text" class="form-control" name="amount" id="amount" pattern="[0-9 ]{1,30}" title="Numbers allowed. Minimum 1 number and maximum 30 number.">
-                    </div>
-                </div>
-                <!-- Champ pour la date de l\'investissement-->
-                <div class="form-group row">
-                    <label for="investment_date" class="col-sm-4 col-form-label">Investment Date</label>
-                    <div class="col-sm-6">
-                    <input type="date" class="form-control" name="investment_date" id="investment_date" pattern="[0-9 ]{1,30}" title="Numbers allowed. Minimum 1 number and maximum 30 number.">
-                    </div>
-                </div>
-                <!-- Champ pour le nom de l\investisseur-->
-                <div class="form-group row">
-                    <label for="investor" class="col-sm-4 col-form-label">Investor</label>
-                    <div class="col-sm-6">
-                    <input type="text" class="form-control" name="investor" id="investor" pattern="[a-zA-Z ]{2,300}" title="Only letters allowed. Minimum 2 characters and maximum 300.">
-                    </div>
-                </div>
-                <!-- Champ pour l\'état de l\'investissement-->
-                <div class="form-group row">
-                    <label for="stage_of_investment" class="col-sm-4 col-form-label">Stage of Investment</label>
-                    <div class="col-sm-6">
-                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="stage_of_investment" id="stage_of_investment">
-                        <option name="NULL" value="NULL" disabled selected>Select a stage of investment</option>';
-                        $stage_of_investment_data = $db-> query('SELECT stage_of_investment FROM stage_of_investment');
-                        $data_stage_of_investment = $stage_of_investment_data -> fetchAll();
-                        foreach ($data_stage_of_investment as $stage_of_investment)
-                        {
-                            echo '<option value="'.$stage_of_investment['stage_of_investment'].'">'.$stage_of_investment['stage_of_investment'].'</option>';
-                        }
-                    echo '
-                    </select>
-                    </div>
-                </div>
-                <!-- Champ pour le type d\'investissement de la startup-->
-                <div class="form-group row">
-                <label for="type_of_investment" class="col-sm-4 col-form-label">Type of Investment</label>
-                <div class="col-sm-6">
-                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_of_investment" id="type_of_investment">
-                    <option name="NULL" value="NULL" disabled selected>Select a type of investment</option>';
-                    $type_of_investment_data = $db-> query('SELECT type_of_investment FROM type_of_investment');
-                    $data_type_of_investment = $type_of_investment_data -> fetchAll();
-                    foreach ($data_type_of_investment as $type_of_investment)
-                    {
-                        echo '<option value="'.$type_of_investment['type_of_investment'].'">'.$type_of_investment['type_of_investment'].'</option>';
-                    }
-                echo '
-                </select>
-                </div>
-            </div>
                 <button class="btn btn-outline-secondary mt-5" id="submit_new_company" name="submit_new_company" type="submit">Submit</button>
             </form>
         </div>
@@ -378,37 +246,7 @@ if(isset($_SESSION['user']))
                 
                 //Récuperer la valeur du champs avec l\'id key_words
                 var key_words_after_check = document.getElementById("key_words").value;   
-                
-                //Récuperer la valeur du champs avec l\'id name
-                var name_after_check = document.getElementById("name").value;  
-                
-                //Récuperer la valeur du champs avec l\'id firstname
-                var firstname_after_check = document.getElementById("firstname").value;
-                
-                //Récuperer la valeur du champs avec l\'id function
-                var function_startup_after_check = document.getElementById("function_startup").value;
-                
-                //Récuperer la valeur du champs avec l\'id email
-                var email_after_check = document.getElementById("email").value;
 
-                //Récuperer la valeur du champs avec l\'id faculty_schools
-                var faculty_schools_after_check = document.getElementById("faculty_schools").value;  
-                
-                //Récuperer la valeur du champs avec l\'id laboratory
-                var laboratory_after_check = document.getElementById("laboratory").value;
-                
-                //Récuperer la valeur du champs avec l\'id prof
-                var prof_after_check = document.getElementById("prof").value;  
-                
-                //Récuperer la valeur du champs avec l\'id amount
-                var amount_after_check = document.getElementById("amount").value;  
-                
-                //Récuperer la valeur du champs avec l\'id investment date
-                var investment_date_after_check = document.getElementById("investment_date").value;
-
-                //Récuperer la valeur du champs avec l\'id investor
-                var investor_after_check = document.getElementById("investor").value;
-                
                 //Récuperer la valeur du champs avec l\'id description
                 var short_description_after_check = document.getElementById("short_description").value; 
                 
@@ -421,11 +259,6 @@ if(isset($_SESSION['user']))
                 var sector = document.getElementById("sector").value;
                 var category = document.getElementById("category").value;
                 var ceo_education_level = document.getElementById("ceo_education_level").value;
-                var prof_as_founder = document.getElementById("prof_as_founder").value;
-                var gender = document.getElementById("gender").value;
-                var type_of_person = document.getElementById("type_of_person").value;
-                var stage_of_investment = document.getElementById("stage_of_investment").value;
-                var type_of_investment = document.getElementById("type_of_investment").value;
 
                 var selected_impact_sdg = document.querySelectorAll("#impact_sdg option:checked");
                 var values_impact_sdg = Array.from(selected_impact_sdg).map(el => el.value);
@@ -444,7 +277,7 @@ if(isset($_SESSION['user']))
                 {
                     //Il initialise la variable à true pour valider l\'écriture
                     var valid="true";
-                    
+
                     if (valid == "true")
                     {   
                         //Ecrire des données saisies par l\'utilisateur dans la base de données
@@ -470,21 +303,6 @@ if(isset($_SESSION['user']))
                                 awards_competition:awards_competition_after_check,
                                 ceo_education_level:ceo_education_level,
                                 founders_country:values_founders_country,
-                                name:name_after_check,
-                                firstname:firstname_after_check,
-                                function_startup:function_startup_after_check,
-                                email:email_after_check,
-                                prof_as_founder:prof_as_founder,
-                                gender:gender,
-                                type_of_person:type_of_person,
-                                faculty_schools:values_faculty_schools,
-                                laboratory:laboratory_after_check,
-                                prof:prof_after_check,
-                                amount:amount_after_check,
-                                investment_date:investment_date_after_check,
-                                investor:investor_after_check,
-                                type_of_investment:type_of_investment,
-                                stage_of_investment:stage_of_investment,
                                 short_description:short_description_after_check,
                             },
                             success:function(data)
