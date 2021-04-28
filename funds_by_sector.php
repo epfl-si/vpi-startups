@@ -1,6 +1,8 @@
 <?php
 
 require 'header.php';
+require 'tools/hide_header.php';
+
 
 if(isset($_SESSION['user']))
 {

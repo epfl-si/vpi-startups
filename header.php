@@ -31,7 +31,7 @@ echo '
         </script>
 
         <!-- L\'en-tête du site -->
-        <nav class="navbar navbar-expand-lg navbar-white bg-white mb-5">
+        <nav id="header" class="navbar navbar-expand-lg navbar-white bg-white mb-5">
             <a class="navbar-brand" href="https://www.epfl.ch">
                 <img src="medias/epfl_logo.png" alt="epfl" width="100" height="50">
             </a>
