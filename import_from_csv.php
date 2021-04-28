@@ -91,35 +91,39 @@ if(isset($_SESSION['user']))
                         //"Ouvrir" le fichier qui aura le résultat après traitement du fichier importé, en lui mettant des droits d'écriture seulement 
                         $output= fopen('csv_imported/startups_modified_good_order.csv', 'a+');
 
+                        //Initialiser la variable pour exclure l'en-tête du fichier
+                        $number_of_lines = 0;
+                        
+                        //Initialiser une variable pour vérifier s'il y a des erreurs au moment de l'importation
+                        $import_error = "false";
+
                         //Lire le fichier importé
-                        while(($data = fgetcsv($input, 10000, ",")) !== FALSE)
+                        while (($csv = fgetcsv($input, 10000, ",")) !== FALSE) 
                         {
-                            //Changer l'ordre du fichier importé, en mettant les foreign keys à la fin (dans la base de données, les fks sont à la fin)
-                            $order = array(0,1,2,3,4,5,6,7,8,9,10,11,12,14,15,16,17);
-                            
-                            //Lire le fichier importé
-                            while (($csv = fgetcsv($input, 10000, ",")) !== FALSE) 
-                            {
+                            //Augmenter la variable pour ne pas lire l'en-tête 
+                            $number_of_line++;
+
+                            //Test pour ne pas traiter la première ligne qui est l'en-tête
+                            if($number_of_line != '1')
+                            {   
                                 //Faire un nouveau tableau avec les données changés pour y mettre les id's des foreign keys
                                 $new = array();
                             
                                 //Mettre le résultat du fichier importé dans le nouveau tableau avec les changements de place
                                 $new[] = $csv[$index];                                  
                                 
-                                //Type of startup
+                                //Type of startup : Vérifier si le type de startup existe dans la base de données
                                 $types_startup = $db -> query('SELECT id_type_startup, type_startup FROM type_startup WHERE type_startup = "'.$csv[10].'"');
                                 $type_startup = $types_startup->fetch();
                                 
                                 if($type_startup['type_startup'] == '')
                                 {
-                                   
-                                    echo '
-                                    <script> 
-                                        var startup = "'.$csv[0].'";
-                                        alert("The type of startup that you choose don\'t match with types of startup in database for the startup : "+startup+""); 
-                                    </script>';
-                                    exit;
+                                
+                                    echo "The type of startup that you choose don't match with types of startup in database for the startup : ".$csv[0]."<br>";
+                                    $import_error = "true";
                                 }
+
+                                //Si le type de startup existe, il le remplace par l'id
                                 else
                                 {
                                     $csv[10] = $type_startup['id_type_startup'];
@@ -131,12 +135,8 @@ if(isset($_SESSION['user']))
                                 
                                 if($ceo_education_level['ceo_education_level'] == '')
                                 {
-                                    echo '
-                                    <script>
-                                        var startup = "'.$csv[0].'";
-                                        alert("The ceo education level that you choose don\'t match with ceo education level in database for the startup : "+startup+""); 
-                                    </script>';
-                                    exit;
+                                    echo "The ceo education level that you choose don't match with ceo education level in database for the startup : ".$csv[0]."<br>"; 
+                                    $import_error = "true";
                                 }
                                 else
                                 {
@@ -149,11 +149,8 @@ if(isset($_SESSION['user']))
                                 
                                 if($sector['sectors'] == '')
                                 {
-                                    echo '
-                                    <script> 
-                                        var startup = "'.$csv[0].'";
-                                        alert("The sector that you choose don\'t match with sector in database for the startup : "+startup+""); 
-                                    </script>';
+                                    echo "The sector that you choose don't match with sector in database for the startup : ".$csv[0]."<br>"; 
+                                    $import_error = "true";
                                 }
                                 else
                                 {
@@ -166,12 +163,8 @@ if(isset($_SESSION['user']))
                                 
                                 if($category['category'] == '')
                                 {
-                                    echo '
-                                    <script> 
-                                        var startup = "'.$csv[0].'";
-                                        alert("The category that you choose don\'t match with category in database for the startup""); 
-                                    </script>';
-                                    exit;
+                                    echo "The category that you choose don't match with category in database for the startup : ".$csv[0]."<br>";
+                                    $import_error = "true";
                                 }
                                 else
                                 {
@@ -184,12 +177,8 @@ if(isset($_SESSION['user']))
                                 
                                 if($statut['status'] == '')
                                 {
-                                    echo '
-                                    <script> 
-                                        var startup = "'.$csv[0].'";
-                                        alert("The status that you choose don\'t match with status in database for the startup : "+startup+""); 
-                                    </script>';
-                                    exit;
+                                    echo "The status that you choose don't match with status in database for the startup : ".$csv[0]."<br>";
+                                    $import_error = "true";
                                 }
                                 else
                                 {
@@ -207,12 +196,8 @@ if(isset($_SESSION['user']))
                                     
                                     if($founders_country['founders_country'] == '')
                                     {
-                                        echo '
-                                        <script> 
-                                            var startup = "'.$data['company'].'";
-                                            alert("The founders country that you choose don\'t match with founders country in database for the startup : "+startup+""); 
-                                        </script>';
-                                        exit;
+                                        echo "The founders country that you choose don't match with founders country in database for the startup : ".$data['company']."<br>"; 
+                                        $import_error = "true";
                                     }
                                     else
                                     {
@@ -232,12 +217,8 @@ if(isset($_SESSION['user']))
                                     
                                     if($faculty_schools['faculty_schools'] == '')
                                     {
-                                        echo '
-                                        <script> 
-                                            var startup = "'.$data['company'].'";
-                                            alert("The faculty schools that you choose don\'t match with faculty schools in database for the startup : "+startup+""); 
-                                        </script>';
-                                        exit;
+                                        echo "The faculty schools that you choose don't match with faculty schools in database for the startup : ".$data['company']."<br>";
+                                        $import_error = "true"; 
                                     }
                                     else
                                     {
@@ -256,12 +237,8 @@ if(isset($_SESSION['user']))
                                     
                                     if($impact_sdg['impact_sdg'] == '')
                                     {
-                                        echo '
-                                        <script>
-                                            var startup = "'.$data['company'].'"; 
-                                            alert("The impact that you choose don\'t match with impact in database for the startup : "+startup+""); 
-                                        </script>';
-                                        exit;
+                                        echo "The impact that you choose don't match with impact in database for the startup : ".$data['company']."<br>";
+                                        $import_error = "true";
                                     }
                                     else
                                     {
@@ -270,119 +247,127 @@ if(isset($_SESSION['user']))
                                     }
                                 }
 
-                                $text = array($csv[0],$csv[1],$csv[2],$csv[3],$csv[4],$csv[5],$csv[6],$csv[7],$csv[8],$csv[9],$csv[10],$csv[11],$csv[12],$csv[13],$csv[14],$id_country,$id_schools,$id_impact);
-                                $output_replaced = str_replace('"', '\'', $text);
-                                
-                            
-
-                                //Mettre les changements dans le fichier output
-                                fputcsv($output, $output_replaced);
-
-                                //Ouvrir le fichier modifié pour obtenir les données et les mettre dans la base de données
-                                $file_output = fopen("csv_imported/startups_modified_good_order.csv","r");
-
-                                while (($data_import_db = fgetcsv($file_output, 10000, ",")) !== FALSE) 
+                                if($import_error == "false")
                                 {
-
-                                    $add_data = $db->query('SELECT id_startup, company FROM startup WHERE company = "'.$data_import_db[0].'"');
-                                    $data = $add_data->fetch();
-
-                                    //On test si la startup n'existe pas
-                                    if($data['company'] == '')
-                                    {
-                                        $import_data_to_db_startups = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory, short_description, fk_type, fk_ceo_education_level, fk_sectors, fk_category, fk_status) VALUES ("'.$data_import_db[0].'","'.$data_import_db[1].'","'.$data_import_db[2].'","'.$data_import_db[3].'","'.$data_import_db[4].'","'.$data_import_db[5].'","'.$data_import_db[6].'","'.$data_import_db[7].'","'.$data_import_db[8].'","'.$data_import_db[9].'","'.$data_import_db[10].'","'.$data_import_db[11].'","'.$data_import_db[12].'","'.$data_import_db[13].'","'.$data_import_db[14].'")');
-                                        $import_data_to_db_startups -> execute();
-
-                                        $last_id_startup = $db->lastInsertId();
-
-                                        $id_founders_country_explode= explode(';',$data_import_db[15]);
-                                        foreach ($id_founders_country_explode as $id_founders_country)
-                                        {
-                                            $import_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup, fk_founders_country) VALUES ("'.$last_id_startup.'","'.$id_founders_country.'")');
-                                            $import_data_to_db_startups_founders_country -> execute();
-
-                                        }
-
-                                        $id_faculty_schools_explode= explode(';',$data_import_db[16]);
-                                        foreach ($id_faculty_schools_explode as $id_faculty_schools)
-                                        {
-                                            $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ("'.$last_id_startup.'","'.$id_faculty_schools.'")');
-                                            $import_data_to_db_startups_faculty_schools -> execute();
-
-                                        }
-
-                                        $id_impact_sdg_explode= explode(';',$data_import_db[17]);
-                                        foreach ($id_impact_sdg_explode as $id_impact_sdg)
-                                        {
-                                            $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ("'.$last_id_startup.'","'.$id_impact_sdg.'")');
-                                            $import_data_to_db_startups_impact_sdg -> execute();
-
-                                        }
-                      
-                                        
-                                    }
-                                    //Si la startup existe
-                                    else
-                                    {
-                                        //Si elle existe et l'utilisateur a choisi de réécrire les données
-                                        if($radio_result == "import_new_overwrite_old")
-                                        {
-                                            
-                                            $update_data = $db -> prepare('UPDATE startup SET web = "'.$data_import_db[1].'", founding_date = "'.$data_import_db[2].'", rc="'.$data_import_db[3].'", exit_year="'.$data_import_db[4].'",epfl_grant="'.$data_import_db[5].'",awards_competitions="'.$data_import_db[6].'", key_words="'.$data_import_db[7].'", laboratory="'.$data_import_db[8].'", short_description="'.$data_import_db[9].'", fk_type="'.$data_import_db[10].'",fk_ceo_education_level="'.$data_import_db[11].'",fk_sectors="'.$data_import_db[12].'",fk_category="'.$data_import_db[13].'",fk_status="'.$data_import_db[14].'" WHERE id_startup="'.$data['id_startup'].'"');
-                                            $update_data -> execute();
-
-                                            //Supprimer les anciennes valeurs pour cette startup des pays
-                                            $delete_data_to_db_startups_founders_country = $db -> prepare('DELETE FROM startup_founders_country WHERE fk_startup="'.$data['id_startup'].'"');
-                                            $delete_data_to_db_startups_founders_country -> execute();
-
-                                            //Pour ensuite les remettre avec les nouvelles données
-                                            $id_founders_country_explode= explode(';',$data_import_db[15]);
-                                            foreach ($id_founders_country_explode as $id_founders_country)
-                                            {
-                                                
-                                                $insert_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country (fk_startup, fk_founders_country) VALUES ("'.$data['id_startup'].'", "'.$id_founders_country.'")');
-                                                $insert_data_to_db_startups_founders_country -> execute();
-
-                                            }
-
-                                            //Supprimer les anciennes valeurs pour cette startup des schools
-                                            $delete_data_to_db_startups_faculty_schools = $db -> prepare('DELETE FROM startup_faculty_schools WHERE fk_startup="'.$data['id_startup'].'"');
-                                            $delete_data_to_db_startups_faculty_schools -> execute();
-
-                                            //Pour ensuite les remettre avec les nouvelles données
-                                            $id_faculty_schools_explode= explode(';',$data_import_db[16]);
-                                            foreach ($id_faculty_schools_explode as $id_faculty_schools)
-                                            {
-                                                
-                                                $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ("'.$data['id_startup'].'","'.$id_faculty_schools.'")');
-                                                $import_data_to_db_startups_faculty_schools -> execute();
-
-                                            }
-
-                                            //Supprimer les anciennes valeurs pour cette startup des impacts
-                                            $delete_data_to_db_startups_impact_sdg = $db -> prepare('DELETE FROM startup_impact_sdg WHERE fk_startup="'.$data['id_startup'].'"');
-                                            $delete_data_to_db_startups_impact_sdg -> execute();
-
-                                            //Pour ensuite les remettre avec les nouvelles données
-                                            $id_impact_sdg_explode= explode(';',$data_import_db[17]);
-                                            foreach ($id_impact_sdg_explode as $id_impact_sdg)
-                                            {
-                                                $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ("'.$data['id_startup'].'","'.$id_impact_sdg.'")');
-                                                $import_data_to_db_startups_impact_sdg -> execute();
-
-                                            }
-                                        }
-                                        //Si l'utilisateur a choisi de ne pas réécrire les données
-                                        else
-                                        {
-                                            echo "La startup ".$data_import_db[0]." existe déjà <br>";
-                                        }
-                                    }
-                                } 
+                                    
+                                    $text = array($csv[0],$csv[1],$csv[2],$csv[3],$csv[4],$csv[5],$csv[6],$csv[7],$csv[8],$csv[9],$csv[10],$csv[11],$csv[12],$csv[13],$csv[14],$id_country,$id_schools,$id_impact);
+                                    $output_replaced = str_replace('"', '\'', $text);
+                                    
+                                    //Mettre les changements dans le fichier output
+                                    fputcsv($output, $output_replaced);
+                                }
+                                else
+                                {
+                                    exit;
+                                }
                             }
                         }
 
-                        //Pop-up d'avertissement pour dire que le fichier a été importé et que les données ont été importées dans la base de donnée
+                        
+                        //Ouvrir le fichier modifié pour obtenir les données et les mettre dans la base de données
+                        $file_output = fopen("csv_imported/startups_modified_good_order.csv","r");
+
+                        while (($data_import_db = fgetcsv($file_output, 10000, ",")) !== FALSE) 
+                        {
+                            $i++;
+                            $add_data = $db->query('SELECT id_startup, company FROM startup WHERE company = "'.$data_import_db[0].'"');
+                            $data = $add_data->fetch();
+                           
+                            //On test si la startup n'existe pas
+                            if($data['company'] == '')
+                            {
+                                $import_data_to_db_startups = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory, short_description, fk_type, fk_ceo_education_level, fk_sectors, fk_category, fk_status) VALUES ("'.$data_import_db[0].'","'.$data_import_db[1].'","'.$data_import_db[2].'","'.$data_import_db[3].'","'.$data_import_db[4].'","'.$data_import_db[5].'","'.$data_import_db[6].'","'.$data_import_db[7].'","'.$data_import_db[8].'","'.$data_import_db[9].'","'.$data_import_db[10].'","'.$data_import_db[11].'","'.$data_import_db[12].'","'.$data_import_db[13].'","'.$data_import_db[14].'")');
+                                $import_data_to_db_startups -> execute();
+
+                                $last_id_startup = $db->lastInsertId();
+
+                                $id_founders_country_explode= explode(';',$data_import_db[15]);
+                                foreach ($id_founders_country_explode as $id_founders_country)
+                                {
+                                    $import_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup, fk_founders_country) VALUES ("'.$last_id_startup.'","'.$id_founders_country.'")');
+                                    $import_data_to_db_startups_founders_country -> execute();
+
+                                }
+
+                                $id_faculty_schools_explode= explode(';',$data_import_db[16]);
+                                foreach ($id_faculty_schools_explode as $id_faculty_schools)
+                                {
+                                    $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ("'.$last_id_startup.'","'.$id_faculty_schools.'")');
+                                    $import_data_to_db_startups_faculty_schools -> execute();
+
+                                }
+
+                                $id_impact_sdg_explode= explode(';',$data_import_db[17]);
+                                foreach ($id_impact_sdg_explode as $id_impact_sdg)
+                                {
+                                    $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ("'.$last_id_startup.'","'.$id_impact_sdg.'")');
+                                    $import_data_to_db_startups_impact_sdg -> execute();
+
+                                }
+                
+                                
+                            }
+                            //Si la startup existe
+                            else
+                            {
+                                //Si elle existe et l'utilisateur a choisi de réécrire les données
+                                if($radio_result == "import_new_overwrite_old")
+                                {
+                                    
+                                    $update_data = $db -> prepare('UPDATE startup SET web = "'.$data_import_db[1].'", founding_date = "'.$data_import_db[2].'", rc="'.$data_import_db[3].'", exit_year="'.$data_import_db[4].'",epfl_grant="'.$data_import_db[5].'",awards_competitions="'.$data_import_db[6].'", key_words="'.$data_import_db[7].'", laboratory="'.$data_import_db[8].'", short_description="'.$data_import_db[9].'", fk_type="'.$data_import_db[10].'",fk_ceo_education_level="'.$data_import_db[11].'",fk_sectors="'.$data_import_db[12].'",fk_category="'.$data_import_db[13].'",fk_status="'.$data_import_db[14].'" WHERE id_startup="'.$data['id_startup'].'"');
+                                    $update_data -> execute();
+
+                                    //Supprimer les anciennes valeurs pour cette startup des pays
+                                    $delete_data_to_db_startups_founders_country = $db -> prepare('DELETE FROM startup_founders_country WHERE fk_startup="'.$data['id_startup'].'"');
+                                    $delete_data_to_db_startups_founders_country -> execute();
+
+                                    //Pour ensuite les remettre avec les nouvelles données
+                                    $id_founders_country_explode= explode(';',$data_import_db[15]);
+                                    foreach ($id_founders_country_explode as $id_founders_country)
+                                    {
+                                        
+                                        $insert_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country (fk_startup, fk_founders_country) VALUES ("'.$data['id_startup'].'", "'.$id_founders_country.'")');
+                                        $insert_data_to_db_startups_founders_country -> execute();
+
+                                    }
+
+                                    //Supprimer les anciennes valeurs pour cette startup des schools
+                                    $delete_data_to_db_startups_faculty_schools = $db -> prepare('DELETE FROM startup_faculty_schools WHERE fk_startup="'.$data['id_startup'].'"');
+                                    $delete_data_to_db_startups_faculty_schools -> execute();
+
+                                    //Pour ensuite les remettre avec les nouvelles données
+                                    $id_faculty_schools_explode= explode(';',$data_import_db[16]);
+                                    foreach ($id_faculty_schools_explode as $id_faculty_schools)
+                                    {
+                                        
+                                        $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ("'.$data['id_startup'].'","'.$id_faculty_schools.'")');
+                                        $import_data_to_db_startups_faculty_schools -> execute();
+
+                                    }
+
+                                    //Supprimer les anciennes valeurs pour cette startup des impacts
+                                    $delete_data_to_db_startups_impact_sdg = $db -> prepare('DELETE FROM startup_impact_sdg WHERE fk_startup="'.$data['id_startup'].'"');
+                                    $delete_data_to_db_startups_impact_sdg -> execute();
+
+                                    //Pour ensuite les remettre avec les nouvelles données
+                                    $id_impact_sdg_explode= explode(';',$data_import_db[17]);
+                                    foreach ($id_impact_sdg_explode as $id_impact_sdg)
+                                    {
+                                        $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ("'.$data['id_startup'].'","'.$id_impact_sdg.'")');
+                                        $import_data_to_db_startups_impact_sdg -> execute();
+
+                                    }
+                                }
+                                //Si l'utilisateur a choisi de ne pas réécrire les données
+                                else
+                                {
+                                    echo "La startup ".$data['company'] ." existe déjà <br>";
+                                }
+                            }
+                        } 
+                    
+
+                       //Pop-up d'avertissement pour dire que le fichier a été importé et que les données ont été importées dans la base de donnée
                         echo " 
                         <script>
                         var filename = '".basename($_FILES["fileToUpload"]["name"])."';
