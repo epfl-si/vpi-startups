@@ -112,10 +112,11 @@ if(isset($_SESSION['user']))
                                 
                                 if($type_startup['type_startup'] == '')
                                 {
+                                   
                                     echo '
                                     <script> 
                                         var startup = "'.$csv[0].'";
-                                        alert("The type of startup that you choose don\'t match with types of startup in database for the startup : "+startup+"); 
+                                        alert("The type of startup that you choose don\'t match with types of startup in database for the startup : "+startup+""); 
                                     </script>';
                                     exit;
                                 }
@@ -151,7 +152,7 @@ if(isset($_SESSION['user']))
                                     echo '
                                     <script> 
                                         var startup = "'.$csv[0].'";
-                                        alert("The sector that you choose don\'t match with sector in database for the startup : "+startup+"); 
+                                        alert("The sector that you choose don\'t match with sector in database for the startup : "+startup+""); 
                                     </script>';
                                 }
                                 else
@@ -168,7 +169,7 @@ if(isset($_SESSION['user']))
                                     echo '
                                     <script> 
                                         var startup = "'.$csv[0].'";
-                                        alert("The category that you choose don\'t match with category in database for the startup"); 
+                                        alert("The category that you choose don\'t match with category in database for the startup""); 
                                     </script>';
                                     exit;
                                 }
@@ -186,7 +187,7 @@ if(isset($_SESSION['user']))
                                     echo '
                                     <script> 
                                         var startup = "'.$csv[0].'";
-                                        alert("The status that you choose don\'t match with status in database for the startup : "+startup+"); 
+                                        alert("The status that you choose don\'t match with status in database for the startup : "+startup+""); 
                                     </script>';
                                     exit;
                                 }
@@ -197,7 +198,7 @@ if(isset($_SESSION['user']))
 
                                 //founders country
                                 $founders_country_explode= explode(';',$csv[15]);
-
+                                $csv[15] = "";
                                 foreach($founders_country_explode as $country)
                                 { 
                                 
@@ -209,22 +210,20 @@ if(isset($_SESSION['user']))
                                         echo '
                                         <script> 
                                             var startup = "'.$data['company'].'";
-                                            alert("The founders country that you choose don\'t match with founders country in database for the startup : "+startup+"); 
+                                            alert("The founders country that you choose don\'t match with founders country in database for the startup : "+startup+""); 
                                         </script>';
                                         exit;
                                     }
                                     else
                                     {
-                                        $csv[15] = $faculty_schools['id_founders_country'];
-
-                        
-
+                                        $csv[15] = $csv[15].$founders_country['id_founders_country'].';';
+                                        $id_country = rtrim($csv[15], ";");
                                     }
                                 }
                                 
                                 //faculty schools
                                 $faculty_schools_explode= explode(';',$csv[16]);
-
+                                $csv[16] = "";
                                 foreach($faculty_schools_explode as $schools)
                                 { 
 
@@ -236,25 +235,22 @@ if(isset($_SESSION['user']))
                                         echo '
                                         <script> 
                                             var startup = "'.$data['company'].'";
-                                            alert("The faculty schools that you choose don\'t match with faculty schools in database for the startup : "+startup+"); 
+                                            alert("The faculty schools that you choose don\'t match with faculty schools in database for the startup : "+startup+""); 
                                         </script>';
                                         exit;
                                     }
                                     else
                                     {
-                                        $csv[16] = $faculty_schools['id_faculty_schools'];
-
-                        
-
+                                        $csv[16] = $csv[16].$faculty_schools['id_faculty_schools']. ';';
+                                        $id_schools = rtrim($csv[16], ";");
                                     }
                                 }
 
                                 //impact sdg
                                 $impact_sdg_explode= explode(';',$csv[17]);
-
+                                $csv[17] = "";
                                 foreach($impact_sdg_explode as $impact)
                                 { 
-
                                     $impact_sdgs = $db -> query('SELECT id_impact_sdg, impact_sdg FROM impact_sdg WHERE impact_sdg = "'.$impact.'"');
                                     $impact_sdg = $impact_sdgs->fetch();
                                     
@@ -263,19 +259,18 @@ if(isset($_SESSION['user']))
                                         echo '
                                         <script>
                                             var startup = "'.$data['company'].'"; 
-                                            alert("The impact that you choose don\'t match with impact in database for the startup : "+startup+"); 
+                                            alert("The impact that you choose don\'t match with impact in database for the startup : "+startup+""); 
                                         </script>';
                                         exit;
                                     }
                                     else
                                     {
-                                        $csv[17] = $impact_sdg['id_impact_sdg'];
-                                        echo $csv[17];
-
+                                        $csv[17] = $csv[17].$impact_sdg['id_impact_sdg']. ';';
+                                        $id_impact = rtrim($csv[17], ";");
                                     }
                                 }
 
-                                $text = array($csv[0],$csv[1],$csv[2],$csv[3],$csv[4],$csv[5],$csv[6],$csv[7],$csv[8],$csv[9],$csv[10],$csv[11],$csv[12],$csv[13],$csv[14],$csv[15],$csv[16],$csv[17]);
+                                $text = array($csv[0],$csv[1],$csv[2],$csv[3],$csv[4],$csv[5],$csv[6],$csv[7],$csv[8],$csv[9],$csv[10],$csv[11],$csv[12],$csv[13],$csv[14],$id_country,$id_schools,$id_impact);
                                 $output_replaced = str_replace('"', '\'', $text);
                                 
                             
@@ -288,8 +283,8 @@ if(isset($_SESSION['user']))
 
                                 while (($data_import_db = fgetcsv($file_output, 10000, ",")) !== FALSE) 
                                 {
-                                    
-                                    /*$add_data = $db->query('SELECT id_startup, company FROM startup WHERE company = "'.$data_import_db[0].'"');
+
+                                    $add_data = $db->query('SELECT id_startup, company FROM startup WHERE company = "'.$data_import_db[0].'"');
                                     $data = $add_data->fetch();
 
                                     //On test si la startup n'existe pas
@@ -300,34 +295,31 @@ if(isset($_SESSION['user']))
 
                                         $last_id_startup = $db->lastInsertId();
 
-                                        $import_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup, fk_founders_country) VALUES ("'.$last_id_startup.'","'.$data_import_db[15].'")');
-                                        $import_data_to_db_startups_founders_country -> execute();
+                                        $id_founders_country_explode= explode(';',$data_import_db[15]);
+                                        foreach ($id_founders_country_explode as $id_founders_country)
+                                        {
+                                            $import_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup, fk_founders_country) VALUES ("'.$last_id_startup.'","'.$id_founders_country.'")');
+                                            $import_data_to_db_startups_founders_country -> execute();
 
-                                            
-                                        $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ("'.$last_id_startup.'","'.$data_import_db[16].'")');
-                                        $import_data_to_db_startups_faculty_schools -> execute();
-                
-                                        $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ("'.$last_id_startup.'","'.$data_import_db[17].'")');
-                                        $import_data_to_db_startups_impact_sdg -> execute();
+                                        }
 
-                                          
-                                        //"Fermer" les fichiers ouverts au-dessus
-                                        fclose($input);
-                                        fclose($output);
-                                        //fclose($file_output);
+                                        $id_faculty_schools_explode= explode(';',$data_import_db[16]);
+                                        foreach ($id_faculty_schools_explode as $id_faculty_schools)
+                                        {
+                                            $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ("'.$last_id_startup.'","'.$id_faculty_schools.'")');
+                                            $import_data_to_db_startups_faculty_schools -> execute();
 
-                                        //Supprimer le fichier qui a été importé par l'utilsateur et le fichier de traitement des données
-                                        unlink('csv_imported/'.basename(($_FILES["fileToUpload"]["name"])).'');
-                                        unlink('csv_imported/startups_modified_good_order.csv');
+                                        }
 
+                                        $id_impact_sdg_explode= explode(';',$data_import_db[17]);
+                                        foreach ($id_impact_sdg_explode as $id_impact_sdg)
+                                        {
+                                            $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ("'.$last_id_startup.'","'.$id_impact_sdg.'")');
+                                            $import_data_to_db_startups_impact_sdg -> execute();
 
-                                        //Pop-up d'avertissement pour dire que le fichier a été importé et que les données ont été importées dans la base de donnée
-                                        echo " 
-                                        <script>
-                                        var filename = '".basename($_FILES["fileToUpload"]["name"])."';
-                                            alert('The file '+filename+' has been uploaded and the data was imported in database.');
-                                        </script>
-                                        "; 
+                                        }
+                      
+                                        
                                     }
                                     //Si la startup existe
                                     else
@@ -344,53 +336,70 @@ if(isset($_SESSION['user']))
                                             $delete_data_to_db_startups_founders_country -> execute();
 
                                             //Pour ensuite les remettre avec les nouvelles données
-                                            $insert_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country (fk_founders_country, fk_startup) VALUES ("'.$data_import_db[15].'","'.$data['id_startup'].'")');
-                                            $insert_data_to_db_startups_founders_country -> execute();
+                                            $id_founders_country_explode= explode(';',$data_import_db[15]);
+                                            foreach ($id_founders_country_explode as $id_founders_country)
+                                            {
+                                                
+                                                $insert_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country (fk_startup, fk_founders_country) VALUES ("'.$data['id_startup'].'", "'.$id_founders_country.'")');
+                                                $insert_data_to_db_startups_founders_country -> execute();
 
+                                            }
 
                                             //Supprimer les anciennes valeurs pour cette startup des schools
                                             $delete_data_to_db_startups_faculty_schools = $db -> prepare('DELETE FROM startup_faculty_schools WHERE fk_startup="'.$data['id_startup'].'"');
                                             $delete_data_to_db_startups_faculty_schools -> execute();
 
                                             //Pour ensuite les remettre avec les nouvelles données
-                                            $insert_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country (fk_founders_country, fk_startup) VALUES ("'.$data_import_db[16].'","'.$data['id_startup'].'")');
-                                            $insert_data_to_db_startups_founders_country -> execute();
+                                            $id_faculty_schools_explode= explode(';',$data_import_db[16]);
+                                            foreach ($id_faculty_schools_explode as $id_faculty_schools)
+                                            {
+                                                
+                                                $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ("'.$data['id_startup'].'","'.$id_faculty_schools.'")');
+                                                $import_data_to_db_startups_faculty_schools -> execute();
 
+                                            }
 
                                             //Supprimer les anciennes valeurs pour cette startup des impacts
                                             $delete_data_to_db_startups_impact_sdg = $db -> prepare('DELETE FROM startup_impact_sdg WHERE fk_startup="'.$data['id_startup'].'"');
                                             $delete_data_to_db_startups_impact_sdg -> execute();
 
                                             //Pour ensuite les remettre avec les nouvelles données
-                                            $update_data_to_db_startups_impact_sdg = $db -> prepare('UPDATE startup_impact_sdg SET fk_impact_sdg="'.$data_import_db[17].'", fk_startup="'.$data['id_startup'].'"');
-                                            $update_data_to_db_startups_impact_sdg -> execute();
-                                                
-                                            //"Fermer" les fichiers ouverts au-dessus
-                                            fclose($input);
-                                            fclose($output);
-                                            fclose($file_output);
+                                            $id_impact_sdg_explode= explode(';',$data_import_db[17]);
+                                            foreach ($id_impact_sdg_explode as $id_impact_sdg)
+                                            {
+                                                $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ("'.$data['id_startup'].'","'.$id_impact_sdg.'")');
+                                                $import_data_to_db_startups_impact_sdg -> execute();
 
-                                            //Supprimer le fichier qui a été importé par l'utilsateur et le fichier de traitement des données
-                                            unlink('csv_imported/'.basename(($_FILES["fileToUpload"]["name"])).'');
-                                            unlink('csv_imported/startups_modified_good_order.csv');
-
-                                            //Pop-up d'avertissement pour dire que le fichier a été importé et que les données ont été importées dans la base de donnée
-                                            echo " 
-                                            <script>
-                                            var filename = '".basename($_FILES["fileToUpload"]["name"])."';
-                                                alert('The file '+filename+' has been uploaded and the data was imported in database.');
-                                            </script>
-                                            "; 
+                                            }
                                         }
                                         //Si l'utilisateur a choisi de ne pas réécrire les données
                                         else
                                         {
                                             echo "La startup ".$data_import_db[0]." existe déjà <br>";
                                         }
-                                    } */
-                                }
+                                    }
+                                } 
                             }
                         }
+
+                        //Pop-up d'avertissement pour dire que le fichier a été importé et que les données ont été importées dans la base de donnée
+                        echo " 
+                        <script>
+                        var filename = '".basename($_FILES["fileToUpload"]["name"])."';
+                            alert('The file '+filename+' has been uploaded and the data was imported in database.');
+                        </script>
+                        ";
+
+                        //echo 'The file '.$data_import_db[0].' has been uploaded and the data was imported in database.';
+                         //"Fermer" les fichiers ouverts au-dessus
+                         fclose($input);
+                         fclose($output);
+                         fclose($file_output);
+
+                         //Supprimer le fichier qui a été importé par l'utilsateur et le fichier de traitement des données
+                         unlink('csv_imported/'.basename(($_FILES["fileToUpload"]["name"])).'');
+                         unlink('csv_imported/startups_modified_good_order.csv');
+
                     }
                     
                     //Pop-up d'avertissement s'il y a eu un problème avec l'importation des données 
