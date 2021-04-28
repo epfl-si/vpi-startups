@@ -33,6 +33,7 @@ foreach ($startup as $row)
 {
     //Mettre le contenu de la base de données dans un array pour ensuite le mettre dans le fichier de téléchargement
     $text = array($row['company'], $row['web'], $row['founding_date'], $row['rc'], $row['exit_year'], $row['epfl_grant'], $row['awards_competitions'], $row['key_words'], $row['laboratory'], $row['short_description'],$row['type_startup'],  $row['ceo_education_level'],  $row['sectors'],$row['category'], $row['status'], $row['country'], $row['schools'], $row['impact']);
+
     $text_replace = str_replace('"', '', $text);
     
     try 
