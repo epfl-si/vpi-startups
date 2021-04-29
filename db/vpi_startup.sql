@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 27, 2021 at 07:21 AM
+-- Generation Time: Apr 29, 2021 at 08:06 AM
 -- Server version: 10.5.9-MariaDB-1:10.5.9+maria~focal
 -- PHP Version: 7.4.16
 
@@ -33,17 +33,6 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `category`
---
-
-INSERT INTO `category` (`id_category`, `category`) VALUES
-(1, 'EPFL Startup'),
-(2, 'EPFL Launchpad'),
-(3, 'EIP Company');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `ceo_education_level`
 --
 
@@ -51,45 +40,6 @@ CREATE TABLE `ceo_education_level` (
   `id_ceo_education_level` int(11) NOT NULL,
   `ceo_education_level` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `ceo_education_level`
---
-
-INSERT INTO `ceo_education_level` (`id_ceo_education_level`, `ceo_education_level`) VALUES
-(1, 'Bachelor'),
-(2, 'Master'),
-(3, 'PhD'),
-(4, 'Formation continue'),
-(5, 'Autre');
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `detail_startup`
--- (See below for the actual view)
---
-CREATE TABLE `detail_startup` (
-`id_startup` int(11)
-,`company` varchar(255)
-,`web` varchar(255)
-,`founding_date` varchar(4)
-,`rc` varchar(255)
-,`exit_year` varchar(4)
-,`epfl_grant` varchar(255)
-,`awards_competitions` varchar(255)
-,`laboratory` varchar(30)
-,`short_description` varchar(255)
-,`status` varchar(255)
-,`type_startup` varchar(30)
-,`sectors` varchar(30)
-,`category` varchar(255)
-,`ceo_education_level` varchar(30)
-,`country` mediumtext
-,`impact` mediumtext
-);
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `faculty_schools`
@@ -101,23 +51,6 @@ CREATE TABLE `faculty_schools` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `faculty_schools`
---
-
-INSERT INTO `faculty_schools` (`id_faculty_schools`, `faculty_schools`) VALUES
-(1, 'ENAC'),
-(2, 'IC'),
-(3, 'SB'),
-(4, 'STI'),
-(5, 'SV'),
-(6, 'CDH'),
-(7, 'CDM'),
-(8, 'Antenna'),
-(9, 'Others');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `founders_country`
 --
 
@@ -125,38 +58,6 @@ CREATE TABLE `founders_country` (
   `id_founders_country` int(11) NOT NULL,
   `founders_country` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `founders_country`
---
-
-INSERT INTO `founders_country` (`id_founders_country`, `founders_country`) VALUES
-(1, 'Switzerland'),
-(2, 'Italy'),
-(3, 'USA'),
-(4, 'Japan'),
-(5, 'Germany'),
-(6, 'Russia'),
-(7, 'Canada'),
-(8, 'Denmark'),
-(9, 'France'),
-(10, 'Austria'),
-(11, 'South Africa'),
-(12, 'Argentina'),
-(13, 'Poland'),
-(14, 'Greece'),
-(15, 'India'),
-(16, 'Netherlands'),
-(17, 'Brazil'),
-(18, 'Romania'),
-(19, 'Czech Republic'),
-(20, 'Spain'),
-(21, 'Iran'),
-(22, 'Sweden'),
-(23, 'United Kingdom'),
-(24, 'Marocco');
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `funding`
@@ -168,34 +69,9 @@ CREATE TABLE `funding` (
   `investment_date` date DEFAULT NULL,
   `investors` varchar(30) DEFAULT NULL,
   `fk_stage_of_investment` int(11) DEFAULT NULL,
-  `fk_type_of_investment` int(11) DEFAULT NULL
+  `fk_type_of_investment` int(11) DEFAULT NULL,
+  `fk_startup` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `funding`
---
-
-INSERT INTO `funding` (`id_funding`, `amount`, `investment_date`, `investors`, `fk_stage_of_investment`, `fk_type_of_investment`) VALUES
-(1, '2000000', '2020-01-25', NULL, 2, 2),
-(2, '20000', '2021-02-04', 'FIT', 7, 3),
-(3, '2000000', '2021-02-17', 'Hugo', 3, 5),
-(4, '2000000', '2020-01-25', '', 2, 2),
-(5, '20000', '2021-02-04', 'FIT', 7, 3),
-(6, '2000000', '2021-02-17', 'Hugo', 3, 5),
-(7, '10000', '2021-01-12', '', 1, 1);
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `funds_by_sector`
--- (See below for the actual view)
---
-CREATE TABLE `funds_by_sector` (
-`sectors` varchar(30)
-,`amount` double
-);
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `impact_sdg`
@@ -207,27 +83,16 @@ CREATE TABLE `impact_sdg` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `impact_sdg`
+-- Table structure for table `logs`
 --
 
-INSERT INTO `impact_sdg` (`id_impact_sdg`, `impact_sdg`) VALUES
-(1, 'Pas de pauvreté'),
-(2, 'Faim Zéro'),
-(3, 'Bonne santé et bien-être'),
-(4, 'Éducation de qualité'),
-(5, 'Égalité entre les sexes'),
-(6, 'Eau propre et assainissement'),
-(7, 'Énergie propre et d\'un coût abordable'),
-(8, 'Travail décent et croissance économique'),
-(9, 'Industrie, innovation et infrastructure'),
-(10, 'Inégalités réduites'),
-(11, 'Villes et communautés durable'),
-(12, 'Consommation et production responsables'),
-(13, 'Mesures relatives à la lutte contre les changements climatiques'),
-(14, 'Vie aquatique'),
-(15, 'Vie terrestre'),
-(16, 'Paix, justice et institutions efficaces'),
-(17, 'Partenariats pour la réalisation des objectifs');
+CREATE TABLE `logs` (
+  `id_logs` int(11) NOT NULL,
+  `sciper_number` int(11) NOT NULL,
+  `date_logs` date NOT NULL,
+  `after_logs` varchar(255) NOT NULL,
+  `before_logs` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -242,25 +107,8 @@ CREATE TABLE `person` (
   `person_function` varchar(30) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `prof_as_founder` tinyint(1) DEFAULT NULL,
-  `gender` tinyint(1) DEFAULT NULL,
-  `fk_type_of_person` int(11) NOT NULL
+  `gender` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `person`
---
-
-INSERT INTO `person` (`id_person`, `name`, `firstname`, `person_function`, `email`, `prof_as_founder`, `gender`, `fk_type_of_person`) VALUES
-(12, 'Kobler', 'Christian', NULL, NULL, 0, 0, 4),
-(13, 'Clavel', NULL, NULL, NULL, 1, 0, 6),
-(14, 'Lasser/Renaud', NULL, NULL, NULL, 0, 0, 6),
-(15, 'Durand', 'Nicolas', NULL, 'nicolas.durand@abionic.com', 0, 1, 4),
-(16, 'Clavel', '', '', '', 1, 0, 6),
-(17, 'Durand', 'Nicolas', '', 'nicolas.durand@abionic.com', 0, 1, 4),
-(18, 'Lasser/Renaud', '', '', '', 0, 0, 6),
-(19, 'Clavel', '', '', '', 0, 0, 6);
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `sectors`
@@ -272,21 +120,6 @@ CREATE TABLE `sectors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `sectors`
---
-
-INSERT INTO `sectors` (`id_sectors`, `sectors`) VALUES
-(1, 'Architecture'),
-(2, 'Biotech'),
-(3, 'ICT'),
-(4, 'Medtech'),
-(5, 'Engineering'),
-(6, 'Fintech'),
-(7, 'Cleantech');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `stage_of_investment`
 --
 
@@ -294,23 +127,6 @@ CREATE TABLE `stage_of_investment` (
   `id_stage_of_investment` int(11) NOT NULL,
   `stage_of_investment` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `stage_of_investment`
---
-
-INSERT INTO `stage_of_investment` (`id_stage_of_investment`, `stage_of_investment`) VALUES
-(1, 'Pre-seed'),
-(2, 'Seed'),
-(3, 'Series A'),
-(4, 'Series B'),
-(5, 'Series C'),
-(6, 'Trade'),
-(7, 'IPO'),
-(8, 'Growth'),
-(9, 'Other');
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `startup`
@@ -331,25 +147,9 @@ CREATE TABLE `startup` (
   `fk_type` int(11) DEFAULT NULL,
   `fk_ceo_education_level` int(11) DEFAULT NULL,
   `fk_sectors` int(11) DEFAULT NULL,
-  `fk_funding` int(11) DEFAULT NULL,
   `fk_category` int(11) DEFAULT NULL,
   `fk_status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `startup`
---
-
-INSERT INTO `startup` (`id_startup`, `company`, `web`, `founding_date`, `rc`, `exit_year`, `epfl_grant`, `awards_competitions`, `key_words`, `laboratory`, `short_description`, `fk_type`, `fk_ceo_education_level`, `fk_sectors`, `fk_funding`, `fk_category`, `fk_status`) VALUES
-(4, '2C3D medical', NULL, '2000', 'CH-550.0.080.832-5', '2002', NULL, NULL, NULL, 'LSRO2', NULL, 1, 5, 4, 1, 1, 2),
-(5, 'Abionic', NULL, '2010', NULL, NULL, NULL, NULL, 'Diagnostics', NULL, NULL, 1, 4, 4, 2, 1, 1),
-(7, 'startupsss', 'www.web.ch', '2020', 'rc', '2021', 'epfl_grant', 'awards_competitions', 'key_words', 'labo', 'short_description', 1, 1, 7, 3, 1, 1),
-(8, '2C3D medical', '', '2000', 'CH-550.0.080.832-5', '2002', '', '', '', 'LSRO2', '', 1, 5, 4, 4, 1, 2),
-(9, 'Abionic', '', '2010', '', '', '', '', 'Diagnostics', '', '', 1, 4, 4, 5, 1, 1),
-(10, 'startupsss', 'www.web.ch', '2020', 'rc', '2021', 'epfl_grant', 'awards_competitions', 'key_words', 'labo', 'short_description', 1, 1, 7, 6, 1, 1),
-(11, 'HemostOD SA', 'www.hemostod.ch', '2010', 'CH-550.0.080.832-5', '2020', '', '', '', 'LSRO2', '', 3, 1, 5, 7, 1, 2);
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `startup_faculty_schools`
@@ -362,26 +162,6 @@ CREATE TABLE `startup_faculty_schools` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `startup_faculty_schools`
---
-
-INSERT INTO `startup_faculty_schools` (`id_startup_faculty_schools`, `fk_startup`, `fk_faculty_schools`) VALUES
-(1, 4, 6),
-(2, 5, 1),
-(3, 7, 2),
-(4, 4, 1),
-(5, 5, 7),
-(6, 8, 6),
-(7, 9, 1),
-(8, 10, 1),
-(9, 11, 7),
-(10, NULL, 2),
-(11, NULL, 1),
-(12, NULL, 2);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `startup_founders_country`
 --
 
@@ -390,26 +170,6 @@ CREATE TABLE `startup_founders_country` (
   `fk_startup` int(11) DEFAULT NULL,
   `fk_founders_country` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `startup_founders_country`
---
-
-INSERT INTO `startup_founders_country` (`id_startup_founders_country`, `fk_startup`, `fk_founders_country`) VALUES
-(1, 4, 12),
-(2, 4, 10),
-(3, 5, 17),
-(4, 5, 7),
-(5, 7, 9),
-(6, 8, 12),
-(7, 9, 10),
-(8, 10, 17),
-(9, 11, 7),
-(10, NULL, 9),
-(11, NULL, 1),
-(12, NULL, 17);
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `startup_impact_sdg`
@@ -422,45 +182,15 @@ CREATE TABLE `startup_impact_sdg` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `startup_impact_sdg`
---
-
-INSERT INTO `startup_impact_sdg` (`id_startup_impact_sdg`, `fk_startup`, `fk_impact_sdg`) VALUES
-(1, 4, 3),
-(2, 4, 6),
-(3, 5, 3),
-(4, 5, 10),
-(5, 7, 16),
-(6, 8, 3),
-(7, 9, 6),
-(8, 10, 3),
-(9, 11, 10),
-(10, NULL, 16),
-(11, NULL, 15),
-(12, NULL, 2);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `startup_person`
 --
 
 CREATE TABLE `startup_person` (
   `id_startup_person` int(11) NOT NULL,
   `fk_startup` int(11) DEFAULT NULL,
-  `fk_person` int(11) DEFAULT NULL
+  `fk_person` int(11) DEFAULT NULL,
+  `fk_type_of_person` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `startup_person`
---
-
-INSERT INTO `startup_person` (`id_startup_person`, `fk_startup`, `fk_person`) VALUES
-(6, 4, 13),
-(7, 5, 15),
-(8, 7, 14);
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `status`
@@ -472,18 +202,6 @@ CREATE TABLE `status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `status`
---
-
-INSERT INTO `status` (`id_status`, `status`) VALUES
-(1, 'Private'),
-(2, 'Stopped'),
-(3, 'Public'),
-(4, 'M&A');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `type_of_investment`
 --
 
@@ -491,19 +209,6 @@ CREATE TABLE `type_of_investment` (
   `id_type_of_investment` int(11) NOT NULL,
   `type_of_investment` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `type_of_investment`
---
-
-INSERT INTO `type_of_investment` (`id_type_of_investment`, `type_of_investment`) VALUES
-(1, 'Equity'),
-(2, 'Convertible Loans'),
-(3, 'Loans'),
-(4, 'Grants'),
-(5, 'Award');
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `type_of_person`
@@ -515,17 +220,6 @@ CREATE TABLE `type_of_person` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `type_of_person`
---
-
-INSERT INTO `type_of_person` (`id_type_of_person`, `type_of_person`) VALUES
-(4, 'CEO'),
-(5, 'Co-founder'),
-(6, 'Prof');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `type_startup`
 --
 
@@ -535,34 +229,191 @@ CREATE TABLE `type_startup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `type_startup`
+-- Stand-in structure for view `view_detail_startup`
+-- (See below for the actual view)
 --
-
-INSERT INTO `type_startup` (`id_type_startup`, `type_startup`) VALUES
-(1, 'SA'),
-(2, 'Sàrl'),
-(3, 'SNC'),
-(4, 'Association'),
-(5, 'Individuelle'),
-(6, 'Soc. nom indiv.');
+CREATE TABLE `view_detail_startup` (
+`id_startup` int(11)
+,`company` varchar(255)
+,`web` varchar(255)
+,`founding_date` varchar(4)
+,`rc` varchar(255)
+,`exit_year` varchar(4)
+,`epfl_grant` varchar(255)
+,`awards_competitions` varchar(255)
+,`laboratory` varchar(30)
+,`short_description` varchar(255)
+,`status` varchar(255)
+,`type_startup` varchar(30)
+,`sectors` varchar(30)
+,`category` varchar(255)
+,`ceo_education_level` varchar(30)
+);
 
 -- --------------------------------------------------------
 
 --
--- Structure for view `detail_startup`
+-- Stand-in structure for view `view_detail_startup_full`
+-- (See below for the actual view)
 --
-DROP TABLE IF EXISTS `detail_startup`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `detail_startup`  AS SELECT `startup`.`id_startup` AS `id_startup`, `startup`.`company` AS `company`, `startup`.`web` AS `web`, `startup`.`founding_date` AS `founding_date`, `startup`.`rc` AS `rc`, `startup`.`exit_year` AS `exit_year`, `startup`.`epfl_grant` AS `epfl_grant`, `startup`.`awards_competitions` AS `awards_competitions`, `startup`.`laboratory` AS `laboratory`, `startup`.`short_description` AS `short_description`, `status`.`status` AS `status`, `type_startup`.`type_startup` AS `type_startup`, `sectors`.`sectors` AS `sectors`, `category`.`category` AS `category`, `ceo_education_level`.`ceo_education_level` AS `ceo_education_level`, group_concat(`founders_country`.`founders_country` separator ';') AS `country`, group_concat(`impact_sdg`.`impact_sdg` separator ';') AS `impact` FROM (((((((((((`startup` join `startup_person` on(`startup`.`id_startup` = `startup_person`.`fk_startup`)) join `person` on(`startup_person`.`fk_person` = `person`.`id_person`)) join `status` on(`status`.`id_status` = `startup`.`fk_status`)) join `type_startup` on(`type_startup`.`id_type_startup` = `startup`.`fk_type`)) join `sectors` on(`sectors`.`id_sectors` = `startup`.`fk_sectors`)) join `category` on(`category`.`id_category` = `startup`.`fk_category`)) join `ceo_education_level` on(`ceo_education_level`.`id_ceo_education_level` = `startup`.`fk_ceo_education_level`)) join `startup_founders_country` on(`startup`.`id_startup` = `startup_founders_country`.`fk_startup`)) join `founders_country` on(`founders_country`.`id_founders_country` = `startup_founders_country`.`fk_founders_country`)) join `startup_impact_sdg` on(`startup`.`id_startup` = `startup_impact_sdg`.`fk_startup`)) join `impact_sdg` on(`impact_sdg`.`id_impact_sdg` = `startup_impact_sdg`.`fk_impact_sdg`)) GROUP BY `startup`.`company` ;
+CREATE TABLE `view_detail_startup_full` (
+`id_startup` int(11)
+,`company` varchar(255)
+,`web` varchar(255)
+,`founding_date` varchar(4)
+,`rc` varchar(255)
+,`exit_year` varchar(4)
+,`epfl_grant` varchar(255)
+,`awards_competitions` varchar(255)
+,`laboratory` varchar(30)
+,`short_description` varchar(255)
+,`status` varchar(255)
+,`type_startup` varchar(30)
+,`sectors` varchar(30)
+,`category` varchar(255)
+,`ceo_education_level` varchar(30)
+,`country` mediumtext
+,`impact` mediumtext
+,`schools` mediumtext
+);
 
 -- --------------------------------------------------------
 
 --
--- Structure for view `funds_by_sector`
+-- Stand-in structure for view `view_funds_by_sector`
+-- (See below for the actual view)
 --
-DROP TABLE IF EXISTS `funds_by_sector`;
+CREATE TABLE `view_funds_by_sector` (
+`sectors` varchar(30)
+,`amount` double
+);
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `funds_by_sector`  AS SELECT `sectors`.`sectors` AS `sectors`, sum(`funding`.`amount`) AS `amount` FROM ((`startup` join `funding` on(`funding`.`id_funding` = `startup`.`fk_funding`)) join `sectors` on(`sectors`.`id_sectors` = `startup`.`fk_sectors`)) GROUP BY `sectors`.`sectors` ORDER BY `sectors`.`sectors` ASC ;
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_number_of_startups_by_year`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_number_of_startups_by_year` (
+`founding_date` varchar(4)
+,`number_of_companies` bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_startups_by_sector`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_startups_by_sector` (
+`sectors` varchar(30)
+,`company` bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_startup_country`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_startup_country` (
+`id_startup` int(11)
+,`country` mediumtext
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_startup_faculty_schools`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_startup_faculty_schools` (
+`id_startup` int(11)
+,`schools` mediumtext
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_startup_impact`
+-- (See below for the actual view)
+--
+CREATE TABLE `view_startup_impact` (
+`id_startup` int(11)
+,`impact` mediumtext
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_detail_startup`
+--
+DROP TABLE IF EXISTS `view_detail_startup`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `view_detail_startup`  AS SELECT `startup`.`id_startup` AS `id_startup`, `startup`.`company` AS `company`, `startup`.`web` AS `web`, `startup`.`founding_date` AS `founding_date`, `startup`.`rc` AS `rc`, `startup`.`exit_year` AS `exit_year`, `startup`.`epfl_grant` AS `epfl_grant`, `startup`.`awards_competitions` AS `awards_competitions`, `startup`.`laboratory` AS `laboratory`, `startup`.`short_description` AS `short_description`, `status`.`status` AS `status`, `type_startup`.`type_startup` AS `type_startup`, `sectors`.`sectors` AS `sectors`, `category`.`category` AS `category`, `ceo_education_level`.`ceo_education_level` AS `ceo_education_level` FROM (((((`startup` join `status` on(`status`.`id_status` = `startup`.`fk_status`)) join `type_startup` on(`type_startup`.`id_type_startup` = `startup`.`fk_type`)) join `sectors` on(`sectors`.`id_sectors` = `startup`.`fk_sectors`)) join `category` on(`category`.`id_category` = `startup`.`fk_category`)) join `ceo_education_level` on(`ceo_education_level`.`id_ceo_education_level` = `startup`.`fk_ceo_education_level`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_detail_startup_full`
+--
+DROP TABLE IF EXISTS `view_detail_startup_full`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `view_detail_startup_full`  AS SELECT `view_detail_startup`.`id_startup` AS `id_startup`, `view_detail_startup`.`company` AS `company`, `view_detail_startup`.`web` AS `web`, `view_detail_startup`.`founding_date` AS `founding_date`, `view_detail_startup`.`rc` AS `rc`, `view_detail_startup`.`exit_year` AS `exit_year`, `view_detail_startup`.`epfl_grant` AS `epfl_grant`, `view_detail_startup`.`awards_competitions` AS `awards_competitions`, `view_detail_startup`.`laboratory` AS `laboratory`, `view_detail_startup`.`short_description` AS `short_description`, `view_detail_startup`.`status` AS `status`, `view_detail_startup`.`type_startup` AS `type_startup`, `view_detail_startup`.`sectors` AS `sectors`, `view_detail_startup`.`category` AS `category`, `view_detail_startup`.`ceo_education_level` AS `ceo_education_level`, `view_startup_country`.`country` AS `country`, `view_startup_impact`.`impact` AS `impact`, `view_startup_faculty_schools`.`schools` AS `schools` FROM (((`view_detail_startup` join `view_startup_country` on(`view_detail_startup`.`id_startup` = `view_startup_country`.`id_startup`)) join `view_startup_impact` on(`view_detail_startup`.`id_startup` = `view_startup_impact`.`id_startup`)) join `view_startup_faculty_schools` on(`view_detail_startup`.`id_startup` = `view_startup_faculty_schools`.`id_startup`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_funds_by_sector`
+--
+DROP TABLE IF EXISTS `view_funds_by_sector`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `view_funds_by_sector`  AS SELECT `sectors`.`sectors` AS `sectors`, sum(`funding`.`amount`) AS `amount` FROM ((`startup` join `funding` on(`funding`.`fk_startup` = `startup`.`id_startup`)) join `sectors` on(`sectors`.`id_sectors` = `startup`.`fk_sectors`)) GROUP BY `sectors`.`sectors` ORDER BY `sectors`.`sectors` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_number_of_startups_by_year`
+--
+DROP TABLE IF EXISTS `view_number_of_startups_by_year`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `view_number_of_startups_by_year`  AS SELECT `startup`.`founding_date` AS `founding_date`, count(`startup`.`company`) AS `number_of_companies` FROM `startup` GROUP BY `startup`.`founding_date` ORDER BY `startup`.`founding_date` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_startups_by_sector`
+--
+DROP TABLE IF EXISTS `view_startups_by_sector`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `view_startups_by_sector`  AS SELECT `sectors`.`sectors` AS `sectors`, count(`startup`.`company`) AS `company` FROM (`startup` join `sectors` on(`sectors`.`id_sectors` = `startup`.`fk_sectors`)) GROUP BY `sectors`.`sectors` ORDER BY `sectors`.`sectors` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_startup_country`
+--
+DROP TABLE IF EXISTS `view_startup_country`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `view_startup_country`  AS SELECT `startup`.`id_startup` AS `id_startup`, group_concat(`founders_country`.`founders_country` separator ';') AS `country` FROM ((`startup` join `startup_founders_country` on(`startup`.`id_startup` = `startup_founders_country`.`fk_startup`)) join `founders_country` on(`founders_country`.`id_founders_country` = `startup_founders_country`.`fk_founders_country`)) GROUP BY `startup`.`id_startup` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_startup_faculty_schools`
+--
+DROP TABLE IF EXISTS `view_startup_faculty_schools`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `view_startup_faculty_schools`  AS SELECT `startup`.`id_startup` AS `id_startup`, group_concat(`faculty_schools`.`faculty_schools` separator ';') AS `schools` FROM ((`startup` join `startup_faculty_schools` on(`startup`.`id_startup` = `startup_faculty_schools`.`fk_startup`)) join `faculty_schools` on(`faculty_schools`.`id_faculty_schools` = `startup_faculty_schools`.`fk_faculty_schools`)) GROUP BY `startup`.`id_startup` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_startup_impact`
+--
+DROP TABLE IF EXISTS `view_startup_impact`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`testing`@`%` SQL SECURITY DEFINER VIEW `view_startup_impact`  AS SELECT `startup`.`id_startup` AS `id_startup`, group_concat(`impact_sdg`.`impact_sdg` separator ';') AS `impact` FROM ((`startup` join `startup_impact_sdg` on(`startup`.`id_startup` = `startup_impact_sdg`.`fk_startup`)) join `impact_sdg` on(`impact_sdg`.`id_impact_sdg` = `startup_impact_sdg`.`fk_impact_sdg`)) GROUP BY `startup`.`id_startup` ;
 
 --
 -- Indexes for dumped tables
@@ -598,7 +449,8 @@ ALTER TABLE `founders_country`
 ALTER TABLE `funding`
   ADD PRIMARY KEY (`id_funding`),
   ADD KEY `fk_stage_of_investment` (`fk_stage_of_investment`),
-  ADD KEY `fk_type_of_investment` (`fk_type_of_investment`);
+  ADD KEY `fk_type_of_investment` (`fk_type_of_investment`),
+  ADD KEY `funding_ibfk_3` (`fk_startup`);
 
 --
 -- Indexes for table `impact_sdg`
@@ -607,11 +459,16 @@ ALTER TABLE `impact_sdg`
   ADD PRIMARY KEY (`id_impact_sdg`);
 
 --
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id_logs`);
+
+--
 -- Indexes for table `person`
 --
 ALTER TABLE `person`
-  ADD PRIMARY KEY (`id_person`),
-  ADD KEY `fk_type_of_person` (`fk_type_of_person`);
+  ADD PRIMARY KEY (`id_person`);
 
 --
 -- Indexes for table `sectors`
@@ -633,7 +490,6 @@ ALTER TABLE `startup`
   ADD KEY `fk_type` (`fk_type`),
   ADD KEY `fk_ceo_education_level` (`fk_ceo_education_level`),
   ADD KEY `fk_sectors` (`fk_sectors`),
-  ADD KEY `fk_funding` (`fk_funding`),
   ADD KEY `fk_category` (`fk_category`),
   ADD KEY `fk_status` (`fk_status`);
 
@@ -667,7 +523,8 @@ ALTER TABLE `startup_impact_sdg`
 ALTER TABLE `startup_person`
   ADD PRIMARY KEY (`id_startup_person`),
   ADD KEY `fk_startup` (`fk_startup`),
-  ADD KEY `fk_person` (`fk_person`);
+  ADD KEY `fk_person` (`fk_person`),
+  ADD KEY `fk_type_of_person` (`fk_type_of_person`);
 
 --
 -- Indexes for table `status`
@@ -734,6 +591,12 @@ ALTER TABLE `impact_sdg`
   MODIFY `id_impact_sdg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `id_logs` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
@@ -755,31 +618,31 @@ ALTER TABLE `stage_of_investment`
 -- AUTO_INCREMENT for table `startup`
 --
 ALTER TABLE `startup`
-  MODIFY `id_startup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_startup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `startup_faculty_schools`
 --
 ALTER TABLE `startup_faculty_schools`
-  MODIFY `id_startup_faculty_schools` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_startup_faculty_schools` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `startup_founders_country`
 --
 ALTER TABLE `startup_founders_country`
-  MODIFY `id_startup_founders_country` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_startup_founders_country` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `startup_impact_sdg`
 --
 ALTER TABLE `startup_impact_sdg`
-  MODIFY `id_startup_impact_sdg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_startup_impact_sdg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `startup_person`
 --
 ALTER TABLE `startup_person`
-  MODIFY `id_startup_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_startup_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -814,13 +677,8 @@ ALTER TABLE `type_startup`
 --
 ALTER TABLE `funding`
   ADD CONSTRAINT `funding_ibfk_1` FOREIGN KEY (`fk_stage_of_investment`) REFERENCES `stage_of_investment` (`id_stage_of_investment`),
-  ADD CONSTRAINT `funding_ibfk_2` FOREIGN KEY (`fk_type_of_investment`) REFERENCES `type_of_investment` (`id_type_of_investment`);
-
---
--- Constraints for table `person`
---
-ALTER TABLE `person`
-  ADD CONSTRAINT `person_ibfk_1` FOREIGN KEY (`fk_type_of_person`) REFERENCES `type_of_person` (`id_type_of_person`);
+  ADD CONSTRAINT `funding_ibfk_2` FOREIGN KEY (`fk_type_of_investment`) REFERENCES `type_of_investment` (`id_type_of_investment`),
+  ADD CONSTRAINT `funding_ibfk_3` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`);
 
 --
 -- Constraints for table `startup`
@@ -829,7 +687,6 @@ ALTER TABLE `startup`
   ADD CONSTRAINT `startup_ibfk_1` FOREIGN KEY (`fk_type`) REFERENCES `type_startup` (`id_type_startup`),
   ADD CONSTRAINT `startup_ibfk_2` FOREIGN KEY (`fk_ceo_education_level`) REFERENCES `ceo_education_level` (`id_ceo_education_level`),
   ADD CONSTRAINT `startup_ibfk_4` FOREIGN KEY (`fk_sectors`) REFERENCES `sectors` (`id_sectors`),
-  ADD CONSTRAINT `startup_ibfk_5` FOREIGN KEY (`fk_funding`) REFERENCES `funding` (`id_funding`),
   ADD CONSTRAINT `startup_ibfk_7` FOREIGN KEY (`fk_category`) REFERENCES `category` (`id_category`),
   ADD CONSTRAINT `startup_ibfk_8` FOREIGN KEY (`fk_status`) REFERENCES `status` (`id_status`);
 
@@ -859,7 +716,8 @@ ALTER TABLE `startup_impact_sdg`
 --
 ALTER TABLE `startup_person`
   ADD CONSTRAINT `startup_person_ibfk_1` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`),
-  ADD CONSTRAINT `startup_person_ibfk_2` FOREIGN KEY (`fk_person`) REFERENCES `person` (`id_person`);
+  ADD CONSTRAINT `startup_person_ibfk_2` FOREIGN KEY (`fk_person`) REFERENCES `person` (`id_person`),
+  ADD CONSTRAINT `startup_person_ibfk_3` FOREIGN KEY (`fk_type_of_person`) REFERENCES `type_of_person` (`id_type_of_person`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
