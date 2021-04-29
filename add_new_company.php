@@ -3,10 +3,56 @@
 require 'header.php';
 require 'tools/connection_db.php';
 
+//Si l'utilisateur n'a pas la session user active, alors il est redirigé vers la page de login
 if(isset($_SESSION['user']))
-{
+{   
+    //S'il n'appartient pas au groupe TequilaPHPWrite, alors il n'a pas le droit de regarder le contenu de cette page
     if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
-    {
+    {   
+        //Fonction pour afficher les listes déroulantes des personnes
+        function display_people($number_of_person)
+        {
+            require 'tools/connection_db.php';
+            
+            echo '<div class="form-group row">
+                    <label for="person'.$number_of_person.'" class="col-sm-4 col-form-label">Person '.$number_of_person.'</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="person'.$number_of_person.'" id="person'.$number_of_person.'">
+                            <option name="NULL" value="" disabled selected>Select person '.$number_of_person.' </option>';
+                            $person_data = $db-> query('SELECT name,firstname FROM person');
+                            $data_person = $person_data -> fetchAll();
+                            foreach ($data_person as $person)
+                            {
+                                echo '<option value="'.$person['name'].'">'.$person['name'].', '.$person['firstname'].'</option>';
+                            }
+                        echo '
+                        </select>
+                    </div>
+                </div>';
+        }
+
+        //Fonction pour afficher les listes déroulantes de la fonction des personnes
+        function display_people_function($number_of_function)
+        {
+            require 'tools/connection_db.php';
+
+            echo '
+            <div class="form-group row">
+                <label for="function_person'.$number_of_function.'" class="col-sm-4 col-form-label"> Person Function '.$number_of_function.'</label>
+                <div class="col-sm-6">
+                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="function_person'.$number_of_function.'" id="function_person'.$number_of_function.'">
+                    <option name="NULL" value="" disabled selected>Select type of person '.$number_of_function.'</option>';
+                    $types_of_person_data = $db-> query('SELECT type_of_person FROM type_of_person');
+                    $type_of_person_data = $types_of_person_data -> fetchAll();
+                    foreach ($type_of_person_data as $type_of_person)
+                    {
+                        echo '<option value="'.$type_of_person['type_of_person'].'">'.$type_of_person['type_of_person'].'</option>';
+                    }
+                echo '
+                </select>
+                </div>
+            </div>';
+        }
         //Formulaire pour ajouter une nouvelle startup
         echo '
         <div class="container">
@@ -134,6 +180,12 @@ if(isset($_SESSION['user']))
                     <input type="text" class="form-control" name="key_words" id="key_words" pattern="[A-Za-z0-9[\(\-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Minimum 2 characters and maximum 500. Special characters allowed are &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="short_description" class="col-sm-4 col-form-label">Short Description</label>
+                    <div class="col-sm-6">
+                    <input type="text" class="form-control" name="short_description" id="short_description" pattern="[A-Za-z0-9[\(-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 500. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
+                    </div>
+                </div>
                 <!-- Champ pour le niveau d\'études du CEO de la startup -->
                 <div class="form-group row">
                     <label for="ceo_education_level" class="col-sm-4 col-form-label">CEO Education Level <small class="text-danger"> *</small> </label>
@@ -171,7 +223,7 @@ if(isset($_SESSION['user']))
                     <label for="faculty_schools" class="col-sm-4 col-form-label">Faculty / Schools <small class="text-danger"> *</small></label>
                     <div class="col-sm-6">
                         <select class="form-control" class="selectpicker" data-dropup-auto="true" name="faculty_schools" id="faculty_schools" multiple="multiple" required>
-                            <option name="NULL" value="" disabled selected>Select the countries</option>';
+                            <option name="NULL" value="" disabled selected>Select the faculty school</option>';
                             $faculty_schools_data = $db-> query('SELECT faculty_schools FROM faculty_schools');
                             $data_faculty_schools = $faculty_schools_data -> fetchAll();
                             foreach ($data_faculty_schools as $faculty_schools)
@@ -197,14 +249,15 @@ if(isset($_SESSION['user']))
                     echo '
                     </select>
                     </div>
-                </div>
+                </div>';
+
+                for ($x = 1; $x <= 3; $x++) {
+                    display_people($x);
+                    display_people_function($x);
+                }
+
+                echo '
                 <!-- Champ pour une description de la startup-->
-                <div class="form-group row">
-                    <label for="short_description" class="col-sm-4 col-form-label">Short Description</label>
-                    <div class="col-sm-6">
-                    <input type="text" class="form-control" name="short_description" id="short_description" pattern="[A-Za-z0-9[\(-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 500. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
-                    </div>
-                </div>
                 <button class="btn btn-outline-secondary mt-5" id="submit_new_company" name="submit_new_company" type="submit">Submit</button>
             </form>
         </div>
@@ -223,32 +276,33 @@ if(isset($_SESSION['user']))
                 //Initialiser une variable valid à false pour tester les regex avant d\'écrire dans la base de données
                 var valid="false";
 
-                //Récuperer la valeur du champs avec l\'id company_name
+                //Récuperer la valeur du champ avec l\'id company_name
                 var company_name_after_check = document.getElementById("company_name").value;
                 
-                //Récuperer la valeur du champs avec l\'id founding_date
+                //Récuperer la valeur du champ avec l\'id founding_date
                 var founding_date_after_check = document.getElementById("founding_date").value;
                 
-                //Récuperer la valeur du champs avec l\'id web
+                //Récuperer la valeur du champ avec l\'id web
                 var web_after_check = document.getElementById("web").value;  
                 
-                //Récuperer la valeur du champs avec l\'id rc
+                //Récuperer la valeur du champ avec l\'id rc
                 var rc_after_check = document.getElementById("rc").value;
                 
-                //Récuperer la valeur du champs avec l\'id exit_year
+                //Récuperer la valeur du champ avec l\'id exit_year
                 var exit_year_after_check = document.getElementById("exit_year").value;   
                 
-                //Récuperer la valeur du champs avec l\'id epfl grant
+                //Récuperer la valeur du champ avec l\'id epfl grant
                 var epfl_grant_after_check = document.getElementById("epfl_grant").value;  
                 
-                //Récuperer la valeur du champs avec l\'id awards_competitions
+                //Récuperer la valeur du champ avec l\'id awards_competitions
                 var awards_competition_after_check = document.getElementById("awards_competitions").value;  
                 
-                //Récuperer la valeur du champs avec l\'id key_words
+                //Récuperer la valeur du champ avec l\'id key_words
                 var key_words_after_check = document.getElementById("key_words").value;   
 
-                //Récuperer la valeur du champs avec l\'id description
-                var short_description_after_check = document.getElementById("short_description").value; 
+                //Récuperer la valeur du champ avec l\'id description
+                var short_description_after_check = document.getElementById("short_description").value;
+                
                 
                 //Si les regex ont été respectées, alors il démarre l\'écriture des données dans la base de données
                 
@@ -260,6 +314,14 @@ if(isset($_SESSION['user']))
                 var category = document.getElementById("category").value;
                 var ceo_education_level = document.getElementById("ceo_education_level").value;
 
+                var person1 = document.getElementById("person1").value;
+                var person2 = document.getElementById("person2").value;
+                var person3 = document.getElementById("person3").value;
+
+                var function_person1 = document.getElementById("function_person1").value;
+                var function_person2 = document.getElementById("function_person2").value;
+                var function_person3 = document.getElementById("function_person3").value;
+
                 var selected_impact_sdg = document.querySelectorAll("#impact_sdg option:checked");
                 var values_impact_sdg = Array.from(selected_impact_sdg).map(el => el.value);
 
@@ -268,7 +330,6 @@ if(isset($_SESSION['user']))
 
                 var selected_founders_country = document.querySelectorAll("#founders_country option:checked");
                 var values_founders_country = Array.from(selected_founders_country).map(el => el.value);
-
 
                 //Tester si toutes les regex du formulaire ont été respectées
                 var resultat_form = form_add_new_company.checkValidity();
@@ -303,6 +364,13 @@ if(isset($_SESSION['user']))
                                 awards_competition:awards_competition_after_check,
                                 ceo_education_level:ceo_education_level,
                                 founders_country:values_founders_country,
+                                faculty_schools:values_faculty_schools,
+                                person1:person1,
+                                person2:person2,
+                                person3:person3,
+                                function_person1:function_person1,
+                                function_person2:function_person2,
+                                function_person3:function_person3,
                                 short_description:short_description_after_check,
                             },
                             success:function(data)

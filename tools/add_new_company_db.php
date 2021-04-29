@@ -24,10 +24,18 @@ $ceo_education_level = security_text($_POST['ceo_education_level']);
 $founders_country = security_text(implode(',', $_POST['founders_country']));
 $faculty_schools = security_text(implode(',', $_POST['faculty_schools']));
 $short_description = security_text($_POST['short_description']);
-
+$person1 = security_text($_POST['person1']);
+$person2 = security_text($_POST['person2']);
+$person3 = security_text($_POST['person3']);
+$function_person1 = security_text($_POST['function_person1']);
+$function_person2 = security_text($_POST['function_person2']);
+$function_person3 = security_text($_POST['function_person3']);
 $impact_sdg_after_explode = explode (",", $impact_sdg);
 $faculty_schools_after_explode = explode (",", $faculty_schools);
 $founders_country_after_explode = explode (",", $founders_country);
+
+//Initialiser une variable à false pour capturer les erreurs
+$error_add_new_people = "false";
 
 //Récupérer l'id du status que l'utilisateur a saisi pour écrire dans la table startup
 $status_id = $db-> query('SELECT id_status FROM status WHERE status ="'.$status.'"');
@@ -84,5 +92,38 @@ foreach ($faculty_schools_after_explode as $key => $val)
 
     $add_new_startup_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup,fk_faculty_schools) VALUES("'.$startup_id.'","'.$id_faculty_schools['id_faculty_schools'].'")');
     $add_new_startup_faculty_schools -> execute(); 
+}
+for ($x = 1; $x <= 3; $x++) 
+{
+        
+    
+    echo $x.' '.${'person'.$x} .'<br>';
+
+    if(${'person'.$x} != "" && ${'function_person'.$x} == "")
+    {
+       echo "erreur : ".${'person'.$x}." n'a pas de fonction";
+       $error_add_new_people = "true";
+       
+    }
+}
+if($error_add_new_people == "false")
+{
+    for ($x = 1; $x <= 3; $x++) {
+
+        //Récupérer l'id de la personne que l'utilisateur a saisi pour écrire dans la table startup
+        $person_id = $db-> query('SELECT id_person FROM person WHERE name ="'.${'person'.$x}.'"');
+        $id_person = $person_id -> fetch();
+
+        //Récupérer l'id du type de personne que l'utilisateur a saisi pour écrire dans la table startup
+        $type_of_person_id = $db-> query('SELECT id_type_of_person FROM type_of_person WHERE type_of_person ="'.${'function_person'.$x}.'"');
+        $id_type_of_person = $type_of_person_id -> fetch();
+
+        if($id_person != "" && $id_type_of_person != "")
+        {
+            $add_new_startup_person = $db -> prepare('INSERT INTO startup_person(fk_startup,fk_person,fk_type_of_person) VALUES("'.$startup_id.'","'.$id_person['id_person'].'","'.$id_type_of_person['id_type_of_person'].'")');
+            $add_new_startup_person -> execute();
+        } 
+
+    }
 }
 ?>
