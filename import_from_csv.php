@@ -2,6 +2,7 @@
 
 require 'header.php';
 require 'tools/connection_db.php';
+require 'tools/logs_function.php';
 
 //Si l'utilisateur est connecté
 if(isset($_SESSION['user']))
@@ -35,32 +36,6 @@ if(isset($_SESSION['user']))
             </form>
             <div id="echo_result"></div>
         </div>';
-
-        function add_logs()
-        {
-            echo '
-            <script>
-                var sciper_number = "'.$sciper_number.'";
-                var date = "'.date("Y-m-d").'";
-                var after = "";
-                var before = "Import data from CSV to database";
-                
-                //Ecrire des données dans la table logs
-                $.ajax
-                ({
-                    url:"tools/logs_db_write.php",
-                    method:"POST",
-                    dataType:"text",
-                    data:
-                    {
-                        sciper_number:sciper_number,
-                        date:date,
-                        after:after,
-                        before:before,
-                    },
-                });
-            </script>';
-        }
 
         //Si le bouton import a été cliqué
         if(isset($_POST["import"])) 
@@ -292,28 +267,11 @@ if(isset($_SESSION['user']))
                         $file_output = fopen("csv_imported/startups_modified_good_order.csv","r");
                         
                         //Ecrire que l'utilisateur a fait un import dans la table logs de la base de données
-                        echo '
-                        <script>
-                            var sciper_number = "'.$sciper_number.'";
-                            var date = "'.date("Y-m-d").'";
-                            var after = "";
-                            var before = "Import data from CSV to database";
-                            
-                            //Ecrire des données dans la table logs
-                            $.ajax
-                            ({
-                                url:"tools/logs_db_write.php",
-                                method:"POST",
-                                dataType:"text",
-                                data:
-                                {
-                                    sciper_number:sciper_number,
-                                    date:date,
-                                    after:after,
-                                    before:before,
-                                },
-                            });
-                        </script>';
+                        $before = "";
+                        $after = "";
+                        $action="Import data from CSV to database";
+
+                        add_logs($sciper_number,$before,$after,$action);
                         
                         while (($data_import_db = fgetcsv($file_output, 10000, ",")) !== FALSE) 
                         {
