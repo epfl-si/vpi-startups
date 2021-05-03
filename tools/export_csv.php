@@ -1,6 +1,7 @@
 <?php
 
 require 'connection_db.php';
+session_start();
 
 //Mettre la date d'aujourd'hui dans le nom du fichier csv
 $today = date("d-m-Y");
@@ -45,6 +46,15 @@ foreach ($startup as $row)
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
     }
 } 
+
+//Ecrire les données dans la table logs pour dire que l'utilisateur à fait un export
+$date = date("Y-m-d");
+$sciper_number = $_SESSION['uniqueid'];
+$after = "";
+$before = "Export data to CSV file";
+
+$insert_logs_data = $db -> prepare('INSERT INTO logs(sciper_number,date_logs,after_logs,before_logs) VALUES ("'.$sciper_number.'","'.$date.'","'.$after.'","'.$before.'")');
+$insert_logs_data -> execute();
 
 //Dire que le fichier est un csv et mettre les accents de français
 header('Content-type: text/csv; charset=UTF-8');

@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+$sciper_number = $_SESSION['uniqueid'];
 
 //Initialiser les modules nécessaires pour le site (bootstrap, ajax, google charts)
 echo '
@@ -72,7 +73,7 @@ echo '
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger" href="#">Logs</a>
+                                <a class="nav-link text-danger" href="logs_page.php">Logs</a>
                             </li>';
                         }  
                     }

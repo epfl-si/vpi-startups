@@ -382,6 +382,26 @@ if(isset($_SESSION['user']))
                             {
                                 alert("Something went wrong, please try again.");
                             }
+                        });  
+
+                        var sciper_number = "'.$sciper_number.'";
+                        var date = "'.date("Y-m-d").'";
+                        var after = "";
+                        var before = "Add startup : "+company_name_after_check;
+                        
+                        //Ecrire des données dans la table logs
+                        $.ajax
+                        ({
+                            url:"tools/logs_db_write.php",
+                            method:"POST",
+                            dataType:"text",
+                            data:
+                            {
+                                sciper_number:sciper_number,
+                                date:date,
+                                after:after,
+                                before:before,
+                            },
                         });
                     }
                 } 
