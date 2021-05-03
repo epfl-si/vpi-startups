@@ -12,8 +12,9 @@ foreach ($logs as $log)
     (
         'sciper_number'=> $log['sciper_number'],
         'date' => $log['date_logs'],
-        'after' => $log['after_logs'],
-        'before' => $log['before_logs'],
+        'after' => $log['after_changes'],
+        'before' => $log['before_changes'],
+        'action' => $log['action'],
     );
 
 }
