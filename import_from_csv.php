@@ -36,6 +36,32 @@ if(isset($_SESSION['user']))
             <div id="echo_result"></div>
         </div>';
 
+        function add_logs()
+        {
+            echo '
+            <script>
+                var sciper_number = "'.$sciper_number.'";
+                var date = "'.date("Y-m-d").'";
+                var after = "";
+                var before = "Import data from CSV to database";
+                
+                //Ecrire des données dans la table logs
+                $.ajax
+                ({
+                    url:"tools/logs_db_write.php",
+                    method:"POST",
+                    dataType:"text",
+                    data:
+                    {
+                        sciper_number:sciper_number,
+                        date:date,
+                        after:after,
+                        before:before,
+                    },
+                });
+            </script>';
+        }
+
         //Si le bouton import a été cliqué
         if(isset($_POST["import"])) 
         {
@@ -249,7 +275,6 @@ if(isset($_SESSION['user']))
 
                                 if($import_error == "false")
                                 {
-                                    
                                     $text = array($csv[0],$csv[1],$csv[2],$csv[3],$csv[4],$csv[5],$csv[6],$csv[7],$csv[8],$csv[9],$csv[10],$csv[11],$csv[12],$csv[13],$csv[14],$id_country,$id_schools,$id_impact);
                                     $output_replaced = str_replace('"', '\'', $text);
                                     
@@ -263,10 +288,33 @@ if(isset($_SESSION['user']))
                             }
                         }
 
-                        
                         //Ouvrir le fichier modifié pour obtenir les données et les mettre dans la base de données
                         $file_output = fopen("csv_imported/startups_modified_good_order.csv","r");
-
+                        
+                        //Ecrire que l'utilisateur a fait un import dans la table logs de la base de données
+                        echo '
+                        <script>
+                            var sciper_number = "'.$sciper_number.'";
+                            var date = "'.date("Y-m-d").'";
+                            var after = "";
+                            var before = "Import data from CSV to database";
+                            
+                            //Ecrire des données dans la table logs
+                            $.ajax
+                            ({
+                                url:"tools/logs_db_write.php",
+                                method:"POST",
+                                dataType:"text",
+                                data:
+                                {
+                                    sciper_number:sciper_number,
+                                    date:date,
+                                    after:after,
+                                    before:before,
+                                },
+                            });
+                        </script>';
+                        
                         while (($data_import_db = fgetcsv($file_output, 10000, ",")) !== FALSE) 
                         {
                             $i++;
@@ -276,6 +324,7 @@ if(isset($_SESSION['user']))
                             //On test si la startup n'existe pas
                             if($data['company'] == '')
                             {
+
                                 $import_data_to_db_startups = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory, short_description, fk_type, fk_ceo_education_level, fk_sectors, fk_category, fk_status) VALUES ("'.$data_import_db[0].'","'.$data_import_db[1].'","'.$data_import_db[2].'","'.$data_import_db[3].'","'.$data_import_db[4].'","'.$data_import_db[5].'","'.$data_import_db[6].'","'.$data_import_db[7].'","'.$data_import_db[8].'","'.$data_import_db[9].'","'.$data_import_db[10].'","'.$data_import_db[11].'","'.$data_import_db[12].'","'.$data_import_db[13].'","'.$data_import_db[14].'")');
                                 $import_data_to_db_startups -> execute();
 
@@ -304,8 +353,6 @@ if(isset($_SESSION['user']))
                                     $import_data_to_db_startups_impact_sdg -> execute();
 
                                 }
-                
-                                
                             }
                             //Si la startup existe
                             else
@@ -313,7 +360,7 @@ if(isset($_SESSION['user']))
                                 //Si elle existe et l'utilisateur a choisi de réécrire les données
                                 if($radio_result == "import_new_overwrite_old")
                                 {
-                                    
+
                                     $update_data = $db -> prepare('UPDATE startup SET web = "'.$data_import_db[1].'", founding_date = "'.$data_import_db[2].'", rc="'.$data_import_db[3].'", exit_year="'.$data_import_db[4].'",epfl_grant="'.$data_import_db[5].'",awards_competitions="'.$data_import_db[6].'", key_words="'.$data_import_db[7].'", laboratory="'.$data_import_db[8].'", short_description="'.$data_import_db[9].'", fk_type="'.$data_import_db[10].'",fk_ceo_education_level="'.$data_import_db[11].'",fk_sectors="'.$data_import_db[12].'",fk_category="'.$data_import_db[13].'",fk_status="'.$data_import_db[14].'" WHERE id_startup="'.$data['id_startup'].'"');
                                     $update_data -> execute();
 
