@@ -1,7 +1,11 @@
 <?php
 
 require 'connection_db.php';
+
 session_start();
+$sciper_number = $_SESSION['uniqueid'];
+require 'logs_function.php';
+
 
 //Mettre la date d'aujourd'hui dans le nom du fichier csv
 $today = date("d-m-Y");
@@ -48,13 +52,11 @@ foreach ($startup as $row)
 } 
 
 //Ecrire les données dans la table logs pour dire que l'utilisateur à fait un export
-$date = date("Y-m-d");
-$sciper_number = $_SESSION['uniqueid'];
+$before = "";
 $after = "";
-$before = "Export data to CSV file";
+$action="Export data to CSV file";
 
-$insert_logs_data = $db -> prepare('INSERT INTO logs(sciper_number,date_logs,after_logs,before_logs) VALUES ("'.$sciper_number.'","'.$date.'","'.$after.'","'.$before.'")');
-$insert_logs_data -> execute();
+add_logs($sciper_number,$before, $after,$action);
 
 //Dire que le fichier est un csv et mettre les accents de français
 header('Content-type: text/csv; charset=UTF-8');
@@ -71,7 +73,9 @@ fclose($file);
 //Supprimer le fichier créé du serveur
 unlink($filepath);
 
+
 require 'disconnection_db.php';
+
 
 
 ?>

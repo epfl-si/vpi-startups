@@ -6,6 +6,8 @@ require '../header.php';
 //Ouvrir la connexion à la base de données pour ajouter la nouvelle startup
 require 'connection_db.php';
 
+require 'logs_function.php';
+
 //Mettre dans variables toutes les valeurs récupérées de la page add_new_company.php
 $company_name = security_text($_POST['company_name']);
 $founding_date = security_text($_POST['founding_date']);
@@ -62,6 +64,14 @@ $add_new_startup = $db -> prepare('INSERT INTO startup(company,web,founding_date
 $add_new_startup -> execute();
 
 $startup_id = $db->lastInsertId();
+
+
+//Ecrire les données dans la table logs pour dire que l'utilisateur à fait un ajout d'une nouvelle startup
+$before = "";
+$after = "Startup : ".$company_name.", Founding Date : ".$founding_date.", Web : ".$web.", Rc : ".$rc.", Status : ".$status.", Exit Year : ".$exit_year.", Type of Startup : ".$type_startup.", Category : ".$category.", EPFL Grant : ".$epfl_grant.", Awards Competition : ".$awards_competition.", Impact sdg : ".$impact_sdg.", Sector : ".$sector.", Key Words : ".$key_words.", CEO Education Level : ".$ceo_education_level.", Founders Country : ".$founders_country.", Faculty Schools : ".$faculty_schools.", Short Description : ".$short_description.", Person 1 : ".$person1.", Person Function 1 : ".$function_person1.", Person 2 : ".$person2.", Person Function 2 : ".$function_person2.", Person 3 : ".$person3.", Person Function 3 : ".$function_person3;
+$action="Add new startup";
+
+add_logs($sciper_number,$before,$after,$action);
 
 //Traitement des champs multicritère
 foreach ($impact_sdg_after_explode as $key => $val) 
