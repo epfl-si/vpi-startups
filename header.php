@@ -57,8 +57,12 @@ echo '
                             <li class="nav-item">
                                 <a class="nav-link text-danger" href="index.php">Homepage</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-danger" href="add_new_company.php">Add New Company</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Add </a>
+                                <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="add_new_company.php">Add New Startup</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="add_new_person.php">Add New Person</a>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-danger" href="import_from_csv.php">Import CSV</a>
