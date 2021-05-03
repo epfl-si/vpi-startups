@@ -147,7 +147,7 @@
     {
         echo "
         <script>
-            //window.location.replace('login.php');
+            window.location.replace('login.php');
         </script>
         ";
     }
