@@ -122,6 +122,13 @@ if(isset($_SESSION['user']))
 
                 $add_startup_person = $db ->prepare('INSERT INTO startup_person(fk_startup,fk_person,fk_type_of_person) VALUES("'.$startup_id['id_startup'].'","'.$id_person.'","'.$type_of_person_id['id_type_of_person'].'")');
                 $add_startup_person -> execute();
+
+                $date = date("Y-m-d");
+                $after="";
+                $before="Add new person : ".$name." ".$firstname;
+
+                $insert_logs_data = $db -> prepare('INSERT INTO logs(sciper_number,date_logs,after_logs,before_logs) VALUES ("'.$sciper_number.'","'.$date.'","'.$after.'","'.$before.'")');
+                $insert_logs_data -> execute();
             }
             else
             {
