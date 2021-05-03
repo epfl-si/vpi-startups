@@ -34,18 +34,20 @@ if(isset($_SESSION['user']))
             var jsonData = chart_data;
             var data = new google.visualization.DataTable();
             
-            data.addColumn('number', 'sciper_number');
+            data.addColumn('string', 'sciper_number');
             data.addColumn('string', 'date');
             data.addColumn('string', 'after');
             data.addColumn('string', 'before');
+            data.addColumn('string', 'action');
             $.each(jsonData, function(i, jsonData)
             {
-                var sciper_number = parseFloat($.trim(jsonData.sciper_number));
+                var sciper_number = jsonData.sciper_number;
                 var date = jsonData.date;
                 var after = jsonData.after;
                 var before = jsonData.before;
+                var action = jsonData.action;
                 
-                data.addRows([[sciper_number,date,after,before]]);
+                data.addRows([[sciper_number,date,before,after,action]]);
             });
             var options = 
             {
