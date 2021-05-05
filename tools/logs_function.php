@@ -1,5 +1,6 @@
 <?php
 
+//Fonction pour ajouter des logs dans la base de données
 function add_logs($sciper_number,$before,$after,$action)
 {
     require 'connection_db.php';

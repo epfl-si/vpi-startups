@@ -49,9 +49,7 @@ echo '
                         if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                         {
                             /*
-                                Menu déroulant avec les pages du site. 
-                                Il n'y pas la page de modifications des données car cette page doit être seulement accéssible si l'utilisateur clique sur une startup, 
-                                vu que les données sont seulement affichées s'il y a le nom de la startup en paramètre dans l'url.
+                                Menu du site web.
                             */
                             echo '
                             <li class="nav-item">

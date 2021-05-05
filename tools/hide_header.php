@@ -1,5 +1,6 @@
 <?php
 
+//Script Javascript pour masquer le menu si header=false dans les paramètres de l'url des pages des graphiques
 echo "
 <script>
     $(document).ready(function(){

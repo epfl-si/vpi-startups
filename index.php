@@ -2,8 +2,10 @@
 
 require 'header.php';
 
+//Si l'utilisateur est connecté
 if(isset($_SESSION['user']))
 {
+    //Tableau qui affiche quelques informations des startups
     echo "
 
     <script type='text/javascript'>
@@ -88,6 +90,7 @@ if(isset($_SESSION['user']))
                 }
             });
 
+            //Ajouter les champ de filtrage par statuts avec quelques options
             var CategoryFilter_status = new google.visualization.ControlWrapper
             ({
                 'controlType': 'CategoryFilter',
@@ -108,6 +111,7 @@ if(isset($_SESSION['user']))
                 }
             });
 
+            //Ajouter le champ de filtrage par secteur avec quelques options
             var CategoryFilter_sectors = new google.visualization.ControlWrapper
             ({
                 'controlType': 'CategoryFilter',
@@ -138,70 +142,6 @@ if(isset($_SESSION['user']))
                     showRowNumber: false,
                     width:'100%',
                 }
-            });
-            
-            //Permet d'ajouter un evenement pour que quand l\'utilisateur clique sur une ligne, le script cherche le nom de l'entreprise et puisse rediriger l'utilisateur vers la page de details
-            google.visualization.events.addListener(table, 'ready', function() 
-            {
-                var container = document.getElementById(table.getContainerId());
-                Array.prototype.forEach.call(container.getElementsByTagName('TD'), function(cell) 
-                {
-                cell.addEventListener('click', selectCell);
-                });
-            
-                function selectCell(sender) 
-                {
-                    //Récupérer le tableau qui est affiché
-                    var tableDataView = table.getDataTable();
-
-                    //Mettre en variable tous les elements de la ligne que l'utilisateur a cliqué
-                    var cell = sender.target;
-                    var row = cell.closest('tr');
-                
-                    //Mettre en variable la position de la ligne que l'utilisateur a cliqué
-                    var selectedRow = row.rowIndex - 1;
-                    
-                    //Permet de savoir quelle celulle l'utilisateur a cliqué
-                    var e = event || window.event;
-                    var cell_e = e.target;
-                    var id_cell = cell_e.cellIndex;
-
-                    //Cette condition permet rediriger l'utilisateur vers la bonne page suivant la celulle cliquée
-                    if(id_cell == 0 || id_cell == 1 || id_cell == 2 || id_cell == 3 || id_cell == 4 || id_cell == 5)
-                    {
-                        //Récupérer le nom de startup cliqué
-                        var str = tableDataView.getFormattedValue(selectedRow, 0);
-
-                        //Chercher l'id de la startup dans la base de données
-                        $.ajax
-                        ({  
-                            //Chemin vers la page qui contient les requêtes SQL
-                            url:'tools/id_startups_index_db.php',
-                            method:'POST',
-                            dataType:'JSON',
-                            data: 
-                            {
-                                str : str,
-                            },
-
-                            /*Si tout est bien, il affiche un pop-up, en disant que les changements
-                            ont été faits et il rafraîchit la page pour montrer à l\'utilisateur les changements*/
-                            success:function(data)
-                            {
-                                //Récupérer l'id de la startup dans la base de données
-                                var id_startup = data[0].id_startup;
-                                
-                                //Mettre l'id comme paramètre dans l'url
-                                window.location.replace('company_information_modification.php?id='+id_startup);
-                            },
-                            error:function()
-                            {
-                                alert('Something went wrong, please try again.');
-                            }
-                        });
-                    } 
-                }
-            
             });
 
             //Partie pour télécharger les données du tableau en format CSV

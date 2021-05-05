@@ -3,9 +3,10 @@
 require 'header.php';
 require 'tools/hide_header.php';
 
-
+//Si l'utilisateur est connecté
 if(isset($_SESSION['user']))
 {
+    //Graphique
     echo "
     <script type='text/javascript'>
 
@@ -14,6 +15,7 @@ if(isset($_SESSION['user']))
 
     google.charts.setOnLoadCallback(number_of_startups_by_year);
 
+    //Prendre les données de la base de données
     function number_of_startups_by_year()
     {
         $.ajax
@@ -28,6 +30,7 @@ if(isset($_SESSION['user']))
         });
     }
 
+    //Mettre les données dans les bonnes colonnes
     function drawChart_number_of_startups_by_year(chart_data)
     {
         var jsonData = chart_data;

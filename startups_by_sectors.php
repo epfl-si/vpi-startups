@@ -3,8 +3,10 @@
 require 'header.php';
 require 'tools/hide_header.php';
 
+//Si l'utilisateur est connecté
 if(isset($_SESSION['user']))
-{ 
+{   
+    //Graphique
     echo "
     <script type='text/javascript'>
 
@@ -14,6 +16,7 @@ if(isset($_SESSION['user']))
 
     google.charts.setOnLoadCallback(startups_by_sectors);
 
+    //Prendre les données de la base de données
     function startups_by_sectors()
     {
         $.ajax
@@ -28,8 +31,7 @@ if(isset($_SESSION['user']))
         });
     }
     
-    
-
+    //Mettre les données dans les bonnes colonnes
     function drawChart_startups_by_sectors(chart_data)
     {
 

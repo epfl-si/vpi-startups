@@ -103,6 +103,8 @@ foreach ($faculty_schools_after_explode as $key => $val)
     $add_new_startup_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup,fk_faculty_schools) VALUES("'.$startup_id.'","'.$id_faculty_schools['id_faculty_schools'].'")');
     $add_new_startup_faculty_schools -> execute(); 
 }
+
+//Fonction pour avertir l'utilisateur si la personne ou la fonction de la personne est erronée
 for ($x = 1; $x <= 3; $x++) 
 {
         
@@ -116,8 +118,11 @@ for ($x = 1; $x <= 3; $x++)
        
     }
 }
+
+//Si tout se passe bien
 if($error_add_new_people == "false")
 {
+    //Insertion des personnes et leurs fonctions
     for ($x = 1; $x <= 3; $x++) {
 
         //Récupérer l'id de la personne que l'utilisateur a saisi pour écrire dans la table startup

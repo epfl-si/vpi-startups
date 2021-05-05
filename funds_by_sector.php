@@ -3,15 +3,17 @@
 require 'header.php';
 require 'tools/hide_header.php';
 
-
+//Si l'utilisateur est connecté à Tequila
 if(isset($_SESSION['user']))
 {
+    //Script Javascript pour faire le graphique
     echo "
     <script type='text/javascript'>
 
     google.charts.load('current', {packages: ['corechart', 'bar']});    
     google.charts.setOnLoadCallback(funds_by_sectors);
 
+    //Aller chercher les données concernants le graphique
     function funds_by_sectors()
     {
         $.ajax
@@ -26,6 +28,7 @@ if(isset($_SESSION['user']))
         });
     }
 
+    //Traiter les données de manière a les mettre dans les bonnes colonnes
     function drawChart_funds_by_sectors(chart_data)
     {
         var jsonData = chart_data;
@@ -59,6 +62,7 @@ if(isset($_SESSION['user']))
     ";
     require 'footer.php';
 }
+//Si l'utilisateur n'est pas connecté
 else
 {
     echo "

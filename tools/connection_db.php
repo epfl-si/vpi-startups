@@ -2,7 +2,7 @@
 
 require 'env.php';
 
-//Permet de faire se connecter à la base de données pour faire les requêtes
+//Permet de faire se connecter à la base de données pour faire les requêtes grace aux variables d'environnement de PHP
 $db_name=getenv("DB_NAME");
 $servername = getenv("DB_HOST");
 $username = getenv("DB_USERNAME");

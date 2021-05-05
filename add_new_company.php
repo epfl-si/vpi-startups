@@ -157,7 +157,7 @@ if(isset($_SESSION['user']))
                     </div>
                 </div>
                 
-                <!-- Combobox pour afficher tout les sectors d\'une startup -->
+                <!-- Combobox pour afficher tous les sectors d\'une startup -->
                 <div class="form-group row">
                     <label for="sector" class="col-sm-4 col-form-label">Sectors <small class="text-danger"> *</small> </label>
                     <div class="col-sm-6">
@@ -303,9 +303,6 @@ if(isset($_SESSION['user']))
                 //Récuperer la valeur du champ avec l\'id description
                 var short_description_after_check = document.getElementById("short_description").value;
                 
-                
-                //Si les regex ont été respectées, alors il démarre l\'écriture des données dans la base de données
-                
                 //Mettre dans des variables les valeurs des comboboxes
 
                 var status = document.getElementById("status").value;
@@ -322,6 +319,7 @@ if(isset($_SESSION['user']))
                 var function_person2 = document.getElementById("function_person2").value;
                 var function_person3 = document.getElementById("function_person3").value;
 
+                //Prendre les valeurs des comboboxes qui sont multicritère
                 var selected_impact_sdg = document.querySelectorAll("#impact_sdg option:checked");
                 var values_impact_sdg = Array.from(selected_impact_sdg).map(el => el.value);
 
@@ -391,6 +389,7 @@ if(isset($_SESSION['user']))
         require 'tools/disconnection_db.php';
         require 'footer.php';
     }
+    //Si l'utilisateur a seulment le droit de lecture alors il n'a pas le droit de voir cette page
     elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
     {
         echo "
@@ -401,6 +400,7 @@ if(isset($_SESSION['user']))
     }
     
 }
+//Si l'utilisateur n'est pas connecté
 else
 {
     echo "

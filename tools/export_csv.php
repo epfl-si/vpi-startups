@@ -2,10 +2,14 @@
 
 require 'connection_db.php';
 
+//Initialiser une session
 session_start();
-$sciper_number = $_SESSION['uniqueid'];
-require 'logs_function.php';
 
+//Prendre le numéro de sciper de l'utilisateur
+$sciper_number = $_SESSION['uniqueid'];
+
+//Importer la pagae logs_function.php
+require 'logs_function.php';
 
 //Mettre la date d'aujourd'hui dans le nom du fichier csv
 $today = date("d-m-Y");
@@ -61,7 +65,7 @@ add_logs($sciper_number,$before, $after,$action);
 //Dire que le fichier est un csv et mettre les accents de français
 header('Content-type: text/csv; charset=UTF-8');
 
-//Donner le nom au fichier
+//Donner le nom au fichier avec la date du jour
 header("Content-Disposition: attachment; filename=".$filename);
 
 //Mettre le contenu du fichier dans le fichier de téléchargement
