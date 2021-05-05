@@ -33,8 +33,6 @@ Make a git clone on a directory of your server to have all the files of the webs
   
 To get the website root right, edit the file ``` /etc/httpd/conf/httpd.conf ``` and put for example: ```DocumentRoot "/var/www/html/project_startups" ``` instead of the default DocumentRoot. This allows the root of the website to be in the right place (where the PHP files are).  
   
-For the database, take the file ``vpi_startup.sql`` which is in ``db/`` and put it into your MySQL server. You can do this with the mysqldump command. This file is a dump of the database structure.
+For the database, take the file ```vpi_startup.sql``` which is in ```db/``` and put it into your MySQL server. You can do this with the mysqldump command. This file is a dump of the database structure.
 
 Make sure you are connected to the EPFL network (on site or via VPN) so that it can wait for the Tequila server to take your information to access the website.
-
-Translated with www.DeepL.com/Translator (free version)
