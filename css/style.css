@@ -90,3 +90,11 @@ Changement de couleur des filtres "status" et "sectors" de la page d'accueil
 {
     background-color:lightgrey !important;
 }
+
+/*
+Mettre le largeur du tableau à 100px
+*/
+.google-visualization-table-th 
+{
+    width:100px;
+}
