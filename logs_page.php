@@ -7,7 +7,6 @@ if(isset($_SESSION['user']))
     //Il affiche le menu aux utilisateurs qui ont le droit d'écrire
     if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     {
-        //Tableau pour afficher les logs 
         echo "
         <script type='text/javascript'>
 
@@ -16,7 +15,6 @@ if(isset($_SESSION['user']))
 
         google.charts.setOnLoadCallback(logs_table);
 
-        //Prendre les logs dans la base de données
         function logs_table()
         {
             $.ajax
@@ -31,7 +29,6 @@ if(isset($_SESSION['user']))
             });
         }
 
-        //Ecrire les données dans les colonnes
         function drawChart_logs_table(chart_data)
         {
             var jsonData = chart_data;
@@ -39,8 +36,8 @@ if(isset($_SESSION['user']))
             
             data.addColumn('string', 'sciper_number');
             data.addColumn('string', 'date');
-            data.addColumn('string', 'after');
             data.addColumn('string', 'before');
+            data.addColumn('string', 'after');
             data.addColumn('string', 'action');
             $.each(jsonData, function(i, jsonData)
             {
@@ -59,7 +56,8 @@ if(isset($_SESSION['user']))
             
             var table = new google.visualization.Table(document.getElementById('chart_logs_table'));
 
-            table.draw(data, {showRowNumber: false, width: '100%'});
+            table.draw(data, {showRowNumber: false});
+            //chart.draw(data, options);
         }
 
         
@@ -71,7 +69,6 @@ if(isset($_SESSION['user']))
         </div>
         ";
     }
-    //Si l'utilisateur appartient au groupe read
     else
     {
         echo "
@@ -82,7 +79,6 @@ if(isset($_SESSION['user']))
         ";
     }
 }
-//Si l'utilisateur n'est pas connecté
 else
 {
     echo "

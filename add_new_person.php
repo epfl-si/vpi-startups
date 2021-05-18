@@ -10,7 +10,6 @@
         //S'il n'appartient pas au groupe TequilaPHPWrite, alors il n'a pas le droit de regarder le contenu de cette page
         if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
         {   
-            //Formulaire pour ajouter une nouvelle personne
             echo '
             <div class="container">
                 <h5 class="font-weight-bold my-3"> Add new person</h5>
@@ -67,69 +66,51 @@
 
             if(isset($_POST['submit_new_person']))
             {
-                //Prendre les données du formulaire
                 $sciper = (int)$_POST['sciper_number'];
-                $startup = $_POST['startup'];
                 $prof_as_founder = $_POST['prof_as_founder'];
                 $gender = $_POST['gender'];
                 $type_of_person = $_POST['type_of_person'];
 
-                //Mettre en variable, l'annuaire de l'EPFL
+                // LDAP variables
                 $ldapuri = "ldap://ldap.epfl.ch:389";
 
-                // Connexion à l'annuaire
+                // Connecting to LDAP
                 $ldapconn = ldap_connect($ldapuri)
                         or die("That LDAP-URI was not parseable");
 
-                //Donner des informations de l'annuaire de l'EPFL
                 $dn = "o=epfl, c=CH";
-
-                //Prendre l'information à partir du numéro de sciper
                 $filter="(uniqueIdentifier=$sciper)";
-
-                //Prendre seulement le résultat des ou, sn, givenname, mail et title
                 $justthese = array("ou", "sn", "givenname", "mail", "title");
 
-                //Faire la recherche avec LDAP
                 $sr=ldap_search($ldapconn, $dn, $filter, $justthese);
 
-                //Prendre les informations et les mettre dans une variable
                 $info = ldap_get_entries($ldapconn, $sr);
 
-                //Si la recherche a été faite avec succès
                 if($info["count"])
                 {
-                    //Prendre les informations nécessaires de l'utilisateur
                     $email = $info[0]["mail"][0];
                     $firstname = $info[0]["givenname"][0];
                     $name = $info[0]["sn"][0];
                     $person_function = $info[0]["title"][0];
                     
-                    //Tester si le numero de sciper n'est déjà dans la base de données
                     $persons = $db ->query('SELECT sciper_number FROM person WHERE sciper_number = "'.$sciper.'"');
                     $person = $persons -> fetch();
 
                     if($person == "")
                     {
-                        //Si non, ajouter la nouvelle personne à la base de données
+                   
                         $add_new_person = $db ->prepare('INSERT INTO person(name,firstname,person_function,email,prof_as_founder,gender,sciper_number) VALUES("'.$name.'","'.$firstname.'","'.$person_function.'","'.$email.'","'.$prof_as_founder.'","'.$gender.'","'.$sciper.'")');
                         $add_new_person -> execute();
 
-                        //Ecrire les données dans la table logs pour dire que l'utilisateur à fait un nouvel ajout de personne
+                        echo "The person : ".$name." ".$firstname." was added";
+
+                        //Ecrire les données dans la table logs pour dire que l'utilisateur à fait un export
                         $before = "";
                         $after = "Name : ".$name." Fistname : ".$firstname." Person Function : ".$person_function." Email : ".$email." Prof as founder : ".$prof_as_founder." Gender : ".$gender." sciper_number : ".$sciper;
                         $action="Add new person";
 
                         add_logs($sciper_number,$before,$after,$action);
-                        
-                        //Avertir l'utilisateur
-                        echo '
-                        <script> 
-                            alert("The person was added in database"); 
-                        </script>
-                        ';
                     }
-                    //Si oui, avertir l'utilisateur que la personne existe déjà dans la base de données
                     else
                     {
                         echo '
@@ -140,7 +121,6 @@
                     }
                 
                 }
-                //Avertir l'utilisateur si le numéro de sciper n'a pas été trouvé
                 else
                 {
                     echo "
@@ -153,7 +133,6 @@
                 
             }
         }
-        //Si l'utilisateur appartient au groupe read
         elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
         {
             echo "
@@ -164,7 +143,6 @@
         }
         
     }
-    //Si l'utilisateur n'est pas connecté
     else
     {
         echo "
