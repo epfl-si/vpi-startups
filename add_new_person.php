@@ -1,8 +1,6 @@
 <?php
 
-    require 'header.php';
-    require 'tools/connection_db.php';
-    require 'tools/logs_function.php';
+    
 
     //Si l'utilisateur n'a pas la session user active, alors il est redirigé vers la page de login
     if(isset($_SESSION['user']))
@@ -85,7 +83,7 @@
                 $.ajax
                 ({  
                     //Chemin vers la page qui contient les requêtes SQL
-                    url:"tools/get_data_from_ldap.php",
+                    url:"/tools/get_data_from_ldap.php",
                     method:"POST",
                     dataType:"JSON",
                     data: 
@@ -178,21 +176,27 @@
         }
         elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
         {
-            echo "
-            <script>
-                alert('You don\'t have enough rights to access this page.');
-                window.location.replace('index.php');
-            </script>";
+
+            $_SESSION['flash_message'] = array();
+            $_SESSION['flash_message']['message'] = "You don't have enough rights to access this page.";
+            $_SESSION['flash_message']['type'] = "warning";
+            header('Location: /index.php');
+            exit;
+            // echo "
+            // <script>
+            //     alert('You don\'t have enough rights to access this page.');
+            //     window.location.replace('index.php');
+            // </script>";
         }
         
     }
     else
     {
-        echo "
-        <script>
-            window.location.replace('login.php');
-        </script>
-        ";
+        $_SESSION['flash_message'] = array();
+        $_SESSION['flash_message']['message'] = "You need to be autenticated to access this page";
+        $_SESSION['flash_message']['type'] = "warning";
+        header('Location: /login.php');
+        exit;
     }
 
 
