@@ -1,28 +1,30 @@
 <?php
 
-require 'header.php';
-require 'tools/connection_db.php';
-require 'tools/logs_function.php';
-
 //Si l'utilisateur n'a pas la session user active, alors il est redirigé vers la page de login
 if(isset($_SESSION['user']))
 {   
     //S'il n'appartient pas au groupe TequilaPHPWrite, alors il n'a pas le droit de regarder le contenu de cette page
     if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     {   
+        
         //Récupérer le nom de la startup qui est en paramètre dans le site
-        $id_person = security_text($_GET['id']);
+        $id_person = $param;
 
         //Récupérer les données de la startup pour les afficher sur les champs
         $persons_data = $db -> query('SELECT * FROM person WHERE id_person="'.$id_person.'"');
         $person_data = $persons_data -> fetch();
+
+        $_SESSION['person_data'] = $person_data;
         
         echo '
 
         <div class="container">
             <h5 class="font-weight-bold my-3"> Modify Person Data</h5>
             <small class="text-danger my-3 row col-12"> * Fields Required </small>
-            <form method="post" id="form_add_new_company" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo security_text($_SERVER["PHP_SELF"]).'?id='.$id_person; echo'">
+            <form method="post" id="form_add_new_company" name="form_change_person" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo '/'.$controller.'/'.$method.'/'.$param; echo'">
+
+                <input type="hidden" id="action" name="action" value="'.$method." ".$controller.' : '.$person_data['sciper_number'].'"">
+            
                 <!-- Champ pour ajouter une personne lier à un numero de sciper -->
                 <div class="form-group row">
                     <label for="sciper_number" class="col-sm-4 col-form-label">Sciper Number</label>
@@ -104,25 +106,9 @@ if(isset($_SESSION['user']))
                     </select>
                     </div>
                 </div>
-                <button class="btn btn-outline-secondary mt-5" id="change_person_data" name="change_person_data" type="submit" onclick="after_click()">Submit</button>
+                <button class="btn btn-outline-secondary mt-5" id="change_person_data" name="change_person_data" type="submit">Submit</button>
             </form>
-        </div>
-        <script>
-
-            var list_fields_name = ["sciper_number", "name", "firstname", "person_function", "email_person", "prof_as_founder", "gender"];
-            var get = "'.security_text($_GET['id']).'";
-            var filename = "write_changes_to_db.php";
-            var sciper = "'.$person_data['sciper_number'].'";
-            var action = "Modify Person";
-            ';
-
-      
-            require 'tools/functions_to_change_data.php';
-        
-        echo '
-        </script>';
-
-       
+        </div>';
 
         require 'tools/disconnection_db.php';
         require 'footer.php';
