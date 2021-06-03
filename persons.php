@@ -1,5 +1,4 @@
 <?php
-require 'header.php';
 
 //Il affiche seulement le menu si l'utilisateur est connecté
 if(isset($_SESSION['user']))
@@ -20,7 +19,7 @@ if(isset($_SESSION['user']))
         {
             $.ajax
             ({
-                url:'tools/persons_db.php',
+                url:'/tools/persons_db.php',
                 method:'POST',
                 dataType:'JSON',
                 //Si tout se passe bien avec le résultat final du fichier 'person_list_index_db.php' alors il passe à success et écrire les données dans le tableau
@@ -146,7 +145,7 @@ if(isset($_SESSION['user']))
                         $.ajax
                         ({  
                             //Chemin vers la page qui contient les requêtes SQL
-                            url:'tools/id_persons_db.php',
+                            url:'/tools/id_persons_db.php',
                             method:'POST',
                             dataType:'JSON',
                             data: 
@@ -161,7 +160,7 @@ if(isset($_SESSION['user']))
                                 var id_person = data[0].id_person;
                                 
                                 //Mettre l'id comme paramètre dans l'url
-                                window.location.replace('modify_person_data.php?id='+id_person);
+                                window.location.replace('/person/modify/'+id_person);
                             },
                             error:function()
                             {
