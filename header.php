@@ -15,7 +15,7 @@ echo '
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/style.css"/>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <title> Project Startups </title>
     </head>
@@ -34,7 +34,7 @@ echo '
         <!-- L\'en-tête du site -->
         <nav id="header" class="navbar navbar-expand-lg navbar-white bg-white mb-5">
             <a class="navbar-brand" href="https://www.epfl.ch">
-                <img src="medias/epfl_logo.png" alt="epfl" width="100" height="50">
+                <img src="/medias/epfl_logo.png" alt="epfl" width="100" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -53,37 +53,36 @@ echo '
                             */
                             echo '
                             <li class="nav-item">
-                                <a class="nav-link text-danger" href="index.php">Homepage</a>
+                                <a class="nav-link text-danger" href="/">Homepage</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Add </a>
                                 <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="add_new_company.php">Add New Startup</a>
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="add_new_person.php">Add New Person</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/startup/add">Add New Startup</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/person/add">Add New Person</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Modify </a>
                                 <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="#">Modify Startup</a>
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="persons.php">Modify Person</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/startup/modify">Modify Startup</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/person">Modify Person</a>
                                     <a class="dropdown-item dropdown-item-danger text-danger" href="#">Modify Funds</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger" href="import_from_csv.php">Import CSV</a>
+                                <a class="nav-link text-danger" href="/import">Import CSV</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Charts </a>
                                 <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="number_of_startups_by_year.php">Number of startups by year</a>
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="startups_by_sectors.php">Startups by sector</a>
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="funds_by_sector.php
-                                    ">Funds by sector</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/charts/number_of_startups_by_year">Number of startups by year</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/charts/startups_by_sectors.php">Startups by sector</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/charts/funds_by_sector">Funds by sector</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger" href="logs_page.php">Logs</a>
+                                <a class="nav-link text-danger" href="/logs">Logs</a>
                             </li>';
                         }  
                     }
@@ -98,12 +97,12 @@ echo '
                     if(isset($_SESSION['user']))
                     {
                         echo '
-                        <a class="nav-link text-danger" href="logout.php">Logout</a>';
+                        <a class="nav-link text-danger" href="/logout.php">Logout</a>';
                     }
                     else
                     {
                         echo '
-                        <a class="nav-link text-danger" href="login.php">Login</a>';
+                        <a class="nav-link text-danger" href="/login.php">Login</a>';
                     }
                     echo '
                     </li>
@@ -111,13 +110,7 @@ echo '
             </div>
         </nav>';
     
-        //Fonction pour empêcher les attaques XSS et injections SQL
-        function security_text($data)
-        {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
+        echo do_i_need_to_display_flash_message();
+        
 
 ?>
