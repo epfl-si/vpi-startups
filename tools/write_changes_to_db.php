@@ -1,32 +1,35 @@
 <?php
 
-//Ouvrir la connexion à la base de données pour ajouter la nouvelle startup
-require 'connection_db.php';
-require 'logs_function.php';
-
-//Fonction pour empêcher les attaques XSS et injections SQL
-function security_text($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 
 //Récupérer les champs et les données de la page de modifications des personnes
-$sciper = security_text($_POST['sciper']);
-$get = security_text($_POST['get']);
-$name_field = security_text($_POST['name_field']);
-$before_changes = security_text($_POST['before_changes']);
-$after_changes = security_text($_POST['after_changes']);
+$before_changes = $_SESSION['person_data'];
+$after_changes = $_POST;
 $action = security_text($_POST['action']);
 
-$before = $name_field." : ".$before_changes;
-$after = $name_field." : ".$after_changes;
+$before = "name : ".$before_changes['name'].", firstname : ".$before_changes['firstname'].", person function : ".$before_changes['person_function'].", email : ".$before_changes['email'].", prof as founder : ".$before_changes['prof_as_founder'].", gender : ".$before_changes['gender'];
+$after = "name : ".$after_changes['name'].", firstname : ".$after_changes['firstname'].", person function : ".$after_changes['person_function'].", email : ".$after_changes['email_person'].", prof as founder : ".$after_changes['prof_as_founder'].", gender : ".$after_changes['gender'];
 
-//Faire un update du champ changé avec la nouvelle valeur pour l'id de personne    
-$update_changes = $db -> prepare('UPDATE person SET '.$name_field.' = "'.$after_changes.'" WHERE id_person ="'.$get.'" ');
-$update_changes -> execute();
+$data = [
 
-add_logs($sciper,$before,$after,$action);
+    "name"=> $_POST['name'],
+    "firstname"=> $_POST['firstname'],
+    "person_function"=> $_POST['person_function'],
+    "email_person"=> $_POST['email_person'],
+    "prof_as_founder"=> $_POST['prof_as_founder'],
+    "gender"=> $_POST['gender'],
+];
+$sql = "UPDATE person SET name=:name, firstname=:firstname, person_function=:person_function, email=:email_person, prof_as_founder=:prof_as_founder, gender=:gender WHERE id_person=$param";
+$stmt= $db->prepare($sql);
+
+if($stmt->execute($data)){
+    $_SESSION['flash_message']['message'] = $_POST['firstname']. " ".$_POST['name']. " was changed";
+    $_SESSION['flash_message']['type'] = "success";
+
+    add_logs($_SESSION['uniqueid'],$before,$after,$action);
+} else {
+    $_SESSION['flash_message']['message'] = "An unexpected error occured";
+    $_SESSION['flash_message']['type'] = "danger";
+}
+header("Location: /$controller/$method/$param");
+
 ?>
