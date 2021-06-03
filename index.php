@@ -1,12 +1,10 @@
 <?php
 
-require 'header.php';
-
 //Si l'utilisateur est connecté
 if(isset($_SESSION['user']))
 {
     //Tableau qui affiche quelques informations des startups
-    echo "
+    ?>
 
     <script type='text/javascript'>
 
@@ -144,6 +142,67 @@ if(isset($_SESSION['user']))
                 }
             });
 
+            //Permet d'ajouter un evenement pour que quand l\'utilisateur clique sur une ligne, le script cherche le nom de l'entreprise et puisse rediriger l'utilisateur vers la page de details
+            google.visualization.events.addListener(table, 'ready', function() 
+            {
+                var container = document.getElementById(table.getContainerId());
+                Array.prototype.forEach.call(container.getElementsByTagName('TD'), function(cell) 
+                {
+                cell.addEventListener('click', selectCell);
+                });
+            
+                function selectCell(sender) 
+                {
+                    //Récupérer le tableau qui est affiché
+                    var tableDataView = table.getDataTable();
+                    //Mettre en variable tous les elements de la ligne que l'utilisateur a cliqué
+                    var cell = sender.target;
+                    var row = cell.closest('tr');
+                
+                    //Mettre en variable la position de la ligne que l'utilisateur a cliqué
+                    var selectedRow = row.rowIndex - 1;
+                    
+                    //Permet de savoir quelle celulle l'utilisateur a cliqué
+                    var e = event || window.event;
+                    var cell_e = e.target;
+                    var id_cell = cell_e.cellIndex;
+                    //Cette condition permet rediriger l'utilisateur vers la bonne page suivant la celulle cliquée
+                    if(id_cell == 0 || id_cell == 1 || id_cell == 2 || id_cell == 3 || id_cell == 4 || id_cell == 5)
+                    {
+                        //Récupérer le nom de startup cliqué
+                        var str = tableDataView.getFormattedValue(selectedRow, 0);
+
+                        //Chercher l'id de la startup dans la base de données
+                        $.ajax
+                        ({  
+                            //Chemin vers la page qui contient les requêtes SQL
+                            url:'/tools/id_company_db.php',
+                            method:'POST',
+                            dataType:'JSON',
+                            data: 
+                            {
+                                str : str,
+                            },
+                            /*Si tout est bien, il affiche un pop-up, en disant que les changements
+                            ont été faits et il rafraîchit la page pour montrer à l\'utilisateur les changements*/
+                            success:function(data)
+                            {
+                                //Récupérer l'id de la startup dans la base de données
+                                var id_startup = data[0].id_startup;
+                                
+                                //Mettre l'id comme paramètre dans l'url
+                                window.location.replace('/startup/modify/'+id_startup);
+                            },
+                            error:function()
+                            {
+                                alert('Something went wrong, please try again.');
+                            }
+                        });
+                    } 
+                }
+            
+            });
+
             //Partie pour télécharger les données du tableau en format CSV
             $('.csv-button').on('click', function () 
             {
@@ -159,6 +218,11 @@ if(isset($_SESSION['user']))
     <!-- Partie HTML pour placer les checkboxes, les champs filtres, le tableau et le bouton de téléchargement du fichier CSV -->
     <div class='container'>
         <h5 class='font-weight-bold'> Homepage: Companies List </h5>
+        
+    <?php
+        // Affiche un message flash si nécessaire:
+        echo do_i_need_to_display_flash_message();
+    ?>
         <div id='dashboard_div'>
             <div class='row'>
                 <div id='search_company' class='text-left col-3 my-5 '></div>
@@ -168,7 +232,8 @@ if(isset($_SESSION['user']))
                 <div id='table' class='col-12 pr-0'></div>
             </div>
         </div>
-    </div>";
+    </div>
+    <?php
 
     require 'footer.php';
 }
@@ -176,8 +241,9 @@ else
 {
     echo "
     <script>
-        window.location.replace('login.php');
+        window.location.replace('/login.php');
     </script>
     ";
 }
+
 ?>
