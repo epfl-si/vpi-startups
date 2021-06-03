@@ -1,5 +1,4 @@
 <?php
-require 'header.php';
 
 //Il affiche seulement le menu si l'utilisateur est connecté
 if(isset($_SESSION['user']))
