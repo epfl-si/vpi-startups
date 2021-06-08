@@ -3,21 +3,17 @@
 
 session_start();
 
-//echo "<pre>"; var_dump($_SESSION); echo "</pre>";
-
-//var_dump($_GET['url']);
-
 list($controller, $method, $param) = explode('/', $_GET['url']);
 
-//var_dump($controller);
-//var_dump($method);
-//var_dump($param);
 //pour persons.php
 require 'tools/utils.php';
 if ($controller === 'person' && $method === 'modify' && is_numeric($param) && isset($_POST['name']) && !empty($_POST['name'])) {
 
-}else {
-   require 'header.php';
+}
+elseif ($controller === 'startup' && $method === 'modify' && is_numeric($param) && isset($_POST['company_name']) && !empty($_POST['company_name'])) {
+}
+else {
+   require_once 'header.php';
 }
 //require 'header.php';
 require 'tools/connection_db.php';
@@ -66,31 +62,40 @@ if ($controller === 'logs') {
 
 //pour persons.php
 if ($controller === 'person') {
-    if ($method === 'modify' && is_numeric($param)) {
-        if(isset($_POST['name']) && !empty($_POST['name'])) {
-            if(data_has_been_modify($param)){
-                require 'tools/write_changes_to_db.php';
+    if ($method === 'modify' && is_numeric($param)) 
+    {
+        if(isset($_POST['name']) && !empty($_POST['name'])) 
+        {
+            if(data_has_been_modify($param))
+            {
+                require 'tools/write_person_changes_to_db.php';
             }
-        }else {
+        }
+        else 
+        {
             include_once('./modify_person_data.php');
         }
-
     }
-    else {
+    else 
+    {
         include_once('./persons.php');
     }
 }
 
 //pour modify_startup_data.php
-if ($controller === 'startup' && $method === 'modify' && is_numeric($param)) {
-    
-        if(isset($_POST['company']) && !empty($_POST['company'])) {
-            if(startup_data_has_been_modify($param)){
-                require 'tools/write_startup_changes_to_db.php';
-            }
-        }else {
-            include_once('./modify_startup_data.php');
+if ($controller === 'startup' && $method === 'modify' && is_numeric($param)) 
+{
+    if(isset($_POST['company_name']) && !empty($_POST['company_name'])) 
+    {
+        if(startup_data_has_been_modify($param))
+        {
+            require 'tools/write_startup_changes_to_db.php';
         }
+    }
+    else 
+    {
+        include_once('./modify_startup_data.php');
+    }
 }
 
 ?>
