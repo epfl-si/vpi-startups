@@ -4,7 +4,7 @@
 function security_text($data)
 {
   $data = trim($data);
-  $data = stripslashes($data);
+  $data = addslashes($data);
   $data = htmlspecialchars($data);
   return $data;
 }
@@ -20,7 +20,7 @@ function do_i_need_to_display_flash_message()
   }
 }
 
-//modifier les données des personnes
+//modifier les données des personnes en regardant si un champ a été modifié
 function data_has_been_modify($param){
   if($_SESSION['person_data']['id_person'] != $param){
     die("hackeur");
@@ -51,37 +51,127 @@ function data_has_been_modify($param){
   return false;
 }
 
-//modifier les données des startups
+//modifier les données des startups en regardant si un champ a été modifié
 function startup_data_has_been_modify($param){
   if($_SESSION['startup_data']['id_startup'] != $param){
     die("hackeur");
   }
-
-  if($_SESSION['startup_data']['company'] != $_POST['company']) {
+  if($_SESSION['startup_data']['company_name'] != $_POST['company_name']) {
     return true;
   }
-
   if($_SESSION['startup_data']['web'] != $_POST['web']) {
     return true;
   }
-
   if($_SESSION['startup_data']['founding_date'] != $_POST['founding_date']) {
     return true;
   }
-
   if($_SESSION['startup_data']['rc'] != $_POST['rc']) {
     return true;
   }
-  if($_SESSION['startup_data']['prof_as_founder'] != $_POST['prof_as_founder']) {
+  if($_SESSION['startup_data']['exit_year'] != $_POST['exit_year']) {
     return true;
   }
-  if($_SESSION['startup_data']['gender'] != $_POST['gender']) {
+  if($_SESSION['startup_data']['status'] != $_POST['status']) {
     return true;
   }
+  if($_SESSION['startup_data']['epfl_grant'] != $_POST['epfl_grant']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['awards_competitions'] != $_POST['awards_competitions']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['key_words'] != $_POST['key_words']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['laboratory'] != $_POST['laboratory']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['short_description'] != $_POST['short_description']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['type_startup'] != $_POST['type_startup']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['ceo_education_level'] != $_POST['ceo_education_level']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['sectors'] != $_POST['sectors']) {
+    return true;
+  }  
+  if($_SESSION['startup_data']['category'] != $_POST['category']) {
+    return true;
+  }  
+  if($_SESSION['startup_data']['schools'] != implode(";",$_POST['faculty_schools'])) {
+    return true;
+  }  
+  if($_SESSION['startup_data']['impact'] != implode(";",$_POST['impact_sdg'])) {
+    return true;
+  }  
+  if($_SESSION['startup_data']['country'] != implode(";",$_POST['founders_country'])) {
+    return true;
+  }  
+  if($_SESSION['startup_data']['id_person1'] != $_POST['person1']) {
+    return true;
+  }  
+  if($_SESSION['startup_data']['id_person2'] != $_POST['person2']) {
+    return true;
+  }  
+  if($_SESSION['startup_data']['id_person3'] != $_POST['person3']) {
+    return true;
+  }  
+  if($_SESSION['startup_data']['id_type_of_person1'] != $_POST['function_type_of_person1']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['id_type_of_person2'] != $_POST['function_type_of_person2']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['id_type_of_person3'] != $_POST['function_type_of_person3']) {
+    return true;
+  }  
   
   return false;
 }
 
+//modifier les données multicritère
+function startup_faculty_data_has_been_modify()
+{
+  if($_SESSION['startup_data']['schools'] != implode(";",$_POST['faculty_schools'])) {
+    return true;
+  }
+  return false;  
+}
+
+function startup_country_data_has_been_modify()
+{
+  if($_SESSION['startup_data']['country'] != implode(";",$_POST['founders_country'])) {
+    return true;
+  }
+  return false;  
+}
+
+function startup_impact_data_has_been_modify()
+{
+  if($_SESSION['startup_data']['impact'] != implode(";",$_POST['impact_sdg'])) {
+    return true;
+  }
+  return false;  
+}
+
+function startup_person_data_has_been_modify($number_of_person)
+{
+  if($_SESSION['startup_data']["id_person$number_of_person"] != $_POST["person$number_of_person"]) {
+    return true;
+  }
+  return false;  
+}
+
+function startup_type_of_person_data_has_been_modify($number_of_types_of_person)
+{
+  if($_SESSION['startup_data']["id_type_of_person$number_of_types_of_person"] != $_POST["function_type_of_person$number_of_types_of_person"]) {
+    return true;
+  }
+  return false;  
+}
 /**
  * Return a bottstrap flash message
  * @param String $message: the message to be displayed
