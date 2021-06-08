@@ -6,54 +6,47 @@ if(isset($_SESSION['user']))
     //S'il n'appartient pas au groupe TequilaPHPWrite, alors il n'a pas le droit de regarder le contenu de cette page
     if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     {   
-        
         //Récupérer le nom de la startup qui est en paramètre dans le site
         $id_startup = $param;
 
         //Récupérer les données de la startup pour les afficher sur les champs
-        $startups_data = $db -> query('SELECT * FROM startup LEFT JOIN startup_person ON startup.id_startup = startup_person.fk_startup LEFT JOIN startup_faculty_schools ON startup.id_startup = startup_faculty_schools.fk_startup LEFT JOIN startup_impact_sdg ON startup.id_startup = startup_impact_sdg.fk_startup LEFT JOIN startup_founders_country ON startup.id_startup = startup_founders_country.fk_startup LEFT JOIN person ON person.id_person = startup_person.fk_person LEFT JOIN type_of_person ON type_of_person.id_type_of_person = startup_person.fk_type_of_person WHERE id_startup="'.$id_startup.'"');
+        $startups_data = $db -> query('SELECT * FROM view_detail_startup_full WHERE id_startup="'.$id_startup.'"');
         $startup_data = $startups_data -> fetch();
 
         $_SESSION['startup_data'] = $startup_data;
-
-        echo $_SESSION['startup_data'];
+        
         //Fonction pour afficher les listes déroulantes des personnes
-        function display_people($number_of_person, $id_startup)
-        {
+        function display_people($number_of_person, $id_startup, $id_person_view, $name_person)
+        { 
             require 'tools/connection_db.php';
-            
             echo '<div class="form-group row">
                     <label for="person'.$number_of_person.'" class="col-sm-4 col-form-label">Person '.$number_of_person.'</label>
                     <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="person'.$number_of_person.'" id="person'.$number_of_person.'">';
-                
-                            $persons_startups = $db-> query('SELECT fk_person, name, firstname FROM person INNER JOIN startup_person ON person.id_person = startup_person.fk_person WHERE fk_startup =  "'.$id_startup.'" ORDER BY id_startup_person');
-                            $person_startup = $persons_startups -> fetchAll();
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="person'.$number_of_person.'" id="person'.$number_of_person.'">
+                        <option value="delete">Delete person</option>';
+                        $selected = false;
 
-                            $all_persons = $db-> query('SELECT id_person, name, firstname FROM person');
-                            $all_person = $all_persons -> fetchAll();
-                            $nb_person = count($person_startup);
-                            
-                            $selected = false;
-                            
-                            foreach($all_person as $all) 
-                            {
-                                if($all['id_person'] == $person_startup[$number_of_person-1]['fk_person'])
-                                {
-                                    echo '<option value="'.$person_startup[$number_of_person-1]['name'].'" selected>'.$person_startup[$number_of_person-1]['name'].'</option>';
-                                    $selected = true;
-                                    
-                                }
-                                else
-                                {
-                                    echo '<option value="'.$all['name'].'">'.$all['name'].'</option>';
-                                }
-                            }
+                        $all_persons = $db-> query('SELECT id_person, name, firstname FROM person');
+                        $all_person = $all_persons -> fetchAll();
 
-                            if($selected == false)
+                        foreach($all_person as $all)
+                        {
+                            if($all['id_person'] == $id_person_view)
                             {
-                                echo '<option value="" disabled selected>Select person '.$number_of_person.'</option>';
+                                echo '<option value="'.$id_person_view.'" selected>'.$name_person.'</option>';
+                                $selected = true;
+                                
                             }
+                            else
+                            {
+                                echo '<option value="'.$all['id_person'].'">'.$all['name'].'</option>';
+                            }
+                        }
+
+                        if($selected == false)
+                        {
+                            echo '<option value="" disabled selected>Select person '.$number_of_person.'</option>';
+                        }
                         echo '
                         </select>
                     </div>
@@ -61,7 +54,7 @@ if(isset($_SESSION['user']))
         }
 
         //Fonction pour afficher les listes déroulantes de la fonction des personnes
-        function display_people_function($number_of_function, $id_startup)
+        function display_people_function($number_of_function, $id_startup,$id_type_of_person_view, $type_of_person)
         {
             require 'tools/connection_db.php';
 
@@ -69,28 +62,25 @@ if(isset($_SESSION['user']))
             <div class="form-group row">
                 <label for="function_type_of_person'.$number_of_function.'" class="col-sm-4 col-form-label"> Type of Person Function '.$number_of_function.'</label>
                 <div class="col-sm-6">
-                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="function_type_of_person'.$number_of_function.'" id="function_type_of_person'.$number_of_function.'">';
+                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="function_type_of_person'.$number_of_function.'" id="function_type_of_person'.$number_of_function.'">
+                <option value="delete">Delete type of function</option>';
                 
-                $types_of_startups = $db-> query('SELECT fk_type_of_person, type_of_person FROM startup_person INNER JOIN type_of_person ON type_of_person.id_type_of_person = startup_person.fk_type_of_person WHERE fk_startup =  "'.$id_startup.'" ORDER BY id_startup_person');
-                $type_of_person_startup = $types_of_startups -> fetchAll();
-
                 $all_type_of_persons = $db-> query('SELECT id_type_of_person, type_of_person FROM type_of_person');
                 $all_type_of_person = $all_type_of_persons -> fetchAll();
-                $nb_type_of_person = count($type_of_person_startup);
-                
+            
                 $selected = false;
                 
                 foreach($all_type_of_person as $all) 
                 {
-                    if($all['id_type_of_person'] == $type_of_person_startup[$number_of_function-1]['fk_type_of_person'])
+                    if($all['id_type_of_person'] == $id_type_of_person_view)
                     {
-                        echo '<option value="'.$type_of_person_startup[$number_of_function-1]['type_of_person'].'" selected>'.$type_of_person_startup[$number_of_function-1]['type_of_person'].'</option>';
+                        echo '<option value="'.$id_type_of_person_view.'" selected>'.$type_of_person.'</option>';
                         $selected = true;
                         
                     }
                     else
                     {
-                        echo '<option value="'.$all['type_of_person'].'">'.$all['type_of_person'].'</option>';
+                        echo '<option value="'.$all['id_type_of_person'].'">'.$all['type_of_person'].'</option>';
                     }
                 }
 
@@ -99,6 +89,7 @@ if(isset($_SESSION['user']))
                     echo '<option value="" disabled selected>Select Type of Person '.$number_of_function.'</option>';
                 }
                 echo '
+                
                 </select>
                 </div>
             </div>';
@@ -357,6 +348,7 @@ if(isset($_SESSION['user']))
                             
                             foreach ($all_faculty_schools_startup as $all_faculty_schools)
                             {
+                                $startup_all_faculty_schools = "";
                                 $selected = false;
                                 foreach ($selected_faculty_schools_startup as $selected_faculty_schools)
                                 {
@@ -416,13 +408,13 @@ if(isset($_SESSION['user']))
 
                 for ($x = 1; $x <= 3; $x++) 
                 {
-                    display_people($x,$id_startup);
-                    display_people_function($x, $id_startup);
+                    display_people($x,$id_startup, $_SESSION['startup_data']["id_person$x"], $_SESSION['startup_data']["name$x"] );
+                    display_people_function($x, $id_startup, $_SESSION['startup_data']["id_type_of_person$x"], $_SESSION['startup_data']["type_of_person$x"]);
                 }
 
                 echo '
                 <!-- Champ pour une description de la startup-->
-                <button class="btn btn-outline-secondary mt-5" id="submit_new_company" name="submit_new_company" type="submit">Submit</button>
+                <button class="btn btn-outline-secondary mt-5" id="submit_modify_company" name="submit_modify_company" type="submit">Submit</button>
             </form>
         </div>';
 
