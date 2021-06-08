@@ -21,7 +21,7 @@ if(isset($_SESSION['user']))
         <div class="container">
             <h5 class="font-weight-bold my-3"> Modify Person Data</h5>
             <small class="text-danger my-3 row col-12"> * Fields Required </small>
-            <form method="post" id="form_add_new_company" name="form_change_person" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo '/'.$controller.'/'.$method.'/'.$param; echo'">
+            <form method="post" id="form_change_person" name="form_change_person" class="form_change_person col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo '/'.$controller.'/'.$method.'/'.$param; echo'">
 
                 <input type="hidden" id="action" name="action" value="'.$method." ".$controller.' : '.$person_data['sciper_number'].'"">
             
