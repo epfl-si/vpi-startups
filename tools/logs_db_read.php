@@ -3,7 +3,7 @@
 require 'connection_db.php';
 
 //Chercher les données du nombre de startups par secteur avec une vue SQL
-$logs_db= $db ->query('SELECT * FROM logs');
+$logs_db= $db ->query('SELECT * FROM logs GROUP BY id_logs DESC');
 $logs = $logs_db ->fetchAll();
 foreach ($logs as $log)
 {
