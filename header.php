@@ -65,7 +65,7 @@ echo '
                                 <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Modify </a>
                                 <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item dropdown-item-danger text-danger" href="/">Modify Startup</a>
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/person">Modify Person</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/persons">Modify Person</a>
                                     <a class="dropdown-item dropdown-item-danger text-danger" href="#">Modify Funds</a>
                                 </div>
                             </li>
