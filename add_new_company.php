@@ -1,6 +1,5 @@
 <?php
 
-require 'header.php';
 require 'tools/connection_db.php';
 
 //Si l'utilisateur n'a pas la session user active, alors il est redirigé vers la page de login

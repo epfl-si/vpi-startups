@@ -1,7 +1,5 @@
 <?php
 
-    
-
     //Si l'utilisateur n'a pas la session user active, alors il est redirigé vers la page de login
     if(isset($_SESSION['user']))
     {   
@@ -182,11 +180,6 @@
             $_SESSION['flash_message']['type'] = "warning";
             header('Location: /index.php');
             exit;
-            // echo "
-            // <script>
-            //     alert('You don\'t have enough rights to access this page.');
-            //     window.location.replace('index.php');
-            // </script>";
         }
         
     }

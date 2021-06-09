@@ -1,8 +1,5 @@
 <?php
 
-require 'header.php';
-require 'tools/connection_db.php';
-require 'tools/logs_function.php';
 
 //Si l'utilisateur est connecté
 if(isset($_SESSION['user']))
