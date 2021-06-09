@@ -1,6 +1,5 @@
 <?php
 
-require 'header.php';
 require 'tools/hide_header.php';
 
 //Si l'utilisateur est connecté
@@ -20,7 +19,7 @@ if(isset($_SESSION['user']))
     {
         $.ajax
         ({
-            url:'tools/number_of_startups_by_year.php',
+            url:'/tools/number_of_startups_by_year.php',
             method:'POST',
             dataType:'JSON',
             success:function(data)
