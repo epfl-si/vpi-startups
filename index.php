@@ -19,7 +19,7 @@ if(isset($_SESSION['user']))
         {
             $.ajax
             ({
-                url:'tools/companies_list_index_db.php',
+                url:'/tools/companies_list_index_db.php',
                 method:'POST',
                 dataType:'JSON',
                 //Si tout se passe bien avec le résultat final du fichier 'companies_list_index_db.php' alors il passe à success et écrire les données dans le tableau
