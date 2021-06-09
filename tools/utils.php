@@ -12,7 +12,6 @@ function security_text($data)
 //flash message
 function do_i_need_to_display_flash_message() 
 {
-  session_start();
   if (isset($_SESSION['flash_message']) && count($_SESSION['flash_message']) && $_SESSION['flash_message']['message'] != '') {
     $fm = flash_message($_SESSION['flash_message']['message'], $_SESSION['flash_message']['type']);
     unset($_SESSION['flash_message']);
@@ -188,7 +187,7 @@ function flash_message($message, $type = 'warning')
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  EOT;
+EOT;
 
   return $msg;
 }
