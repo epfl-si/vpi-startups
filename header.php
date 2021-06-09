@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 $sciper_number = $_SESSION['uniqueid'];
 
 //Initialiser les modules nécessaires pour le site (bootstrap, ajax, google charts)
@@ -65,7 +64,7 @@ echo '
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Modify </a>
                                 <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/startup/modify">Modify Startup</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/">Modify Startup</a>
                                     <a class="dropdown-item dropdown-item-danger text-danger" href="/person">Modify Person</a>
                                     <a class="dropdown-item dropdown-item-danger text-danger" href="#">Modify Funds</a>
                                 </div>
