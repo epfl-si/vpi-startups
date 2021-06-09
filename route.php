@@ -66,24 +66,17 @@ if ($controller === 'logs') {
 }
 
 //pour persons.php
-if ($controller === 'person') {
-    if ($method === 'modify' && is_numeric($param)) 
+if ($controller === 'person' && $method === 'modify' && is_numeric($param)) {
+    if(isset($_POST['name']) && !empty($_POST['name'])) 
     {
-        if(isset($_POST['name']) && !empty($_POST['name'])) 
+        if(data_has_been_modify($param))
         {
-            if(data_has_been_modify($param))
-            {
-                require 'tools/write_person_changes_to_db.php';
-            }
-        }
-        else 
-        {
-            include_once('./modify_person_data.php');
+            require 'tools/write_person_changes_to_db.php';
         }
     }
     else 
     {
-        include_once('./persons.php');
+        include_once('./modify_person_data.php');
     }
 }
 
