@@ -5,11 +5,10 @@ echo "
 <script>
     $(document).ready(function(){
         var url = window.location.href;
-        var url2 = new URL(url);
-        var c = url2.searchParams.get('header');
-        console.log(c);
+        var get_url = new URL(url);
+        var header_result = get_url.searchParams.get('header');
 
-        if(c == 'false')
+        if(header_result == 'false')
         {
             $('#header').css('display', 'none');
         }
