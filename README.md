@@ -12,8 +12,8 @@ The rights management is done by PHP sessions ( $_SESSION ), the connection to T
   
 It allows you to :  
   
-* Add startups
-* Add people 
+* Add and modify startups
+* Add and modify people 
 * View graphs of the evolution of startups
 * Export startup data in CSV format
 * Import a CSV file to insert the data from this file into the startup table  
@@ -36,3 +36,12 @@ To get the website root right, edit the file ``` /etc/httpd/conf/httpd.conf ``` 
 For the database, take the file ```vpi_startup.sql``` which is in ```db/``` and put it into your MySQL server. You can do this with the mysqldump command. This file is a dump of the database structure.
 
 Make sure you are connected to the EPFL network (on site or via VPN) so that it can wait for the Tequila server to take your information to access the website.
+
+In order to allow .htacces to work in your server, you may have to enable ```mod_rewrite``` (if is not done) and change in Apache configuration :    
+``` 
+<Directory "/var/www/html/root_of_projet_startups/">
+    [...]
+    AllowOverride All
+    [...]
+</Directory>
+```  
