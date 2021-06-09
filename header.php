@@ -76,7 +76,7 @@ echo '
                                 <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Charts </a>
                                 <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item dropdown-item-danger text-danger" href="/charts/number_of_startups_by_year">Number of startups by year</a>
-                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/charts/startups_by_sectors.php">Startups by sector</a>
+                                    <a class="dropdown-item dropdown-item-danger text-danger" href="/charts/startups_by_sectors">Startups by sector</a>
                                     <a class="dropdown-item dropdown-item-danger text-danger" href="/charts/funds_by_sector">Funds by sector</a>
                                 </div>
                             </li>
