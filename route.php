@@ -44,14 +44,30 @@ if ($controller === '') {
 if ($controller === 'charts' && $method === 'funds_by_sector') {
     include_once('./funds_by_sector.php');
 }
+elseif($controller === 'charts' && $method === 'funds_by_sector?header=false')
+{
+    include_once('./hide_header.php');
+    include_once('./funds_by_sector.php');
+}
+
 
 //pour number_of_startups_by_year.php
 if ($controller === 'charts' && $method === 'number_of_startups_by_year') {
     include_once('./number_of_startups_by_year.php');
 }
+elseif($controller === 'charts' && $method === 'number_of_startups_by_year?header=false')
+{
+    include_once('./hide_header.php');
+    include_once('./number_of_startups_by_year.php');
+}
 
 //pour startups_by_sectors.php
 if ($controller === 'charts' && $method === 'startups_by_sectors') {
+    include_once('./startups_by_sectors.php');
+}
+elseif($controller === 'charts' && $method === 'startups_by_sectors?header=false')
+{
+    include_once('./hide_header.php');
     include_once('./startups_by_sectors.php');
 }
 
