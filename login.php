@@ -35,7 +35,7 @@ if(strpos($group, $word) !== false)
     $_SESSION['TequilaPHPWrite'] = "TequilaPHPWritetrue";
     
     //Redirection vers la page d'acceuil pour finalisé la connexion à Tequila
-    header('Location: index.php');	 
+    header('Location: /');	 
 }
 else
 {
@@ -43,7 +43,7 @@ else
     $_SESSION['TequilaPHPRead'] = "TequilaPHPReadtrue";
     
     //Redirection vers la page d'acceuil pour finalisé la connexion à Tequila
-    header('Location: index.php');
+    header('Location: /');
 }
 
 ?>
