@@ -3,7 +3,7 @@
 
 session_start();
 
-list($controller, $method, $param) = explode('/', $_GET['url']);
+list($controller, $method, $param) = array_pad(explode('/', $_GET['url']),3,null);
 
 //pour persons.php
 require 'tools/utils.php';
@@ -28,6 +28,11 @@ if ($controller === 'person' && $method === 'add') {
 //pour add_new_company.php
 if ($controller === 'startup' && $method === 'add') {
     include_once('./add_new_company.php');
+}
+
+//pour persons.php
+if ($controller === 'persons') {
+    include_once('./persons.php');
 }
 
 //pour index.php
