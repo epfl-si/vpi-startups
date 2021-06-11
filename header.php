@@ -96,12 +96,12 @@ echo '
                     if(isset($_SESSION['user']))
                     {
                         echo '
-                        <a class="nav-link text-danger" href="/logout.php">Logout</a>';
+                        <a class="nav-link text-danger" href="/logout">Logout</a>';
                     }
                     else
                     {
                         echo '
-                        <a class="nav-link text-danger" href="/login.php">Login</a>';
+                        <a class="nav-link text-danger" href="/login">Login</a>';
                     }
                     echo '
                     </li>
