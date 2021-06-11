@@ -8,9 +8,12 @@ list($controller, $method, $param) = array_pad(explode('/', $_GET['url']),3,null
 //pour persons.php
 require 'tools/utils.php';
 if ($controller === 'person' && $method === 'modify' && is_numeric($param) && isset($_POST['name']) && !empty($_POST['name'])) {
-
 }
 elseif ($controller === 'startup' && $method === 'modify' && is_numeric($param) && isset($_POST['company_name']) && !empty($_POST['company_name'])) {
+}
+elseif ($controller === 'person' && $method === 'add' && isset($_POST['sciper_number']) && !empty($_POST['sciper_number'])) {
+}
+elseif ($controller === 'startup' && $method === 'add' && isset($_POST['company_name']) && !empty($_POST['company_name'])) {
 }
 else {
    require_once 'header.php';
@@ -23,11 +26,6 @@ require 'tools/logs_function.php';
 // localhost:8888/add_new_person.php → localhost:8888/person/add
 if ($controller === 'person' && $method === 'add') {
     include_once('./add_new_person.php');
-}
-
-//pour add_new_company.php
-if ($controller === 'startup' && $method === 'add') {
-    include_once('./add_new_company.php');
 }
 
 //pour persons.php
@@ -103,7 +101,7 @@ if ($controller === 'startup' && $method === 'modify' && is_numeric($param))
     {
         if(startup_data_has_been_modify($param))
         {
-            require 'tools/write_startup_changes_to_db.php';
+            require './tools/write_startup_changes_to_db.php';
         }
     }
     else 
@@ -112,4 +110,16 @@ if ($controller === 'startup' && $method === 'modify' && is_numeric($param))
     }
 }
 
+//pour add_person.php
+if ($controller === 'startup' && $method === 'add') 
+{
+    if(isset($_POST['company_name']) && !empty($_POST['company_name'])) 
+    {
+        require './tools/add_new_company_db.php';
+    }
+    else
+    {
+        include_once('./add_new_company.php');
+    }
+}
 ?>
