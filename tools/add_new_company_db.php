@@ -26,7 +26,7 @@ $person3 = $_POST['person3'];
 $function_person1 = $_POST['function_person1'];
 $function_person2 = $_POST['function_person2'];
 $function_person3 = $_POST['function_person3'];
-
+$inserted = false;
 
 //Initialiser une variable à false pour capturer les erreurs
 $error_add_new_people = "false";
@@ -54,7 +54,14 @@ $id_category = $category_id -> fetch();
 
 //Insertion des données dans la table startup
 $add_new_startup = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory,short_description,fk_type,fk_ceo_education_level,fk_sectors,fk_category,fk_status) VALUES("'.$company_name.'","'.$web.'","'.$founding_date.'","'.$rc.'","'.$exit_year.'","'.$epfl_grant.'","'.$awards_competition.'","'.$key_words.'","'.$laboratory.'","'.$short_description.'","'.$id_type_startup['id_type_startup'].'","'.$id_ceo_education_level['id_ceo_education_level'].'","'.$id_sectors['id_sectors'].'","'.$id_category['id_category'].'","'.$id_status['id_status'].'")');
-$add_new_startup -> execute();
+if($add_new_startup -> execute())
+{
+    $inserted=true;
+}
+else
+{
+    $inserted=false;
+}
 
 $startup_id = $db->lastInsertId();
 
@@ -63,7 +70,7 @@ $before = "";
 $after = "Startup : ".$company_name.", Founding Date : ".$founding_date.", Web : ".$web.", Rc : ".$rc.", Status : ".$status.", Exit Year : ".$exit_year.", Type of Startup : ".$type_startup.", Category : ".$category.", EPFL Grant : ".$epfl_grant.", Awards Competition : ".$awards_competition.", Impact sdg : ".implode(";",$impact_sdg).", Sector : ".$sector.", Key Words : ".$key_words.", CEO Education Level : ".$ceo_education_level.", Founders Country : ".implode(";",$founders_country).", Faculty Schools : ".implode(";",$faculty_schools).", Short Description : ".$short_description.", Person 1 : ".$person1.", Person Function 1 : ".$function_person1.", Person 2 : ".$person2.", Person Function 2 : ".$function_person2.", Person 3 : ".$person3.", Person Function 3 : ".$function_person3;
 $action="Add new startup";
 
-add_logs($sciper_number,$before,$after,$action);
+add_logs($_SESSION['uniqueid'],$before,$after,$action);
 
 //Traitement des champs multicritère 
 //Compter le nombre de facultés choisies par l'utilisateur
@@ -78,7 +85,14 @@ for ($x=0; $x<$count_impact_sdg; $x++)
     $impact_sdg = $id_impact_sdg['id_impact_sdg'];
 
     $add_new_startup_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup,fk_impact_sdg) VALUES("'.$startup_id.'","'.$impact_sdg.'")');
-    $add_new_startup_impact_sdg -> execute(); 
+    if($add_new_startup_impact_sdg -> execute())
+    {
+
+    } 
+    else
+    {
+        $inserted=false;
+    }
 }
 
 //Compter le nombre de countries choisies par l'utilisateur
@@ -93,7 +107,14 @@ for ($x=0; $x<$count_founders_country; $x++)
     $founders_country = $id_founders_country['id_founders_country'];
 
     $add_new_startup_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup,fk_founders_country) VALUES("'.$startup_id.'","'.$founders_country.'")');
-    $add_new_startup_founders_country -> execute(); 
+    if($add_new_startup_founders_country -> execute())
+    {
+
+    }
+    else
+    {
+        $inserted=false;
+    }
 }
 
 //Compter le nombre de countries choisies par l'utilisateur
@@ -108,7 +129,15 @@ for ($x=0; $x<$count_faculty_schools; $x++)
     $faculty_schools = $id_faculty_schools['id_faculty_schools'];
 
     $add_new_startup_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup,fk_faculty_schools) VALUES("'.$startup_id.'","'.$faculty_schools.'")');
-    $add_new_startup_faculty_schools -> execute(); 
+    if($add_new_startup_faculty_schools -> execute())
+    {
+
+    }
+    else
+    {
+        $inserted=false;
+    }
+
 }
 
 //Fonction pour avertir l'utilisateur si la personne ou la fonction de la personne est erronée
@@ -138,8 +167,30 @@ if($error_add_new_people == "false")
         if($id_person != "" && $id_type_of_person != "")
         {
             $add_new_startup_person = $db -> prepare('INSERT INTO startup_person(fk_startup,fk_person,fk_type_of_person) VALUES("'.$startup_id.'","'.$id_person['id_person'].'","'.$id_type_of_person['id_type_of_person'].'")');
-            $add_new_startup_person -> execute();
+            if($add_new_startup_person -> execute())
+            {
+
+            }
+            else
+            {
+                $inserted=false;
+            }
         } 
     }
 }
+
+if($inserted)
+{
+    $_SESSION['flash_message'] = array();
+    $_SESSION['flash_message']['message'] = $_POST['company_name']." was added";
+    $_SESSION['flash_message']['type'] = "success";
+}
+else
+{
+    $_SESSION['flash_message'] = array();
+    $_SESSION['flash_message']['message'] = "An unexpected error occured";
+    $_SESSION['flash_message']['type'] = "danger";
+}
+
+header("Location: /$controller/$method");
 ?>

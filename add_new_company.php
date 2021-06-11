@@ -6,7 +6,7 @@ require 'tools/connection_db.php';
 if(isset($_SESSION['user']))
 {   
     echo do_i_need_to_display_flash_message();
-    
+
     //S'il n'appartient pas au groupe TequilaPHPWrite, alors il n'a pas le droit de regarder le contenu de cette page
     if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     {   
