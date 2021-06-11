@@ -3,12 +3,31 @@
 $before_changes = $_SESSION['startup_data'];
 $after_changes = $_POST;
 $action = security_text($_POST['action']);
+$updated = false;
 
-//implode(";",$_POST['faculty_schools'])
+for ($x=1;$x<=3;$x++)
+{
+    if($after_changes["person$x"] != '')
+    {
+        $person_name = $db -> query('SELECT name FROM person WHERE id_person = "'.$after_changes["person$x"].'"');
+        $name = $person_name -> fetch();
+        $after_changes["person$x"] = $name['name'];
+    }
+}
+
+for ($x=1;$x<=3;$x++)
+{
+    if($after_changes["function_type_of_person$x"] != '')
+    {
+        $function_type_of_person_name = $db -> query('SELECT name FROM function_type_of_person WHERE id_function_type_of_person = "'.$after_changes["function_type_of_person$x"].'"');
+        $name = $function_type_of_person_name -> fetch();
+        $after_changes["function_type_of_person$x"] = $name['name'];
+    }
+}
 
 //logs
-$before = "company : ".$before_changes['company_name'].", web : ".$before_changes['web'].", founding date : ".$before_changes['founding_date'].", rc : ".$before_changes['rc'].", exit year : ".$before_changes['exit_year'].", EPFL grant : ".$before_changes['epfl_grant'].", awards competitions : ".$before_changes['awards_competitions'].", key words : ".$before_changes['key_words'].", laboratory : ".$before_changes['laboratory'].", short description : ".$before_changes['short_description'].", type of startup : ".$before_changes['type_startup'].", ceo education level : ".$before_changes['ceo_education_level'].", sector : ".$before_changes['sectors'].", category : ".$before_changes['category'].", status : ".$before_changes['status'].", founders country : ".$before_changes['country'].", impact sdg : ".$before_changes['impact'].", faculty schools : ".$before_changes['schools'].", person 1 : ".$before_changes['person1'].", person 2 : ".$before_changes['person2'].", person 3 : ".$before_changes['person3'].", function person 1 : ".$before_changes['type_of_person1'].", function person 2 : ".$before_changes['type_of_person2'].", function person 3 : ".$before_changes['type_of_person3'];
-$after = "company : ".$after_changes['company_name'].", web : ".$after_changes['web'].", founding date : ".$after_changes['founding_date'].", rc : ".$after_changes['rc'].", exit year : ".$after_changes['exit_year'].", EPFL grant : ".$after_changes['epfl_grant'].", awards competitions : ".$after_changes['awards_competitions'].", key words : ".$after_changes['key_words'].", laboratory : ".$after_changes['laboratory'].", short description : ".$after_changes['short_description'].", type of startup : ".$after_changes['type_startup'].", ceo education level : ".$after_changes['ceo_education_level'].", sector : ".$after_changes['sectors'].", category : ".$after_changes['category'].", status : ".$after_changes['status'].", founders country : ".$after_changes['founders_country'].", impact sdg : ".$after_changes['impact_sdg'].", faculty schools : ".$after_changes['faculty_schools'].", person 1 : ".$after_changes['person1'].", person 2 : ".$after_changes['person2'].", person 3 : ".$after_changes['person3'].", function person 1 : ".$after_changes['function_type_of_person1'].", function person 2 : ".$after_changes['function_type_of_person2'].", function person 3 : ".$after_changes['function_type_of_person3'];
+$before = "company : ".$before_changes['company'].", web : ".$before_changes['web'].", founding date : ".$before_changes['founding_date'].", rc : ".$before_changes['rc'].", exit year : ".$before_changes['exit_year'].", EPFL grant : ".$before_changes['epfl_grant'].", awards competitions : ".$before_changes['awards_competitions'].", key words : ".$before_changes['key_words'].", laboratory : ".$before_changes['laboratory'].", short description : ".$before_changes['short_description'].", type of startup : ".$before_changes['type_startup'].", ceo education level : ".$before_changes['ceo_education_level'].", sector : ".$before_changes['sectors'].", category : ".$before_changes['category'].", status : ".$before_changes['status'].", founders country : ".$before_changes['country'].", impact sdg : ".$before_changes['impact'].", faculty schools : ".$before_changes['schools'].", person 1 : ".$before_changes['name1'].", person 2 : ".$before_changes['name2'].", person 3 : ".$before_changes['name3'].", function person 1 : ".$before_changes['type_of_person1'].", function person 2 : ".$before_changes['type_of_person2'].", function person 3 : ".$before_changes['type_of_person3'];
+$after = "company : ".$after_changes['company_name'].", web : ".$after_changes['web'].", founding date : ".$after_changes['founding_date'].", rc : ".$after_changes['rc'].", exit year : ".$after_changes['exit_year'].", EPFL grant : ".$after_changes['epfl_grant'].", awards competitions : ".$after_changes['awards_competitions'].", key words : ".$after_changes['key_words'].", laboratory : ".$after_changes['laboratory'].", short description : ".$after_changes['short_description'].", type of startup : ".$after_changes['type_startup'].", ceo education level : ".$after_changes['ceo_education_level'].", sector : ".$after_changes['sectors'].", category : ".$after_changes['category'].", status : ".$after_changes['status'].", founders country : ".implode(";",$after_changes['founders_country']).", impact sdg : ".implode(";",$after_changes['impact_sdg']).", faculty schools : ".implode(";",$after_changes['faculty_schools']).", person 1 : ".$after_changes['person1'].", person 2 : ".$after_changes['person2'].", person 3 : ".$after_changes['person3'].", function person 1 : ".$after_changes['function_type_of_person1'].", function person 2 : ".$after_changes['function_type_of_person2'].", function person 3 : ".$after_changes['function_type_of_person3'];
 
 //Recupérer les données saisies par l'utilisateur
 $data = [
@@ -49,6 +68,14 @@ $status = $statut_id['id_status'];
 //Update des champs de la table startup
 $sql_update_startup = "UPDATE startup SET company=:company_name, web=:web, founding_date=:founding_date, rc=:rc, exit_year=:exit_year, epfl_grant=:epfl_grant, awards_competitions=:awards_competitions, key_words=:key_words, laboratory=:laboratory, short_description=:short_description, fk_type=$type, fk_ceo_education_level=$ceo, fk_sectors=$sector, fk_category=$category, fk_status=$status WHERE id_startup=$param";
 $stmt = $db->prepare($sql_update_startup);
+if($stmt->execute($data))
+{
+ $updated = true;
+}
+else
+{
+ $updated = false;
+}
 
 //Update des champs multicritère
 if(startup_faculty_data_has_been_modify())
@@ -69,7 +96,13 @@ if(startup_faculty_data_has_been_modify())
         $faculty_school = $id_faculty_school['id_faculty_schools'];
 
         $insert_new_faculties_schools =$db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES('.$param.','.$faculty_school.')');
-        $insert_new_faculties_schools -> execute();
+        if($insert_new_faculties_schools -> execute())
+        {
+        }
+        else
+        {
+            $updated = false;
+        }
     }
 } 
 
@@ -91,7 +124,13 @@ if(startup_country_data_has_been_modify())
         $founders_country = $id_country['id_founders_country'];
 
         $insert_new_founders_countries =$db -> prepare('INSERT INTO startup_founders_country(fk_startup, fk_founders_country) VALUES('.$param.','.$founders_country.')');
-        $insert_new_founders_countries -> execute();
+        if($insert_new_founders_countries -> execute())
+        {
+        }
+        else
+        {
+            $updated = false;
+        }
     }
 }
 
@@ -113,7 +152,13 @@ if(startup_impact_data_has_been_modify())
         $impact_id = $id_impact['id_impact_sdg'];
 
         $insert_new_impact_sdg =$db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES('.$param.','.$impact_id.')');
-        $insert_new_impact_sdg -> execute();
+        if($insert_new_impact_sdg -> execute())
+        {
+        }
+        else
+        {
+            $updated = false;
+        }
     }
 }
 
@@ -132,13 +177,25 @@ for ($x = 1; $x <= 3; $x++)
             if(($_SESSION['startup_data']["id_person$x"] == ""&& $_POST["person$x"] != "") && ($_SESSION['startup_data']["id_type_of_person$x"] == ""&& $_POST["function_type_of_person$x"] != ""))
             {
                 $add_new_startup_person = $db -> prepare('INSERT INTO startup_person(fk_startup,fk_person,fk_type_of_person) VALUES ("'.$param.'","'.$_POST["person$x"].'","'.$_POST["function_type_of_person$x"].'")');
-                $add_new_startup_person -> execute();
+                if($add_new_startup_person -> execute())
+                {
+                }
+                else
+                {
+                    $updated = false;
+                }
             }
             //Si les champs ne sont pas vides, faire l'update de la table startup person
             else
             {
                 $modify_startup_person = $db -> prepare('UPDATE startup_person SET fk_startup="'.$param.'", fk_person="'.$_POST["person$x"].'",fk_type_of_person="'.$_POST["function_type_of_person$x"].'" WHERE id_startup_person="'.$_SESSION['startup_data']["id_startup_person$x"].'"');
-                $modify_startup_person -> execute();
+                if($modify_startup_person -> execute())
+                {
+                }
+                else
+                {
+                    $updated = false;
+                }
             }
             
         }
@@ -146,11 +203,11 @@ for ($x = 1; $x <= 3; $x++)
 }
 
 //Flash message pour dire à l'utilisateur que la startup a été changé
-if($stmt->execute($data)){
+if($updated){
     $_SESSION['flash_message']['message'] = $_POST['company_name']." was changed";
     $_SESSION['flash_message']['type'] = "success";
 
-    //add_logs($_POST['company_name'],$after,$after,$action);
+    add_logs($_SESSION['uniqueid'],$before,$after,$action);
 } else {
     $_SESSION['flash_message']['message'] = "An unexpected error occured";
     $_SESSION['flash_message']['type'] = "danger";
