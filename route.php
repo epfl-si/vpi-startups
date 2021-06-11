@@ -15,6 +15,8 @@ elseif ($controller === 'person' && $method === 'add' && isset($_POST['sciper_nu
 }
 elseif ($controller === 'startup' && $method === 'add' && isset($_POST['company_name']) && !empty($_POST['company_name'])) {
 }
+elseif ($controller === 'import' && isset($_POST['import']) && !empty($_FILES['fileToUpload']['name'])) {
+}
 else {
    require_once 'header.php';
 }
@@ -78,11 +80,6 @@ elseif($controller === 'charts' && $method === 'startups_by_sectors?header=false
     include_once('./startups_by_sectors.php');
 }
 
-//pour import_from_csv.php
-if ($controller === 'import') {
-    include_once('./import_from_csv.php');
-}
-
 //pour logs_page.php
 if ($controller === 'logs') {
     include_once('./logs_page.php');
@@ -103,6 +100,7 @@ if ($controller === 'person' && $method === 'modify' && is_numeric($param)) {
     }
 }
 
+
 //pour modify_startup_data.php
 if ($controller === 'startup' && $method === 'modify' && is_numeric($param)) 
 {
@@ -116,6 +114,19 @@ if ($controller === 'startup' && $method === 'modify' && is_numeric($param))
     else 
     {
         include_once('./modify_startup_data.php');
+    }
+}
+
+//pour import.php
+if ($controller === 'import') 
+{
+    if(isset($_POST['import']) && !empty($_FILES['fileToUpload']['name'])) 
+    {
+        require './tools/import_to_db.php';
+    }
+    else
+    {
+        include_once('./import_from_csv.php');
     }
 }
 
