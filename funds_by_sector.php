@@ -64,10 +64,9 @@ if(isset($_SESSION['user']))
 //Si l'utilisateur n'est pas connecté
 else
 {
-    echo "
-    <script>
-        window.location.replace('login.php');
-    </script>
-    ";
+    $_SESSION['flash_message'] = array();
+    $_SESSION['flash_message']['message'] = "You need to be autenticated to access this page";
+    $_SESSION['flash_message']['type'] = "warning";
+    header('Location: /login');
 }
 ?>

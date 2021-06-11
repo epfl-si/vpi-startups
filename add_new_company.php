@@ -283,7 +283,7 @@ else
     $_SESSION['flash_message'] = array();
     $_SESSION['flash_message']['message'] = "You need to be autenticated to access this page";
     $_SESSION['flash_message']['type'] = "warning";
-    header('Location: /login.php');
+    header('Location: /login');
     exit;
 }
 ?>

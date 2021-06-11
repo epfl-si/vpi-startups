@@ -54,24 +54,20 @@ if(isset($_SESSION['user']))
 
                 //Il regarde si la taille du fichier ne dépasse les 500 Mb
                 if ($_FILES["fileToUpload"]["size"] > 500000000) 
-                {
-                    echo "
-                    <script>
-                        alert('Sorry, your file have more that 500 Mb, it\'s too large.');
-                    </script>
-                    ";
-                
+                {                    
+                    $_SESSION['flash_message'] = array();
+                    $_SESSION['flash_message']['message'] = "Sorry, your file have more that 500 Mb, it\'s too large"; 
+                    $_SESSION['flash_message']['type'] = "warning";
                     $uploadOk = 0;
                 }
 
                 //Si une de ces conditions est vraie, alors il n'importe pas le fichier
                 if ($uploadOk == 0) 
                 {
-                    echo "
-                    <script>
-                        alert('Sorry, the file was not upload.');
-                    </script>
-                    ";
+                    $_SESSION['flash_message'] = array();
+                    $_SESSION['flash_message']['message'] = "Sorry, the file was not upload"; 
+                    $_SESSION['flash_message']['type'] = "warning";
+                    header('Location: /'.$controller);
                 }
 
                 //Si tout se passe bien
@@ -117,8 +113,9 @@ if(isset($_SESSION['user']))
 
                                     if($type_startup['type_startup'] == '')
                                     {
-                                    
-                                        echo "The type of startup that you choose don't match with types of startup in database for the startup : ".$csv[0]."<br>";
+                                        $_SESSION['flash_message'] = array();
+                                        $_SESSION['flash_message']['message'] = "The type of startup that you choose don't match with types of startup in database for the startup : ".$csv[0]."<br>"; 
+                                        $_SESSION['flash_message']['type'] = "warning";
                                         $import_error = "true";
                                     }
 
@@ -142,7 +139,9 @@ if(isset($_SESSION['user']))
                                     
                                     if($ceo_education_level['ceo_education_level'] == '')
                                     {
-                                        echo "The ceo education level that you choose don't match with ceo education level in database for the startup : ".$csv[0]."<br>"; 
+                                        $_SESSION['flash_message'] = array();
+                                        $_SESSION['flash_message']['message'] = "The ceo education level that you choose don't match with ceo education level in database for the startup : ".$csv[0]."<br>"; 
+                                        $_SESSION['flash_message']['type'] = "warning";
                                         $import_error = "true";
                                     }
                                     else
@@ -164,7 +163,9 @@ if(isset($_SESSION['user']))
                                     
                                     if($sector['sectors'] == '')
                                     {
-                                        echo "The sector that you choose don't match with sector in database for the startup : ".$csv[0]."<br>"; 
+                                        $_SESSION['flash_message'] = array();
+                                        $_SESSION['flash_message']['message'] = "The sector that you choose don't match with sector in database for the startup : ".$csv[0]."<br>";
+                                        $_SESSION['flash_message']['type'] = "warning";
                                         $import_error = "true";
                                     }
                                     else
@@ -185,7 +186,9 @@ if(isset($_SESSION['user']))
                                     
                                     if($category['category'] == '')
                                     {
-                                        echo "The category that you choose don't match with category in database for the startup : ".$csv[0]."<br>";
+                                        $_SESSION['flash_message'] = array();
+                                        $_SESSION['flash_message']['message'] = "The category that you choose don't match with category in database for the startup : ".$csv[0]."<br>"; 
+                                        $_SESSION['flash_message']['type'] = "warning";
                                         $import_error = "true";
                                     }
                                     else
@@ -207,7 +210,9 @@ if(isset($_SESSION['user']))
                                     
                                     if($statut['status'] == '')
                                     {
-                                        echo "The status that you choose don't match with status in database for the startup : ".$csv[0]."<br>";
+                                        $_SESSION['flash_message'] = array();
+                                        $_SESSION['flash_message']['message'] = "The status that you choose don't match with status in database for the startup : ".$csv[0]."<br>"; 
+                                        $_SESSION['flash_message']['type'] = "warning";
                                         $import_error = "true";
                                     }
                                     else
@@ -233,7 +238,9 @@ if(isset($_SESSION['user']))
                                         
                                         if($founders_country['founders_country'] == '')
                                         {
-                                            echo "The founders country that you choose don't match with founders country in database for the startup : ".$csv[0]."<br>"; 
+                                            $_SESSION['flash_message'] = array();
+                                            $_SESSION['flash_message']['message'] = "The founders country that you choose don't match with founders country in database for the startup : ".$csv[0]."<br>"; 
+                                            $_SESSION['flash_message']['type'] = "warning";
                                             $import_error = "true";
                                         }
                                         else
@@ -261,7 +268,9 @@ if(isset($_SESSION['user']))
                                         
                                         if($faculty_schools['faculty_schools'] == '')
                                         {
-                                            echo "The faculty schools that you choose don't match with faculty schools in database for the startup : ".$csv[0]."<br>";
+                                            $_SESSION['flash_message'] = array();
+                                            $_SESSION['flash_message']['message'] = "The faculty schools that you choose don't match with faculty schools in database for the startup : ".$csv[0]."<br>";
+                                            $_SESSION['flash_message']['type'] = "warning";
                                             $import_error = "true"; 
                                         }
                                         else
@@ -288,7 +297,9 @@ if(isset($_SESSION['user']))
                                         
                                         if($impact_sdg['impact_sdg'] == '')
                                         {
-                                            echo "The impact that you choose don't match with impact in database for the startup : ".$csv[0]."<br>";
+                                            $_SESSION['flash_message'] = array();
+                                            $_SESSION['flash_message']['message'] = "The impact that you choose don't match with impact in database for the startup : ".$csv[0]."<br>";
+                                            $_SESSION['flash_message']['type'] = "warning";
                                             $import_error = "true";
                                         }
                                         else
@@ -314,6 +325,7 @@ if(isset($_SESSION['user']))
                                 }
                                 else
                                 {
+                                    header('Location: /'.$controller);
                                     exit;
                                 }
                             }
@@ -435,40 +447,39 @@ if(isset($_SESSION['user']))
                                 //Si l'utilisateur a choisi de ne pas réécrire les données
                                 else
                                 {
-                                    echo "La startup ".$data['company'] ." existe déjà <br>";
+                                    $_SESSION['flash_message'] = array();
+                                    $_SESSION['flash_message']['message'] = "La startup ".$data['company'] ." existe déjà <br>";
+                                    $_SESSION['flash_message']['type'] = "warning";
+                                    header('Location: /'.$controller);
                                 } 
                             }
                         }
                     
 
-                       //Pop-up d'avertissement pour dire que le fichier a été importé et que les données ont été importées dans la base de donnée
-                        echo " 
-                        <script>
-                        var filename = '".basename($_FILES["fileToUpload"]["name"])."';
-                            alert('The file '+filename+' has been uploaded and the data was imported in database.');
-                        </script>
-                        ";
+                        //Pop-up d'avertissement pour dire que le fichier a été importé et que les données ont été importées dans la base de donnée
+                        $_SESSION['flash_message'] = array();
+                        $_SESSION['flash_message']['message'] = "The file ".basename($_FILES["fileToUpload"]["name"])." has been uploaded and the data was imported in database";
+                        $_SESSION['flash_message']['type'] = "success";
 
-                        //echo 'The file '.$data_import_db[0].' has been uploaded and the data was imported in database.';
-                         //"Fermer" les fichiers ouverts au-dessus
-                         fclose($input);
-                         fclose($output);
-                         fclose($file_output);
+                        //"Fermer" les fichiers ouverts au-dessus
+                        fclose($input);
+                        fclose($output);
+                        fclose($file_output);
 
-                         //Supprimer le fichier qui a été importé par l'utilsateur et le fichier de traitement des données
-                         unlink('csv_imported/'.basename(($_FILES["fileToUpload"]["name"])).'');
-                         unlink('csv_imported/startups_modified_good_order.csv');
+                        //Supprimer le fichier qui a été importé par l'utilsateur et le fichier de traitement des données
+                        unlink('csv_imported/'.basename(($_FILES["fileToUpload"]["name"])).'');
+                        unlink('csv_imported/startups_modified_good_order.csv');
+                        header('Location: /'.$controller);
 
                     }
                     
                     //Pop-up d'avertissement s'il y a eu un problème avec l'importation des données 
                     else 
                     {
-                        echo "  
-                        <script>
-                            alert('Sorry, there was an error uploading your file.');
-                        </script>
-                        ";
+                        $_SESSION['flash_message'] = array();
+                        $_SESSION['flash_message']['message'] = "Sorry, something went wrong";
+                        $_SESSION['flash_message']['type'] = "warning";
+                        header('Location: /'.$controller);
                     } 
                     
                 } 
@@ -476,11 +487,10 @@ if(isset($_SESSION['user']))
             //Si le fichier n'est pas valide 
             else 
             {
-                echo "
-                <script>
-                    alert('Sorry, your file is not valid.');
-                </script>
-                ";
+                $_SESSION['flash_message'] = array();
+                $_SESSION['flash_message']['message'] = "Sorry, your file is not valid";
+                $_SESSION['flash_message']['type'] = "warning";
+                header('Location: /'.$controller);
             }
         }
 
@@ -491,21 +501,18 @@ if(isset($_SESSION['user']))
     //Si l'utilisateur n'a pas le droit d'écrire, un pop-up d'avertissement sera affiché et il sera redirigé vers la page d'accueil
     elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
     {
-        echo "
-        <script>
-            alert('You don't have enough rights to access this page.');
-            window.location.replace('index.php');
-        </script>
-        ";
+        $_SESSION['flash_message'] = array();
+        $_SESSION['flash_message']['message'] = "You don't have enough rights to access this page.";
+        $_SESSION['flash_message']['type'] = "warning";
+        header('Location: /');
     }
 }
 else
 {
-    echo "
-    <script>
-        window.location.replace('login.php');
-    </script>
-    ";
+    $_SESSION['flash_message'] = array();
+    $_SESSION['flash_message']['message'] = "You need to be autenticated to access this page";
+    $_SESSION['flash_message']['type'] = "warning";
+    header('Location: /login');
 }
 
 ?>

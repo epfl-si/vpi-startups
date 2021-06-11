@@ -423,20 +423,18 @@ if(isset($_SESSION['user']))
     }
     elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
     {
-        echo "
-        <script>
-            alert('You don\'t have enough rights to access this page.');
-            window.location.replace('index.php');
-        </script>";
+        $_SESSION['flash_message'] = array();
+        $_SESSION['flash_message']['message'] = "You don't have enough rights to access this page";
+        $_SESSION['flash_message']['type'] = "warning";
+        header('Location: /');
     }
 }
 else
 {
-    echo "
-    <script>
-        window.location.replace('login.php');
-    </script>
-    ";
+    $_SESSION['flash_message'] = array();
+    $_SESSION['flash_message']['message'] = "You need to be autenticated to access this page";
+    $_SESSION['flash_message']['type'] = "warning";
+    header('Location: /login');
 }
 
 
