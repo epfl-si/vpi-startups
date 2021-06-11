@@ -10,7 +10,7 @@
             <div class="container">
                 <h5 class="font-weight-bold my-3"> Add new person</h5>
                 <small class="text-danger my-3 row col-12"> * Fields Required </small>
-                <form method="post" id="form_add_new_company" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo security_text($_SERVER["PHP_SELF"]); echo'">
+                <form method="post" id="form_add_new_company" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo '/'.$controller.'/'.$method; echo'">
                     <!-- Champ pour ajouter une personne lier à un numero de sciper -->
                     <div class="form-group row">
                         <label for="sciper_number" class="col-sm-4 col-form-label">Sciper Number <small class="text-danger"> *</small> </label>
@@ -96,10 +96,6 @@
                         document.getElementById("firstname").value = data[0]["firstname"];
                         document.getElementById("email_person").value = data[0]["email"];
                         document.getElementById("person_function").value = data[0]["person_function"];
-                    },
-                    error:function()
-                    {
-                        alert("Something went wrong, please try again.");
                     }
                 });
             }
@@ -151,25 +147,28 @@
                         add_logs($sciper_number,$before,$after,$action);
                     }
                     else
-                    {
-                        echo '
-                        <script> 
-                            alert("The person already exist in database"); 
-                        </script>
-                        ';
+                    {   
+                        $_SESSION['flash_message'] = array();
+                        $_SESSION['flash_message']['message'] = "The person already exist in database";
+                        $_SESSION['flash_message']['type'] = "warning";
+                        echo "la personne existe déjà";
+                        
+                        exit;
+                        
                     }
                 
                 }
                 else
                 {
-                    echo "
-                    <script>
-                        alert('Sciper number not found');
-                    </script> ";
+
+                    $_SESSION['flash_message'] = array();
+                    $_SESSION['flash_message']['message'] = "Sciper number not found";
+                    $_SESSION['flash_message']['type'] = "warning";
+                    exit;
                 }
 
                 
-                
+                header("Location: /$controller/$method");
             }
         }
         elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
@@ -178,7 +177,7 @@
             $_SESSION['flash_message'] = array();
             $_SESSION['flash_message']['message'] = "You don't have enough rights to access this page.";
             $_SESSION['flash_message']['type'] = "warning";
-            header('Location: /index.php');
+            header('Location: /');
             exit;
         }
         
