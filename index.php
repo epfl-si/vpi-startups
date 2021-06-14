@@ -1,8 +1,6 @@
 <?php
 
-//Si l'utilisateur est connecté
-if(isset($_SESSION['user']))
-{
+
     //Tableau qui affiche quelques informations des startups
     ?>
 
@@ -218,11 +216,6 @@ if(isset($_SESSION['user']))
     <!-- Partie HTML pour placer les checkboxes, les champs filtres, le tableau et le bouton de téléchargement du fichier CSV -->
     <div class='container'>
         <h5 class='font-weight-bold'> Homepage: Companies List </h5>
-        
-    <?php
-        // Affiche un message flash si nécessaire:
-        echo do_i_need_to_display_flash_message();
-    ?>
         <div id='dashboard_div'>
             <div class='row'>
                 <div id='search_company' class='text-left col-3 my-5 '></div>
@@ -236,14 +229,6 @@ if(isset($_SESSION['user']))
     <?php
 
     require 'footer.php';
-}
-else
-{
-    echo "
-    <script>
-        window.location.replace('/login.php');
-    </script>
-    ";
-}
+
 
 ?>

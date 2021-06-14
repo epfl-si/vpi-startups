@@ -55,7 +55,7 @@ function startup_data_has_been_modify($param){
   if($_SESSION['startup_data']['id_startup'] != $param){
     die("hackeur");
   }
-  if($_SESSION['startup_data']['company_name'] != $_POST['company_name']) {
+  if($_SESSION['startup_data']['company'] != $_POST['company_name']) {
     return true;
   }
   if($_SESSION['startup_data']['web'] != $_POST['web']) {
