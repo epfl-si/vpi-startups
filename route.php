@@ -17,6 +17,8 @@ elseif ($controller === 'startup' && $method === 'add' && isset($_POST['company_
 }
 elseif ($controller === 'import' && isset($_POST['import']) && !empty($_FILES['fileToUpload']['name'])) {
 }
+elseif ($controller === 'logout') {
+}
 else {
    require_once 'header.php';
 }
