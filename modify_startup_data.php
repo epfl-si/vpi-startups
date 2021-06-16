@@ -95,10 +95,9 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     //Formulaire pour ajouter une nouvelle startup
     echo '
     <div class="container">
-        <h5 class="font-weight-bold my-3"> Modify company</h5>
-        <small class="text-danger my-3 row col-12"> * Fields Required </small>
-        <form method="post" id="form_add_new_company" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo '/'.$controller.'/'.$method.'/'.$param; echo'">
-
+        <form method="post" id="form_add_new_company" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" action="'; echo '/'.$controller.'/'.$method.'/'.$param; echo'">
+            <legend class="font-weight-bold my-3"> Modify company</legend>
+            <small class="text-danger my-3 row col-12"> * Fields Required </small>
             <input type="hidden" id="action" name="action" value="'.$method." ".$controller.' : '.$startup_data['company'].'"">
             <!-- Champ pour le nom de la startup -->
             <div class="form-group row">
@@ -412,7 +411,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
 
             echo '
             <!-- Champ pour une description de la startup-->
-            <button class="btn btn-outline-secondary mt-5" id="submit_modify_company" name="submit_modify_company" type="submit">Submit</button>
+            <button class="btn btn-outline-secondary my-5" id="submit_modify_company" name="submit_modify_company" type="submit">Submit</button>
         </form>
     </div>';
 
