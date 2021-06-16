@@ -17,12 +17,16 @@ elseif ($controller === 'startup' && $method === 'add' && isset($_POST['company_
 }
 elseif ($controller === 'import' && isset($_POST['import']) && !empty($_FILES['fileToUpload']['name'])) {
 }
+elseif ($controller === 'funds' && $method === 'add' && isset($_POST['amount']) && isset($_POST['amount'])) {
+}
+elseif ($controller === 'funds' && $method === 'modify' && is_numeric($param) && isset($_POST['amount']) && isset($_POST['amount'])) {
+}
 elseif ($controller === 'logout') {
 }
 else {
    require_once 'header.php';
 }
-//require 'header.php';
+
 require 'tools/connection_db.php';
 require 'tools/logs_function.php';
 
@@ -40,6 +44,11 @@ if ($controller === 'persons') {
 //pour index.php
 if ($controller === '') {
     include_once('./index.php');
+}
+
+//funds 
+if ($controller === 'funds') {
+    include_once('./pages/funds/funds.php');
 }
 
 //Login 
@@ -80,6 +89,11 @@ elseif($controller === 'charts' && $method === 'startups_by_sectors?header=false
 {
     include_once('./hide_header.php');
     include_once('./startups_by_sectors.php');
+}
+
+//funds
+if ($controller === 'funds') {
+    include_once('./pages/funds/funds.php');
 }
 
 //pour logs_page.php
@@ -144,4 +158,6 @@ if ($controller === 'startup' && $method === 'add')
         include_once('./add_new_company.php');
     }
 }
+
+require_once 'footer.php';
 ?>
