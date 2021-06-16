@@ -41,6 +41,13 @@ class Fund {
         return $stmt->fetchAll();
     }
 
+    function get_stage_of_investment_by_id_stage_of_investment($post)
+    {
+        require './tools/connection_db.php';
+        $stmt = $db->query("SELECT stage_of_investment FROM stage_of_investment WHERE id_stage_of_investment = '".$post."'");
+        return $stmt->fetch();
+    }
+
     function get_type_of_investment_by_id_type_of_investment($post)
     {
         require './tools/connection_db.php';

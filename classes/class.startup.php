@@ -40,6 +40,13 @@ class Startup
         return $html_startup;
     }
 
+    function get_startup_by_id_startup($post)
+    {
+        require './tools/connection_db.php';
+        $stmt = $db->query("SELECT company FROM startup WHERE id_startup = '".$post."'");
+        return $stmt->fetch();
+    }
+
     
 }
 
