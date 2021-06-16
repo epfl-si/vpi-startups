@@ -17,10 +17,12 @@ if($method=="add")
         if($fund->insert_new_funds($_POST))
         {
             $type_of_investment = $fund->get_type_of_investment_by_id_type_of_investment($_POST['fk_type_of_investment']);
-            $after = "amount : ".$_POST['amount'].", investment date : ".$_POST['investment_date'].", investors : ".$_POST['investors'].", stage of investment : ".['stage_of_investment'].", type_of_investment : ".$type_of_investment['type_of_investment'].", startup : ".$data['startup'];
+            $stage_of_investment = $fund->get_stage_of_investment_by_id_stage_of_investment($_POST['fk_stage_of_investment']);
+            $startup_name = $startup->get_startup_by_id_startup($_POST['fk_startup']);
+            $after = "amount : ".$_POST['amount'].", investment date : ".$_POST['investment_date'].", investors : ".$_POST['investors'].", stage of investment : ".$stage_of_investment['stage_of_investment'].", type_of_investment : ".$type_of_investment['type_of_investment'].", startup : ".$startup_name['company'];
             $action = "Add new fund";
 
-            //add_logs($_SESSION['uniqueid'],"",$after,$action); 
+            add_logs($_SESSION['uniqueid'],"",$after,$action); 
 
             $_SESSION['flash_message']['message'] = "The fund was added to startup : ".$startup->get_startup_by_id($_POST['fk_startup'])['company'];
             $_SESSION['flash_message']['type'] = "success";
