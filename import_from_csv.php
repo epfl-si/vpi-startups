@@ -5,8 +5,8 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
 {
     echo '
     <div class="container my-5">
-        <h5 class="font-weight-bold my-5 pl-0"> Import from CSV to database </h5>
-        <form method="post" id="form_csv_upload" class="form_csv_upload col-12 col-sm-12 col-lg-8 col-xl-8 my-5" enctype="multipart/form-data" action="'; echo '/'.$controller; echo'">
+        <form method="post" id="form_csv_upload" class="form_csv_upload col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" enctype="multipart/form-data" action="'; echo '/'.$controller; echo'">
+            <legend class="font-weight-bold my-5 pl-0"> Import from CSV to database </legend>    
             <div>
                 <!-- input type="file" permet d\'aller chercher sur le disque de l\'utilisateur, le csv qu\'il veut ajouter-->
                 <input type="file" class="form-control-file border" name="fileToUpload" id="fileToUpload">  

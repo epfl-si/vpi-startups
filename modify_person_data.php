@@ -17,10 +17,9 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     echo '
 
     <div class="container">
-        <h5 class="font-weight-bold my-3"> Modify Person Data</h5>
-        <small class="text-danger my-3 row col-12"> * Fields Required </small>
-        <form method="post" id="form_change_person" name="form_change_person" class="form_change_person col-12 col-sm-12 col-lg-8 col-xl-8 my-5" action="'; echo '/'.$controller.'/'.$method.'/'.$param; echo'">
-
+        <form method="post" id="form_change_person" name="form_change_person" class="form_change_person col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" action="'; echo '/'.$controller.'/'.$method.'/'.$param; echo'">
+            <legend class="font-weight-bold my-3"> Modify Person Data</legend>
+            <small class="text-danger my-3 row col-12"> * Fields Required </small>
             <input type="hidden" id="action" name="action" value="'.$method." ".$controller.' : '.$person_data['sciper_number'].'"">
         
             <!-- Champ pour ajouter une personne lier à un numero de sciper -->
@@ -104,7 +103,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 </select>
                 </div>
             </div>
-            <button class="btn btn-outline-secondary mt-5" id="change_person_data" name="change_person_data" type="submit">Submit</button>
+            <button class="btn btn-outline-secondary my-5" id="change_person_data" name="change_person_data" type="submit">Submit</button>
         </form>
     </div>';
 

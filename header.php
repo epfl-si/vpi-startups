@@ -2,6 +2,7 @@
 
 if(isset($_SESSION['user']))
 {
+    error_reporting(E_ALL & ~E_NOTICE);
     $sciper_number = $_SESSION['uniqueid'];
 
     //Initialiser les modules nécessaires pour le site (bootstrap, ajax, google charts)
@@ -57,6 +58,7 @@ if(isset($_SESSION['user']))
                         <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item dropdown-item-danger text-danger" href="/startup/add">Add New Startup</a>
                             <a class="dropdown-item dropdown-item-danger text-danger" href="/person/add">Add New Person</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/funds/add">Add New Funds</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -64,7 +66,7 @@ if(isset($_SESSION['user']))
                         <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item dropdown-item-danger text-danger" href="/">Modify Startup</a>
                             <a class="dropdown-item dropdown-item-danger text-danger" href="/persons">Modify Person</a>
-                            <a class="dropdown-item dropdown-item-danger text-danger" href="#">Modify Funds</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/funds">Modify Funds</a>
                         </div>
                     </li>
                     <li class="nav-item">

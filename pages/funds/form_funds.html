@@ -1,0 +1,84 @@
+<?php
+
+if($param != "")
+{
+    $method_param = $method."/".$param;
+}
+else
+{
+    $method_param = $method;
+}
+
+?>
+
+
+<div class="container">
+    <form class="form-horizontal col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" method="POST" action="/funds/<?= $method_param; ?>">
+        <fieldset>
+            <!-- Add new company -->
+            <legend class="font-weight-bold my-3"> Add new Fund</legend>
+            <small class="text-danger my-3 row col-12"> * Fields Required </small>
+
+            <!-- Amount-->
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="amount">Amount <small class="text-danger"> *</small> </label>  
+                <div class="col-sm-6">
+                    <input id="amount" name="amount" type="number" value="<?= $amount; ?>" class="form-control" required>
+                </div>
+            </div>
+            
+            <!-- Investment Date-->
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="investment_date">Investment Date<small class="text-danger"> *</small></label>  
+                <div class="col-sm-6">
+                    <input id="investment_date" name="investment_date" type="date" value="<?= $investment_date; ?>" class="form-control" required> 
+                </div>
+            </div>
+            
+            <!-- Investors-->
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="investors">Investors<small class="text-danger"> *</small> </label>  
+                <div class="col-sm-6">
+                    <input id="investors" name="investors" type="text" value="<?= $investors; ?>" class="form-control"> 
+                </div>
+            </div>
+            
+            <!-- Stage of Investment -->
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="fk_stage_of_investment">Stage of Investment<small class="text-danger"> *</small> </label>
+                <div class="col-sm-6">
+                    <select id="fk_stage_of_investment" name="fk_stage_of_investment" class="form-control" required>
+                        <?= $option_stage_of_investment; ?>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Type of investment -->
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="fk_type_of_investment">Type of investment<small class="text-danger"> *</small> </label>
+                <div class="col-sm-6">
+                    <select id="fk_type_of_investment" name="fk_type_of_investment" class="form-control" required>
+                        <?= $option_type_of_investment; ?>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Sartup -->
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label" for="fk_startup">Startup<small class="text-danger"> *</small> </label>
+                <div class="col-sm-6">
+                    <select id="fk_startup" name="fk_startup" class="form-control" required>
+                        <?= $option_startup; ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Button Submit-->
+            <div class="form-group row">
+                <div class="col-sm-6">
+                <button id="submit_btn_funds" name="submit_btn_funds" class="btn btn-outline-secondary my-5">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
