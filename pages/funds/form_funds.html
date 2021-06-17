@@ -1,5 +1,19 @@
+<?php
+
+if($param != "")
+{
+    $method_param = $method."/".$param;
+}
+else
+{
+    $method_param = $method;
+}
+
+?>
+
+
 <div class="container">
-    <form class="form-horizontal col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" method="POST" action="/funds/<?= $method; ?>">
+    <form class="form-horizontal col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" method="POST" action="/funds/<?= $method_param; ?>">
         <fieldset>
             <!-- Add new company -->
             <legend class="font-weight-bold my-3"> Add new Fund</legend>
