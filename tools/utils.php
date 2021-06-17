@@ -171,6 +171,42 @@ function startup_type_of_person_data_has_been_modify($number_of_types_of_person)
   }
   return false;  
 }
+
+
+//modifier les données des personnes en regardant si un champ a été modifié
+function funds_data_has_been_modify($param){
+  if($_SESSION['funds_data']['id_funding'] != $param){
+    
+    die("hackeur");
+  }
+
+  if($_SESSION['funds_data']['amount'] != $_POST['amount']) {
+    return true;
+  }
+
+  if($_SESSION['funds_data']['investment_date'] != $_POST['investment_date']) {
+    return true;
+  }
+
+  if($_SESSION['funds_data']['investors'] != $_POST['investors']) {
+    return true;
+  }
+
+  if($_SESSION['funds_data']['fk_stage_of_investment'] != $_POST['fk_stage_of_investment']) {
+    return true;
+  }
+  if($_SESSION['funds_data']['fk_type_of_investment'] != $_POST['fk_type_of_investment']) {
+    return true;
+  }
+  if($_SESSION['funds_data']['fk_startup'] != $_POST['fk_startup']) {
+    return true;
+  }
+  
+  return false;
+}
+
+
+
 /**
  * Return a bottstrap flash message
  * @param String $message: the message to be displayed
