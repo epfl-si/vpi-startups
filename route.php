@@ -22,16 +22,11 @@ elseif ($controller === 'logout') {
 else {
    require_once 'header.php';
 }
+
 //require 'header.php';
 require 'tools/connection_db.php';
 require 'tools/logs_function.php';
 
-/* // Pour add_new_person.php
-// localhost:8888/add_new_person.php → localhost:8888/person/add
-if ($controller === 'person' && $method === 'add') {
-    include_once('./add_new_person.php');
-}
- */
 //pour persons.php
 if ($controller === 'persons') {
     include_once('./persons.php');
