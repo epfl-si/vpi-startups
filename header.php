@@ -2,7 +2,7 @@
 
 if(isset($_SESSION['user']))
 {
-    
+    error_reporting(E_ALL & ~E_NOTICE);
     $sciper_number = $_SESSION['uniqueid'];
 
     //Initialiser les modules nécessaires pour le site (bootstrap, ajax, google charts)
