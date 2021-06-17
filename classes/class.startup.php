@@ -46,6 +46,7 @@ class Startup
         $stmt = $db->query("SELECT company FROM startup WHERE id_startup = '".$post."'");
         return $stmt->fetch();
     }
+    
 
     
 }

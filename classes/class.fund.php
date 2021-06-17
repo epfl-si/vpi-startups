@@ -87,12 +87,24 @@ class Fund {
         return $data;
     }
 
-    function update_funds($data)
+    function get_funds_to_modify($param)
+    {
+        require './tools/connection_db.php';
+
+        //Récupérer les données des fonds
+        $funds_data = $db -> query('SELECT * FROM funding WHERE id_funding="'.$param.'"');
+        $funds_data = $funds_data -> fetch();
+        $_SESSION['funds_data'] = $funds_data;
+        return $_SESSION['funds_data'];
+    }
+
+    function update_funds($data, $param)
     {
         require './tools/connection_db.php';
         $data = $this->validate_funds_data($data);
-        $update_funds = $db -> prepare("INSERT INTO funding (amount, investment_date, investors, fk_stage_of_investment, fk_type_of_investment, fk_startup) VALUES (".$data['amount'].", '".$data['investment_date']."', '".$data['investors']."', ".$data['fk_stage_of_investment'].", ".$data['fk_type_of_investment'].", ".$data['fk_startup'].")");
-        return $update_funds -> execute();
+        $update_funds = $db -> prepare("UPDATE funding SET amount = '".$data['amount']."', investment_date = '".$data['investment_date']."', investors = '".$data['investors']."', fk_stage_of_investment= '".$data['fk_stage_of_investment']."', fk_type_of_investment= '".$data['fk_type_of_investment']."', fk_startup='".$data['fk_startup']."' WHERE id_funding='".$param."'");
+        $update_funds -> execute();
+        return $data;
     }
 
 
