@@ -26,12 +26,12 @@ else {
 require 'tools/connection_db.php';
 require 'tools/logs_function.php';
 
-// Pour add_new_person.php
+/* // Pour add_new_person.php
 // localhost:8888/add_new_person.php → localhost:8888/person/add
 if ($controller === 'person' && $method === 'add') {
     include_once('./add_new_person.php');
 }
-
+ */
 //pour persons.php
 if ($controller === 'persons') {
     include_once('./persons.php');
@@ -132,7 +132,7 @@ if ($controller === 'import')
     }
 }
 
-//pour add_person.php
+//pour add_startup.php
 if ($controller === 'startup' && $method === 'add') 
 {
     if(isset($_POST['company_name']) && !empty($_POST['company_name'])) 
@@ -142,6 +142,19 @@ if ($controller === 'startup' && $method === 'add')
     else
     {
         include_once('./add_new_company.php');
+    }
+}
+
+//pour add_person.php
+if ($controller === 'person' && $method === 'add') 
+{
+    if(isset($_POST['sciper_number']) && !empty($_POST['sciper_number'])) 
+    {
+        require './tools/add_new_person_db.php';
+    }
+    else
+    {
+        include_once('./add_new_person.php');
     }
 }
 ?>
