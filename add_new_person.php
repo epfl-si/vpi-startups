@@ -7,9 +7,9 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     echo '
     <div class="container">
         <form method="post" id="form_add_new_company" class="form_add_new_company col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" action="'; echo '/'.$controller.'/'.$method; echo'">
-            <legend class="font-weight-bold my-3"> Add new person</legend>
-            <small class="text-danger my-3 row col-12"> * Fields Required </small>    
             <!-- Champ pour ajouter une personne lier à un numero de sciper -->
+            <legend class="font-weight-bold my-3"> Add new person</legend>
+            <small class="text-danger my-3 row col-12"> * Fields Required </small>
             <div class="form-group row">
                 <label for="sciper_number" class="col-sm-4 col-form-label">Sciper Number <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
@@ -99,75 +99,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     }
 
     </script>';
-        
-    if(isset($_POST['submit_new_person']))
-    {
-        $sciper = (int)$_POST['sciper_number'];
-        $name = security_text($_POST['name']);
-        $firstname = security_text($_POST['firstname']);
-        $email = security_text($_POST['email']);
-        $person_function = security_text($_POST['person_function']);
-        $prof_as_founder = $_POST['prof_as_founder'];
-        $gender = $_POST['gender'];
 
-        // LDAP variables
-        $ldapuri = "ldap://ldap.epfl.ch:389";
-
-        // Connecting to LDAP
-        $ldapconn = ldap_connect($ldapuri)
-                or die("That LDAP-URI was not parseable");
-
-        $dn = "o=epfl, c=CH";
-        $filter="(uniqueIdentifier=$sciper)";
-        $justthese = array("ou", "sn", "givenname", "mail", "title");
-
-        $sr=ldap_search($ldapconn, $dn, $filter, $justthese);
-
-        $info = ldap_get_entries($ldapconn, $sr);
-
-        if($info["count"])
-        {                    
-            $persons = $db ->query('SELECT sciper_number FROM person WHERE sciper_number = "'.$sciper.'"');
-            $person = $persons -> fetch();
-
-            if($person == "")
-            {
-                $add_new_person = $db ->prepare('INSERT INTO person(name,firstname,person_function,email,prof_as_founder,gender,sciper_number) VALUES("'.$name.'","'.$firstname.'","'.$person_function.'","'.$email.'","'.$prof_as_founder.'","'.$gender.'","'.$sciper.'")');
-                $add_new_person -> execute();
-
-                echo "The person : ".$name." ".$firstname." was added";
-
-                //Ecrire les données dans la table logs pour dire que l'utilisateur à fait un export
-                $before = "";
-                $after = "Name : ".$name." Fistname : ".$firstname." Person Function : ".$person_function." Email : ".$email." Prof as founder : ".$prof_as_founder." Gender : ".$gender." sciper_number : ".$sciper;
-                $action="Add new person";
-
-                add_logs($sciper_number,$before,$after,$action);
-            }
-            else
-            {   
-                $_SESSION['flash_message'] = array();
-                $_SESSION['flash_message']['message'] = "The person already exist in database";
-                $_SESSION['flash_message']['type'] = "warning";
-                echo "la personne existe déjà";
-                
-                exit;
-                
-            }
-        
-        }
-        else
-        {
-
-            $_SESSION['flash_message'] = array();
-            $_SESSION['flash_message']['message'] = "Sciper number not found";
-            $_SESSION['flash_message']['type'] = "warning";
-            exit;
-        }
-
-        
-        header("Location: /$controller/$method");
-    }
 }
 elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
 {

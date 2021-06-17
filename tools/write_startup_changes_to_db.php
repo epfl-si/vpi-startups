@@ -19,9 +19,10 @@ for ($x=1;$x<=3;$x++)
 {
     if($after_changes["function_type_of_person$x"] != '')
     {
-        $function_type_of_person_name = $db -> query('SELECT name FROM function_type_of_person WHERE id_function_type_of_person = "'.$after_changes["function_type_of_person$x"].'"');
-        $name = $function_type_of_person_name -> fetch();
-        $after_changes["function_type_of_person$x"] = $name['name'];
+        $function_type_of_person_name = $db -> query('SELECT type_of_person FROM type_of_person WHERE id_type_of_person = "'.$after_changes["function_type_of_person$x"].'"');
+        $name_function = $function_type_of_person_name -> fetch();
+
+        $after_changes["function_type_of_person$x"] = $name_function['type_of_person'];
     }
 }
 
