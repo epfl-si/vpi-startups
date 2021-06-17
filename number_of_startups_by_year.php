@@ -57,5 +57,5 @@ function drawChart_number_of_startups_by_year(chart_data)
 </div>
 ";
 require 'footer.php';
-}
+
 ?>
