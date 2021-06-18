@@ -17,12 +17,21 @@ $sr=ldap_search($ldapconn, $dn, $filter, $justthese);
 
 $info = ldap_get_entries($ldapconn, $sr);
 
+
 if($info["count"])
 {
     $email = $info[0]["mail"][0];
     $firstname = $info[0]["givenname"][0];
     $name = $info[0]["sn"][0];
-    $person_function = $info[0]["title"][0];
+    
+    if(isset($info[0]["title"][0]))
+    {
+        $person_function = $info[0]["title"][0];
+    }
+    else
+    {
+        $person_function = "";
+    }
     
     $output[] = array 
     (

@@ -85,18 +85,19 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <label for="gender" class="col-sm-4 col-form-label">Gender <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="gender" id="gender" required>';
-                    
+                
+                //0 = Homme ; 1 = Femme    
                 if($person_data['gender'] == "0")
                 {
                     echo '
-                    <option name="no" value="'.$person_data['gender'].'" selected>No</option>
-                    <option name="yes" value="1">Yes</option>';
+                    <option name="no" value="'.$person_data['gender'].'" selected>Man</option>
+                    <option name="yes" value="1">Women</option>';
                 }
                 else
                 {
                     echo ' 
-                    <option name="yes" value="'.$person_data['gender'].'" selected>Yes</option>
-                    <option name="no" value="0">No</option>';
+                    <option name="yes" value="'.$person_data['gender'].'" selected>Woman</option>
+                    <option name="no" value="0">Men</option>';
                 }
 
                 echo '

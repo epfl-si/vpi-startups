@@ -11,7 +11,7 @@ if ($controller === 'person' && $method === 'modify' && is_numeric($param) && is
 }
 elseif ($controller === 'startup' && $method === 'modify' && is_numeric($param) && isset($_POST['company_name']) && !empty($_POST['company_name'])) {
 }
-elseif ($controller === 'person' && $method === 'add' && isset($_POST['sciper_number']) && !empty($_POST['sciper_number'])) {
+elseif ($controller === 'person' && $method === 'add' && isset($_POST['name']) && !empty($_POST['name'])) {
 }
 elseif ($controller === 'startup' && $method === 'add' && isset($_POST['company_name']) && !empty($_POST['company_name'])) {
 }
@@ -156,7 +156,7 @@ if ($controller === 'startup' && $method === 'add')
 //pour add_person.php
 if ($controller === 'person' && $method === 'add') 
 {
-    if(isset($_POST['sciper_number']) && !empty($_POST['sciper_number'])) 
+    if(isset($_POST['name']) && !empty($_POST['name'])) 
     {
         require './tools/add_new_person_db.php';
     }
