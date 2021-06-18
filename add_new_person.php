@@ -11,9 +11,9 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <legend class="font-weight-bold my-3"> Add new person</legend>
             <small class="text-danger my-3 row col-12"> * Fields Required </small>
             <div class="form-group row">
-                <label for="sciper_number" class="col-sm-4 col-form-label">Sciper Number <small class="text-danger"> *</small> </label>
+                <label for="sciper_number" class="col-sm-4 col-form-label">Sciper Number</label>
                 <div class="col-sm-6">
-                    <input type="number" min="100000" max="999999" class="form-control" name="sciper_number" onchange="get_data()" id="sciper_number" required>
+                    <input type="number" min="100000" max="999999" class="form-control" name="sciper_number" onchange="get_data()" id="sciper_number">
                 </div>
             </div>
             <!-- Champ pour ajouter une personne lier à un numero de sciper -->
@@ -103,7 +103,6 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     }
 
     </script>';
-
 }
 elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
 {
