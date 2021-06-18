@@ -19,7 +19,7 @@ It allows you to :
 * Import a CSV file to insert the data from this file into the startup table  
 * Allows to see the logs of each user action (Example: If the user has made an import)  
 
-## Deployment
+## Server Deployment
 
 Requirements to deploy this application:
 
@@ -45,3 +45,18 @@ In order to allow .htacces to work in your server, you may have to enable ```mod
     [...]
 </Directory>
 ```  
+  
+## Local Deployment  
+  
+Requirements to deploy localy this application :
+* Docker
+    * 3 containers (docker-compose.yml) :
+        * webserver (DockerFile image)
+        * db
+        * phpmyadmin
+  
+Create a directory where you will put the application.  
+Go to docker folder and build the DockerFile (he will build the webserver image) with ``` docker build . ``` .  
+After that, execute the docker-compose.yml (he will build the 3 containers for the application) with ``` docker-compose up -d ```.  
+Go to localhost:8888 to access to website and localhost:8081 to access database through phpmyadmin. 
+
