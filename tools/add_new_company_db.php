@@ -13,6 +13,7 @@ $type_startup = security_text($_POST['type_startup']);
 $category = security_text($_POST['category']);
 $epfl_grant = security_text($_POST['epfl_grant']);
 $key_words = security_text($_POST['key_words']);
+$laboratory = security_text($_POST['laboratory']);
 $short_description = security_text($_POST['short_description']);
 $awards_competition = security_text($_POST['awards_competition']);
 $impact_sdg = $_POST['impact_sdg'];

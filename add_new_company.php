@@ -176,6 +176,14 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <input type="text" class="form-control" name="key_words" id="key_words" pattern="[A-Za-z0-9[\(\-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Minimum 2 characters and maximum 500. Special characters allowed are &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
                 </div>
             </div>
+            <!-- Champ pour le laboratoire de la startup -->
+            <div class="form-group row">
+                <label for="laboratory" class="col-sm-4 col-form-label">Laboratory</label>
+                <div class="col-sm-6">
+                <input type="text" class="form-control" name="laboratory" id="laboratory" pattern="[A-Za-z0-9[\(\-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Minimum 2 characters and maximum 500. Special characters allowed are &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
+                </div>
+            </div>
+            <!-- Champ pour la description de la startup -->
             <div class="form-group row">
                 <label for="short_description" class="col-sm-4 col-form-label">Short Description</label>
                 <div class="col-sm-6">
