@@ -61,8 +61,8 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="gender" id="gender" required>
                     <option name="NULL" value="" disabled selected>Select an option</option>
-                    <option name="yes" value="1">Yes</option>
-                    <option name="no" value="0">No</option>
+                    <option name="yes" value="1">Women</option>
+                    <option name="no" value="0">Men</option>
                 </select>
                 </div>
             </div>
@@ -92,7 +92,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 document.getElementById("name").value = data[0]["name"];
                 document.getElementById("firstname").value = data[0]["firstname"];
                 document.getElementById("email_person").value = data[0]["email"];
-                document.getElementById("person_function").value = data[0]["person_function"]
+                document.getElementById("person_function").value = data[0]["person_function"];
             },
             error:function()
             {
