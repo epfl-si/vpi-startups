@@ -10,7 +10,7 @@ if(isset($_POST['submit_new_person']))
     $prof_as_founder = $_POST['prof_as_founder'];
     $gender = $_POST['gender'];
                     
-    $persons = $db ->query('SELECT sciper_number FROM person WHERE sciper_number = "'.$sciper.'"');
+    $persons = $db ->query('SELECT sciper_number FROM person WHERE (sciper_number = "'.$sciper.'") OR (name = "'.$name.'" AND firstname = "'.$firstname.'")');
     $person = $persons -> fetch();
 
     if($person == "")
@@ -37,8 +37,7 @@ if(isset($_POST['submit_new_person']))
         $_SESSION['flash_message']['type'] = "warning";
         header("Location: /$controller/$method");
         
-    }    
+    }   
 }
-
 
 ?>
