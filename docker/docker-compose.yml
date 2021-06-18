@@ -1,0 +1,74 @@
+#Docker compose version
+version: '3'
+
+#Docker compose services
+services:
+
+#Config for db
+  db:
+
+  #Latest version of mysql
+    image: mariadb:latest
+
+  #The name of the db container
+    container_name: db
+  
+  #Command to prevent errors of authentification compatability
+    command: --default-authentication-plugin=mysql_native_password
+  
+  #User name and password and password for root  
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secret_password
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_user_pass
+  
+  #The port redirection (Container : 3306, NAS : 6033)
+    ports:
+      - "6033:3306"
+
+  #Config of webserver
+  web:
+    depends_on: 
+      - db
+    #Where is the dockerfile to use it as image for the container
+    build: ./
+
+    #Container name
+    container_name: webserver
+
+    #The port redirection (Container : 80, NAS : 8888)
+    ports: 
+      - "8888:80"
+
+    #Create a link (you can see the link in network) with db for communication between them
+    links:
+      - db
+    
+    #Where is the pages of the website
+    volumes:
+      - ../:/var/www/html
+   
+  #Config for phpmyadmin
+  phpmyadmin:
+
+    #Image to download for phpmyadmin
+    image: phpmyadmin/phpmyadmin
+
+    #Container name for phpmyadmin
+    container_name: pma
+
+    #Create a link with db for communication between them
+    links:
+      - db
+    
+    #Config of phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+
+    #The port redirection (Container : 80, NAS : 8081)
+    ports:
+      - 8081:80
