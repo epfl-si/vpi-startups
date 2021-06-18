@@ -56,13 +56,14 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 </div>
             </div>
             <!-- Champ pour choisir si la personne est un homme ou une femme -->
+            <!-- 0 = Homme ; 1 = Femme -->
             <div class="form-group row">
                 <label for="gender" class="col-sm-4 col-form-label">Gender <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="gender" id="gender" required>
                     <option name="NULL" value="" disabled selected>Select an option</option>
-                    <option name="yes" value="1">Women</option>
-                    <option name="no" value="0">Men</option>
+                    <option name="yes" value="1">Woman</option>
+                    <option name="no" value="0">Man</option>
                 </select>
                 </div>
             </div>
