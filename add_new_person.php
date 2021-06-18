@@ -75,7 +75,6 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     function get_data()
     {
         var sciper = document.getElementById("sciper_number").value;
-        console.log(sciper);
         $.ajax
         ({  
             //Chemin vers la page qui contient les requêtes SQL
@@ -93,7 +92,11 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 document.getElementById("name").value = data[0]["name"];
                 document.getElementById("firstname").value = data[0]["firstname"];
                 document.getElementById("email_person").value = data[0]["email"];
-                document.getElementById("person_function").value = data[0]["person_function"];
+                document.getElementById("person_function").value = data[0]["person_function"]
+            },
+            error:function()
+            {
+                alert("The sciper doesn\'t exist");
             }
         });
     }
