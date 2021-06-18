@@ -680,8 +680,8 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013  SQL SECURITY DEFINER */
-/*!50001 VIEW `view_number_of_startups_by_year` AS select `startup`.`founding_date` AS `founding_date`,count(`startup`.`company`) AS `number_of_companies` from `startup` group by `startup`.`founding_date` order by `startup`.`founding_date` */;
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_number_of_startups_by_year` AS select `startup`.`founding_date` AS `founding_date`,count(`startup`.`company`) AS `number_of_companies` from `startup` where `startup`.`founding_date` < year(curdate()) group by `startup`.`founding_date` order by `startup`.`founding_date` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -866,4 +866,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-18 14:23:24
+-- Dump completed on 2021-06-18 14:56:26
