@@ -222,7 +222,7 @@
                 <div id='status_dropdown_menu' class='text-center col-3 my-5 '></div>
                 <div id='sectors_dropdown_menu' class='text-center col-3 my-5 '></div>
                 <button id='button-csv' class='csv-button btn btn-outline-secondary col-2 my-5 ml-auto'>Download to CSV file</button>
-                <div id='table' class='col-12 pr-0'></div>
+                <div id='table' class='col-12 pr-0 mb-5'></div>
             </div>
         </div>
     </div>
