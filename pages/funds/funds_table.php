@@ -205,13 +205,13 @@ echo "
               <div id='search_amount' class='text-left col-6 my-5 '></div>
               <div id='search_startup' class='text-right col-6 my-5 '></div>
               <div id='table' class='col-12 pr-0 mb-5'></div>
-              <div id='sum_amount' class='col-12 pr-0 mb-5'></div>";
+              <div id='sum_amount' class='col-12 pr-0 mb-5 font-weight-bold'></div>";
           }
           else
           {
             echo "
             <div id='table' class='col-12 pr-0 mb-5 mt-3 mx-auto'></div>
-            <div id='sum_amount' class='col-12 pr-0 mb-5'></div>
+            <div id='sum_amount' class='col-12 pr-0 mb-5 font-weight-bold'></div>
             <a href='/funds/add/$id_startup' class='btn btn-outline-secondary mb-5' role='button' aria-disabled='true'>Add New Fund to Startup</a>";
           }
           echo "
