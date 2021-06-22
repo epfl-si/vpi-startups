@@ -76,8 +76,22 @@ echo "
         data.addRows([[id_funding, amount, date_investment, investors, stage_of_investment, type_of_investment, startup]]);
       });
       
+
+      function formatMillier(nombre)
+      {
+        nombre += '';
+        var sep = '\'';
+        var reg = /(\d+)(\d{3})/;
+        while( reg.test( nombre)) 
+        {
+          nombre = nombre.replace( reg, '$1' +sep +'$2');
+        }
+        return nombre;
+      }
+
+
       //Ecrire dans la div, le total des fonds
-      document.getElementById('sum_amount').innerHTML += 'Total : '+sum_amount+' CHF';
+      document.getElementById('sum_amount').innerHTML += 'Total : '+formatMillier(sum_amount)+' CHF';
 
 
       if(id_startup == 'none')
