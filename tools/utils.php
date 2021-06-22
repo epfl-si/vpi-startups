@@ -88,6 +88,15 @@ function startup_data_has_been_modify($param){
   if($_SESSION['startup_data']['short_description'] != $_POST['short_description']) {
     return true;
   }
+  if($_SESSION['startup_data']['company_uid'] != $_POST['company_uid']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['crunchbase_uid'] != $_POST['crunchbase_uid']) {
+    return true;
+  }
+  if($_SESSION['startup_data']['unit_path'] != $_POST['unit_path']) {
+    return true;
+  }
   if($_SESSION['startup_data']['type_startup'] != $_POST['type_startup']) {
     return true;
   }

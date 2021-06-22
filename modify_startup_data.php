@@ -276,6 +276,27 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <input type="text" class="form-control" name="short_description" id="short_description" value="'.$startup_data['short_description'].'" pattern="[A-Za-z0-9[\(-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 500. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
                 </div>
             </div>
+            <!-- Champ pour l\'uid de la startup -->
+            <div class="form-group row">
+                <label for="company_uid" class="col-sm-4 col-form-label">Company UID</label>
+                <div class="col-sm-6">
+                <input type="text" class="form-control" name="company_uid" id="company_uid" value="'.$startup_data['company_uid'].'" pattern="[A-Za-z0-9[\(-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 500. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
+                </div>
+            </div>
+            <!-- Champ pour l\'uid crunchbase de la startup -->
+            <div class="form-group row">
+                <label for="crunchbase_uid" class="col-sm-4 col-form-label">Short Description</label>
+                <div class="col-sm-6">
+                <input type="text" class="form-control" name="crunchbase_uid" id="crunchbase_uid" value="'.$startup_data['crunchbase_uid'].'" pattern="[A-Za-z0-9[\(-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 500. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
+                </div>
+            </div>
+            <!-- Champ pour le chemin de l\'unité de la startup -->
+            <div class="form-group row">
+                <label for="unit_path" class="col-sm-4 col-form-label">Short Description</label>
+                <div class="col-sm-6">
+                <input type="text" class="form-control" name="unit_path" id="unit_path" value="'.$startup_data['unit_path'].'" pattern="[A-Za-z0-9[\(-\+éöïçàäèüãáñâôé,()\.@#\+&=!$£?\'\/<>:;^`~\|*_\] ]{2,500}" title="Letters and Numbers are accepted. Minimum 2 characters and maximum 500. The special characters accepted are : &quot; (-+éöïçàäèüãáñâôé,().@#+&=!$£?\'/<>:;^`~|*_ &quot;">
+                </div>
+            </div>
             <!-- Champ pour le niveau d\'études du CEO de la startup -->
             <div class="form-group row">
                 <label for="ceo_education_level" class="col-sm-4 col-form-label">CEO Education Level <small class="text-danger"> *</small> </label>
