@@ -93,7 +93,7 @@ CREATE TABLE `funding` (
   CONSTRAINT `funding_ibfk_1` FOREIGN KEY (`fk_stage_of_investment`) REFERENCES `stage_of_investment` (`id_stage_of_investment`),
   CONSTRAINT `funding_ibfk_2` FOREIGN KEY (`fk_type_of_investment`) REFERENCES `type_of_investment` (`id_type_of_investment`),
   CONSTRAINT `funding_ibfk_3` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,7 +125,7 @@ CREATE TABLE `logs` (
   `after_changes` blob NOT NULL,
   `action` varchar(255) NOT NULL,
   PRIMARY KEY (`id_logs`)
-) ENGINE=InnoDB AUTO_INCREMENT=303 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=312 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,6 +195,9 @@ CREATE TABLE `startup` (
   `key_words` varchar(255) DEFAULT NULL,
   `laboratory` varchar(30) DEFAULT NULL,
   `short_description` varchar(255) DEFAULT NULL,
+  `company_uid` varchar(20) DEFAULT NULL,
+  `crunchbase_uid` varchar(20) DEFAULT NULL,
+  `unit_path` varchar(20) DEFAULT NULL,
   `fk_type` int(11) DEFAULT NULL,
   `fk_ceo_education_level` int(11) DEFAULT NULL,
   `fk_sectors` int(11) DEFAULT NULL,
@@ -211,7 +214,7 @@ CREATE TABLE `startup` (
   CONSTRAINT `startup_ibfk_4` FOREIGN KEY (`fk_sectors`) REFERENCES `sectors` (`id_sectors`),
   CONSTRAINT `startup_ibfk_7` FOREIGN KEY (`fk_category`) REFERENCES `category` (`id_category`),
   CONSTRAINT `startup_ibfk_8` FOREIGN KEY (`fk_status`) REFERENCES `status` (`id_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +233,7 @@ CREATE TABLE `startup_faculty_schools` (
   KEY `fk_faculty_schools` (`fk_faculty_schools`),
   CONSTRAINT `startup_faculty_schools_ibfk_1` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`),
   CONSTRAINT `startup_faculty_schools_ibfk_2` FOREIGN KEY (`fk_faculty_schools`) REFERENCES `faculty_schools` (`id_faculty_schools`)
-) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +252,7 @@ CREATE TABLE `startup_founders_country` (
   KEY `fk_founders_country` (`fk_founders_country`),
   CONSTRAINT `startup_founders_country_ibfk_1` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`),
   CONSTRAINT `startup_founders_country_ibfk_2` FOREIGN KEY (`fk_founders_country`) REFERENCES `founders_country` (`id_founders_country`)
-) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +271,7 @@ CREATE TABLE `startup_impact_sdg` (
   KEY `fk_impact_sdg` (`fk_impact_sdg`),
   CONSTRAINT `startup_impact_sdg_ibfk_1` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`),
   CONSTRAINT `startup_impact_sdg_ibfk_2` FOREIGN KEY (`fk_impact_sdg`) REFERENCES `impact_sdg` (`id_impact_sdg`)
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,7 +293,7 @@ CREATE TABLE `startup_person` (
   CONSTRAINT `startup_person_ibfk_1` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`),
   CONSTRAINT `startup_person_ibfk_2` FOREIGN KEY (`fk_person`) REFERENCES `person` (`id_person`),
   CONSTRAINT `startup_person_ibfk_3` FOREIGN KEY (`fk_type_of_person`) REFERENCES `type_of_person` (`id_type_of_person`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,6 +372,9 @@ SET character_set_client = utf8;
   `key_words` tinyint NOT NULL,
   `laboratory` tinyint NOT NULL,
   `short_description` tinyint NOT NULL,
+  `company_uid` tinyint NOT NULL,
+  `crunchbase_uid` tinyint NOT NULL,
+  `unit_path` tinyint NOT NULL,
   `status` tinyint NOT NULL,
   `type_startup` tinyint NOT NULL,
   `sectors` tinyint NOT NULL,
@@ -397,6 +403,9 @@ SET character_set_client = utf8;
   `key_words` tinyint NOT NULL,
   `laboratory` tinyint NOT NULL,
   `short_description` tinyint NOT NULL,
+  `company_uid` tinyint NOT NULL,
+  `crunchbase_uid` tinyint NOT NULL,
+  `unit_path` tinyint NOT NULL,
   `status` tinyint NOT NULL,
   `type_startup` tinyint NOT NULL,
   `sectors` tinyint NOT NULL,
@@ -423,6 +432,25 @@ SET character_set_client = utf8;
   `firstname3` tinyint NOT NULL,
   `id_type_of_person3` tinyint NOT NULL,
   `type_of_person3` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_display_funds`
+--
+
+DROP TABLE IF EXISTS `view_display_funds`;
+/*!50001 DROP VIEW IF EXISTS `view_display_funds`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `view_display_funds` (
+  `amount` tinyint NOT NULL,
+  `investment_date` tinyint NOT NULL,
+  `investors` tinyint NOT NULL,
+  `fk_startup` tinyint NOT NULL,
+  `stage_of_investment` tinyint NOT NULL,
+  `type_of_investment` tinyint NOT NULL,
+  `company` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -624,7 +652,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013  SQL SECURITY DEFINER */
-/*!50001 VIEW `view_detail_startup` AS select `startup`.`id_startup` AS `id_startup`,`startup`.`company` AS `company`,`startup`.`web` AS `web`,`startup`.`founding_date` AS `founding_date`,`startup`.`rc` AS `rc`,`startup`.`exit_year` AS `exit_year`,`startup`.`epfl_grant` AS `epfl_grant`,`startup`.`awards_competitions` AS `awards_competitions`,`startup`.`key_words` AS `key_words`,`startup`.`laboratory` AS `laboratory`,`startup`.`short_description` AS `short_description`,`status`.`status` AS `status`,`type_startup`.`type_startup` AS `type_startup`,`sectors`.`sectors` AS `sectors`,`category`.`category` AS `category`,`ceo_education_level`.`ceo_education_level` AS `ceo_education_level` from (((((`startup` join `status` on(`status`.`id_status` = `startup`.`fk_status`)) join `type_startup` on(`type_startup`.`id_type_startup` = `startup`.`fk_type`)) left join `sectors` on(`sectors`.`id_sectors` = `startup`.`fk_sectors`)) left join `category` on(`category`.`id_category` = `startup`.`fk_category`)) left join `ceo_education_level` on(`ceo_education_level`.`id_ceo_education_level` = `startup`.`fk_ceo_education_level`)) */;
+/*!50001 VIEW `view_detail_startup` AS select `startup`.`id_startup` AS `id_startup`,`startup`.`company` AS `company`,`startup`.`web` AS `web`,`startup`.`founding_date` AS `founding_date`,`startup`.`rc` AS `rc`,`startup`.`exit_year` AS `exit_year`,`startup`.`epfl_grant` AS `epfl_grant`,`startup`.`awards_competitions` AS `awards_competitions`,`startup`.`key_words` AS `key_words`,`startup`.`laboratory` AS `laboratory`,`startup`.`short_description` AS `short_description`,`startup`.`company_uid` AS `company_uid`,`startup`.`crunchbase_uid` AS `crunchbase_uid`,`startup`.`unit_path` AS `unit_path`,`status`.`status` AS `status`,`type_startup`.`type_startup` AS `type_startup`,`sectors`.`sectors` AS `sectors`,`category`.`category` AS `category`,`ceo_education_level`.`ceo_education_level` AS `ceo_education_level` from (((((`startup` join `status` on(`status`.`id_status` = `startup`.`fk_status`)) join `type_startup` on(`type_startup`.`id_type_startup` = `startup`.`fk_type`)) left join `sectors` on(`sectors`.`id_sectors` = `startup`.`fk_sectors`)) left join `category` on(`category`.`id_category` = `startup`.`fk_category`)) left join `ceo_education_level` on(`ceo_education_level`.`id_ceo_education_level` = `startup`.`fk_ceo_education_level`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -643,7 +671,26 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013  SQL SECURITY DEFINER */
-/*!50001 VIEW `view_detail_startup_full` AS select `view_detail_startup`.`id_startup` AS `id_startup`,`view_detail_startup`.`company` AS `company`,`view_detail_startup`.`web` AS `web`,`view_detail_startup`.`founding_date` AS `founding_date`,`view_detail_startup`.`rc` AS `rc`,`view_detail_startup`.`exit_year` AS `exit_year`,`view_detail_startup`.`epfl_grant` AS `epfl_grant`,`view_detail_startup`.`awards_competitions` AS `awards_competitions`,`view_detail_startup`.`key_words` AS `key_words`,`view_detail_startup`.`laboratory` AS `laboratory`,`view_detail_startup`.`short_description` AS `short_description`,`view_detail_startup`.`status` AS `status`,`view_detail_startup`.`type_startup` AS `type_startup`,`view_detail_startup`.`sectors` AS `sectors`,`view_detail_startup`.`category` AS `category`,`view_detail_startup`.`ceo_education_level` AS `ceo_education_level`,`view_startup_country`.`country` AS `country`,`view_startup_impact`.`impact` AS `impact`,`view_startup_faculty_schools`.`schools` AS `schools`,`view_startup_with_person`.`id_startup_person1` AS `id_startup_person1`,`view_startup_with_person`.`id_person1` AS `id_person1`,`view_startup_with_person`.`name1` AS `name1`,`view_startup_with_person`.`firstname1` AS `firstname1`,`view_startup_with_type_of_person`.`id_type_of_person1` AS `id_type_of_person1`,`view_startup_with_type_of_person`.`type_of_person1` AS `type_of_person1`,`view_startup_with_person`.`id_startup_person2` AS `id_startup_person2`,`view_startup_with_person`.`id_person2` AS `id_person2`,`view_startup_with_person`.`name2` AS `name2`,`view_startup_with_person`.`firstname2` AS `firstname2`,`view_startup_with_type_of_person`.`id_type_of_person2` AS `id_type_of_person2`,`view_startup_with_type_of_person`.`type_of_person2` AS `type_of_person2`,`view_startup_with_person`.`id_startup_person3` AS `id_startup_person3`,`view_startup_with_person`.`id_person3` AS `id_person3`,`view_startup_with_person`.`name3` AS `name3`,`view_startup_with_person`.`firstname3` AS `firstname3`,`view_startup_with_type_of_person`.`id_type_of_person3` AS `id_type_of_person3`,`view_startup_with_type_of_person`.`type_of_person3` AS `type_of_person3` from (((((`view_detail_startup` left join `view_startup_country` on(`view_detail_startup`.`id_startup` = `view_startup_country`.`id_startup`)) left join `view_startup_impact` on(`view_detail_startup`.`id_startup` = `view_startup_impact`.`id_startup`)) left join `view_startup_faculty_schools` on(`view_detail_startup`.`id_startup` = `view_startup_faculty_schools`.`id_startup`)) left join `view_startup_with_person` on(`view_detail_startup`.`id_startup` = `view_startup_with_person`.`id_startup`)) left join `view_startup_with_type_of_person` on(`view_detail_startup`.`id_startup` = `view_startup_with_type_of_person`.`id_startup`)) */;
+/*!50001 VIEW `view_detail_startup_full` AS select `view_detail_startup`.`id_startup` AS `id_startup`,`view_detail_startup`.`company` AS `company`,`view_detail_startup`.`web` AS `web`,`view_detail_startup`.`founding_date` AS `founding_date`,`view_detail_startup`.`rc` AS `rc`,`view_detail_startup`.`exit_year` AS `exit_year`,`view_detail_startup`.`epfl_grant` AS `epfl_grant`,`view_detail_startup`.`awards_competitions` AS `awards_competitions`,`view_detail_startup`.`key_words` AS `key_words`,`view_detail_startup`.`laboratory` AS `laboratory`,`view_detail_startup`.`short_description` AS `short_description`,`view_detail_startup`.`company_uid` AS `company_uid`,`view_detail_startup`.`crunchbase_uid` AS `crunchbase_uid`,`view_detail_startup`.`unit_path` AS `unit_path`,`view_detail_startup`.`status` AS `status`,`view_detail_startup`.`type_startup` AS `type_startup`,`view_detail_startup`.`sectors` AS `sectors`,`view_detail_startup`.`category` AS `category`,`view_detail_startup`.`ceo_education_level` AS `ceo_education_level`,`view_startup_country`.`country` AS `country`,`view_startup_impact`.`impact` AS `impact`,`view_startup_faculty_schools`.`schools` AS `schools`,`view_startup_with_person`.`id_startup_person1` AS `id_startup_person1`,`view_startup_with_person`.`id_person1` AS `id_person1`,`view_startup_with_person`.`name1` AS `name1`,`view_startup_with_person`.`firstname1` AS `firstname1`,`view_startup_with_type_of_person`.`id_type_of_person1` AS `id_type_of_person1`,`view_startup_with_type_of_person`.`type_of_person1` AS `type_of_person1`,`view_startup_with_person`.`id_startup_person2` AS `id_startup_person2`,`view_startup_with_person`.`id_person2` AS `id_person2`,`view_startup_with_person`.`name2` AS `name2`,`view_startup_with_person`.`firstname2` AS `firstname2`,`view_startup_with_type_of_person`.`id_type_of_person2` AS `id_type_of_person2`,`view_startup_with_type_of_person`.`type_of_person2` AS `type_of_person2`,`view_startup_with_person`.`id_startup_person3` AS `id_startup_person3`,`view_startup_with_person`.`id_person3` AS `id_person3`,`view_startup_with_person`.`name3` AS `name3`,`view_startup_with_person`.`firstname3` AS `firstname3`,`view_startup_with_type_of_person`.`id_type_of_person3` AS `id_type_of_person3`,`view_startup_with_type_of_person`.`type_of_person3` AS `type_of_person3` from (((((`view_detail_startup` left join `view_startup_country` on(`view_detail_startup`.`id_startup` = `view_startup_country`.`id_startup`)) left join `view_startup_impact` on(`view_detail_startup`.`id_startup` = `view_startup_impact`.`id_startup`)) left join `view_startup_faculty_schools` on(`view_detail_startup`.`id_startup` = `view_startup_faculty_schools`.`id_startup`)) left join `view_startup_with_person` on(`view_detail_startup`.`id_startup` = `view_startup_with_person`.`id_startup`)) left join `view_startup_with_type_of_person` on(`view_detail_startup`.`id_startup` = `view_startup_with_type_of_person`.`id_startup`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_display_funds`
+--
+
+/*!50001 DROP TABLE IF EXISTS `view_display_funds`*/;
+/*!50001 DROP VIEW IF EXISTS `view_display_funds`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013  SQL SECURITY DEFINER */
+/*!50001 VIEW `view_display_funds` AS select `funding`.`amount` AS `amount`,`funding`.`investment_date` AS `investment_date`,`funding`.`investors` AS `investors`,`funding`.`fk_startup` AS `fk_startup`,`stage_of_investment`.`stage_of_investment` AS `stage_of_investment`,`type_of_investment`.`type_of_investment` AS `type_of_investment`,`startup`.`company` AS `company` from (((`funding` left join `startup` on(`startup`.`id_startup` = `funding`.`fk_startup`)) left join `stage_of_investment` on(`stage_of_investment`.`id_stage_of_investment` = `funding`.`fk_stage_of_investment`)) left join `type_of_investment` on(`type_of_investment`.`id_type_of_investment` = `funding`.`fk_type_of_investment`)) order by `startup`.`company`,`funding`.`investment_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -866,4 +913,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-21  7:33:21
+-- Dump completed on 2021-06-22 13:11:28
