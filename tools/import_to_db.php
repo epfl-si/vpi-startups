@@ -59,12 +59,12 @@
                             {   
                                 //Faire un nouveau tableau avec les données changés pour y mettre les id's des foreign keys
                                 $new = array();
-                                
+                          
                                 //Type startup
-                                if($csv[10] != "")
+                                if($csv[13] != "")
                                 {   
                                     //Type of startup : Vérifier si le type de startup existe dans la base de données
-                                    $types_startup = $db -> query('SELECT id_type_startup, type_startup FROM type_startup WHERE type_startup = "'.$csv[10].'"');
+                                    $types_startup = $db -> query('SELECT id_type_startup, type_startup FROM type_startup WHERE type_startup = "'.$csv[13].'"');
                                     $type_startup = $types_startup->fetch();
                                     
 
@@ -77,19 +77,19 @@
                                     //Si le type de startup existe, il le remplace par l'id
                                     else
                                     {
-                                        $csv[10] = $type_startup['id_type_startup'];
+                                        $csv[13] = $type_startup['id_type_startup'];
                                     }
                                 }
                                 else
                                 {
-                                    $csv[10] = "NULL";
+                                    $csv[13] = "NULL";
                                 }
 
                                 //Ceo education level
-                                if($csv[11] != "")
+                                if($csv[14] != "")
                                 {
                                     
-                                    $ceo_education_levels = $db -> query('SELECT id_ceo_education_level, ceo_education_level FROM ceo_education_level WHERE ceo_education_level = "'.$csv[11].'"');
+                                    $ceo_education_levels = $db -> query('SELECT id_ceo_education_level, ceo_education_level FROM ceo_education_level WHERE ceo_education_level = "'.$csv[14].'"');
                                     $ceo_education_level = $ceo_education_levels->fetch();
                                     
                                     if($ceo_education_level['ceo_education_level'] == '')
@@ -99,19 +99,19 @@
                                     }
                                     else
                                     {
-                                        $csv[11] = $ceo_education_level['id_ceo_education_level'];
+                                        $csv[14] = $ceo_education_level['id_ceo_education_level'];
                                     }
                                 }
                                 else
                                 {
-                                    $csv[11] = "NULL";
+                                    $csv[14] = "NULL";
                                 }
 
                                 //sectors
-                                if($csv[12] != "")
+                                if($csv[15] != "")
                                 {
                                    
-                                    $sectors = $db -> query('SELECT id_sectors, sectors FROM sectors WHERE sectors = "'.$csv[12].'"');
+                                    $sectors = $db -> query('SELECT id_sectors, sectors FROM sectors WHERE sectors = "'.$csv[15].'"');
                                     $sector = $sectors->fetch();
                                     
                                     if($sector['sectors'] == '')
@@ -121,18 +121,18 @@
                                     }
                                     else
                                     {
-                                        $csv[12] = $sector['id_sectors'];
+                                        $csv[15] = $sector['id_sectors'];
                                     }
                                 }
                                 else
                                 {
-                                    $csv[12] = "NULL";
+                                    $csv[15] = "NULL";
                                 }
                                 
                                 //category
-                                if($csv[13] != "")
+                                if($csv[16] != "")
                                 {
-                                    $categories = $db -> query('SELECT id_category, category FROM category WHERE category = "'.$csv[13].'"');
+                                    $categories = $db -> query('SELECT id_category, category FROM category WHERE category = "'.$csv[16].'"');
                                     $category = $categories->fetch();
                                     
                                     if($category['category'] == '')
@@ -142,19 +142,19 @@
                                     }
                                     else
                                     {
-                                        $csv[13] = $category['id_category'];
+                                        $csv[16] = $category['id_category'];
                                     }
                                 }
                                 else
                                 {
-                                    $csv[13] = "NULL";
+                                    $csv[16] = "NULL";
                                 }
                                 
 
                                 //status
-                                if($csv[14] != "")
+                                if($csv[17] != "")
                                 {
-                                    $status = $db -> query('SELECT id_status, status FROM status WHERE status = "'.$csv[14].'"');
+                                    $status = $db -> query('SELECT id_status, status FROM status WHERE status = "'.$csv[17].'"');
                                     $statut = $status->fetch();
                                     
                                     if($statut['status'] == '')
@@ -164,19 +164,19 @@
                                     }
                                     else
                                     {
-                                        $csv[14] = $statut['id_status'];
+                                        $csv[17] = $statut['id_status'];
                                     }
                                 }
                                 else
                                 {
-                                    $csv[14] = "NULL";
+                                    $csv[17] = "NULL";
                                 }
 
                                 //founders country
-                                if($csv[15] != "")
+                                if($csv[18] != "")
                                 {
-                                    $founders_country_explode= explode(';',$csv[15]);
-                                    $csv[15] = "";
+                                    $founders_country_explode= explode(';',$csv[18]);
+                                    $csv[18] = "";
                                     foreach($founders_country_explode as $country)
                                     { 
                                     
@@ -190,8 +190,8 @@
                                         }
                                         else
                                         {
-                                            $csv[15] = $csv[15].$founders_country['id_founders_country'].';';
-                                            $id_country = rtrim($csv[15], ";");
+                                            $csv[18] = $csv[18].$founders_country['id_founders_country'].';';
+                                            $id_country = rtrim($csv[18], ";");
                                         }
                                     }
                                 }
@@ -201,10 +201,10 @@
                                 }
                                 
                                 //faculty schools
-                                if($csv[16] != "")
+                                if($csv[19] != "")
                                 {
-                                    $faculty_schools_explode= explode(';',$csv[16]);
-                                    $csv[16] = "";
+                                    $faculty_schools_explode= explode(';',$csv[19]);
+                                    $csv[19] = "";
                                     foreach($faculty_schools_explode as $schools)
                                     { 
 
@@ -218,8 +218,8 @@
                                         }
                                         else
                                         {
-                                            $csv[16] = $csv[16].$faculty_schools['id_faculty_schools']. ';';
-                                            $id_schools = rtrim($csv[16], ";");
+                                            $csv[19] = $csv[19].$faculty_schools['id_faculty_schools']. ';';
+                                            $id_schools = rtrim($csv[19], ";");
                                         }
                                     }
                                 }
@@ -229,10 +229,10 @@
                                 }
 
                                 //impact sdg
-                                if($csv[17] != "")
+                                if($csv[20] != "")
                                 {
-                                    $impact_sdg_explode= explode(';',$csv[17]);
-                                    $csv[17] = "";
+                                    $impact_sdg_explode= explode(';',$csv[20]);
+                                    $csv[20] = "";
                                     foreach($impact_sdg_explode as $impact)
                                     { 
                                         $impact_sdgs = $db -> query('SELECT id_impact_sdg, impact_sdg FROM impact_sdg WHERE impact_sdg = "'.$impact.'"');
@@ -245,8 +245,8 @@
                                         }
                                         else
                                         {
-                                            $csv[17] = $csv[17].$impact_sdg['id_impact_sdg']. ';';
-                                            $id_impact = rtrim($csv[17], ";");
+                                            $csv[20] = $csv[20].$impact_sdg['id_impact_sdg']. ';';
+                                            $id_impact = rtrim($csv[20], ";");
                                             
                                         }
                                     }
@@ -258,7 +258,7 @@
                                 
                                 if($import_error == "false")
                                 {
-                                    $text = array($csv[0],$csv[1],$csv[2],$csv[3],$csv[4],$csv[5],$csv[6],$csv[7],$csv[8],$csv[9],$csv[10],$csv[11],$csv[12],$csv[13],$csv[14],$id_country,$id_schools,$id_impact);
+                                    $text = array($csv[0],$csv[1],$csv[2],$csv[3],$csv[4],$csv[5],$csv[6],$csv[7],$csv[8],$csv[9],$csv[10],$csv[11],$csv[12],$csv[13],$csv[14],$csv[15],$csv[16],$csv[17],$id_country,$id_schools,$id_impact);
                                     $output_replaced = str_replace('"', '\'', $text);
                                     
                                     //Mettre les changements dans le fichier output
@@ -293,14 +293,14 @@
                             //On test si la startup n'existe pas
                             if($data['company'] == '')
                             {
-                                $import_data_to_db_startups = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory, short_description, fk_type, fk_ceo_education_level, fk_sectors, fk_category, fk_status) VALUES ("'.$data_import_db[0].'","'.$data_import_db[1].'","'.$data_import_db[2].'","'.$data_import_db[3].'","'.$data_import_db[4].'","'.$data_import_db[5].'","'.$data_import_db[6].'","'.$data_import_db[7].'","'.$data_import_db[8].'","'.$data_import_db[9].'",'.$data_import_db[10].','.$data_import_db[11].','.$data_import_db[12].','.$data_import_db[13].','.$data_import_db[14].')');
+                                $import_data_to_db_startups = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory, short_description, company_uid, crunchbase_uid, unit_path, fk_type, fk_ceo_education_level, fk_sectors, fk_category, fk_status) VALUES ("'.$data_import_db[0].'","'.$data_import_db[1].'","'.$data_import_db[2].'","'.$data_import_db[3].'","'.$data_import_db[4].'","'.$data_import_db[5].'","'.$data_import_db[6].'","'.$data_import_db[7].'","'.$data_import_db[8].'","'.$data_import_db[9].'","'.$data_import_db[10].'","'.$data_import_db[11].'","'.$data_import_db[12].'",'.$data_import_db[13].','.$data_import_db[14].','.$data_import_db[15].','.$data_import_db[16].','.$data_import_db[17].')');
                                 $import_data_to_db_startups -> execute();
 
                                 $last_id_startup = $db->lastInsertId();
 
-                                if($data_import_db[15]  != 'NULL')
+                                if($data_import_db[18]  != 'NULL')
                                 {
-                                    $id_founders_country_explode= explode(';',$data_import_db[15]);
+                                    $id_founders_country_explode= explode(';',$data_import_db[18]);
                                     foreach ($id_founders_country_explode as $id_founders_country)
                                     {
                                         $import_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup, fk_founders_country) VALUES ('.$last_id_startup.','.$id_founders_country.')');
@@ -308,9 +308,9 @@
 
                                     }
                                 }
-                                if($data_import_db[16]  != 'NULL')
+                                if($data_import_db[19]  != 'NULL')
                                 {
-                                    $id_faculty_schools_explode= explode(';',$data_import_db[16]);
+                                    $id_faculty_schools_explode= explode(';',$data_import_db[19]);
                                     foreach ($id_faculty_schools_explode as $id_faculty_schools)
                                     {
                                         $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ('.$last_id_startup.','.$id_faculty_schools.')');
@@ -319,9 +319,9 @@
                                     }
                                 }
                                 
-                                if($data_import_db[17] != "NULL")
+                                if($data_import_db[20] != "NULL")
                                 {
-                                    $id_impact_sdg_explode= explode(';',$data_import_db[17]);
+                                    $id_impact_sdg_explode= explode(';',$data_import_db[20]);
                                     foreach ($id_impact_sdg_explode as $id_impact_sdg)
                                     {
                                         $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ('.$last_id_startup.','.$id_impact_sdg.')');
@@ -337,17 +337,17 @@
                                 if($radio_result == "import_new_overwrite_old")
                                 {
 
-                                    $update_data = $db -> prepare('UPDATE startup SET web = "'.$data_import_db[1].'", founding_date = "'.$data_import_db[2].'", rc="'.$data_import_db[3].'", exit_year="'.$data_import_db[4].'",epfl_grant="'.$data_import_db[5].'",awards_competitions="'.$data_import_db[6].'", key_words="'.$data_import_db[7].'", laboratory="'.$data_import_db[8].'", short_description="'.$data_import_db[9].'", fk_type='.$data_import_db[10].',fk_ceo_education_level='.$data_import_db[11].',fk_sectors='.$data_import_db[12].',fk_category='.$data_import_db[13].',fk_status='.$data_import_db[14].' WHERE id_startup='.$data['id_startup'].'');
+                                    $update_data = $db -> prepare('UPDATE startup SET web = "'.$data_import_db[1].'", founding_date = "'.$data_import_db[2].'", rc="'.$data_import_db[3].'", exit_year="'.$data_import_db[4].'",epfl_grant="'.$data_import_db[5].'",awards_competitions="'.$data_import_db[6].'", key_words="'.$data_import_db[7].'", laboratory="'.$data_import_db[8].'", short_description="'.$data_import_db[9].'", company_uid="'.$data_import_db[10].'", crunchbase_uid="'.$data_import_db[11].'", unit_path="'.$data_import_db[12].'",fk_type='.$data_import_db[13].',fk_ceo_education_level='.$data_import_db[14].',fk_sectors='.$data_import_db[15].',fk_category='.$data_import_db[16].',fk_status='.$data_import_db[17].' WHERE id_startup='.$data['id_startup'].'');
                                     $update_data -> execute();
 
                                     //Supprimer les anciennes valeurs pour cette startup des pays
                                     $delete_data_to_db_startups_founders_country = $db -> prepare('DELETE FROM startup_founders_country WHERE fk_startup='.$data['id_startup'].'');
                                     $delete_data_to_db_startups_founders_country -> execute();
 
-                                    if($data_import_db[15] != 'NULL')
+                                    if($data_import_db[18] != 'NULL')
                                     {
                                         //Pour ensuite les remettre avec les nouvelles données
-                                        $id_founders_country_explode= explode(';',$data_import_db[15]);
+                                        $id_founders_country_explode= explode(';',$data_import_db[18]);
                                         foreach ($id_founders_country_explode as $id_founders_country)
                                         {
                                             
@@ -360,10 +360,10 @@
                                     $delete_data_to_db_startups_faculty_schools = $db -> prepare('DELETE FROM startup_faculty_schools WHERE fk_startup='.$data['id_startup'].'');
                                     $delete_data_to_db_startups_faculty_schools -> execute();
 
-                                    if($data_import_db[16] != 'NULL')
+                                    if($data_import_db[19] != 'NULL')
                                     {
                                         //Pour ensuite les remettre avec les nouvelles données
-                                        $id_faculty_schools_explode= explode(';',$data_import_db[16]);
+                                        $id_faculty_schools_explode= explode(';',$data_import_db[19]);
                                         foreach ($id_faculty_schools_explode as $id_faculty_schools)
                                         {
                                             
@@ -376,10 +376,10 @@
                                     $delete_data_to_db_startups_impact_sdg = $db -> prepare('DELETE FROM startup_impact_sdg WHERE fk_startup='.$data['id_startup'].'');
                                     $delete_data_to_db_startups_impact_sdg -> execute();
 
-                                    if($data_import_db[17] != 'NULL')
+                                    if($data_import_db[20] != 'NULL')
                                     {
                                         //Pour ensuite les remettre avec les nouvelles données
-                                        $id_impact_sdg_explode= explode(';',$data_import_db[17]);
+                                        $id_impact_sdg_explode= explode(';',$data_import_db[20]);
                                         foreach ($id_impact_sdg_explode as $id_impact_sdg)
                                         {
                                             $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ('.$data['id_startup'].','.$id_impact_sdg.')');

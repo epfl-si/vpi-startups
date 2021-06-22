@@ -15,7 +15,10 @@ $epfl_grant = security_text($_POST['epfl_grant']);
 $key_words = security_text($_POST['key_words']);
 $laboratory = security_text($_POST['laboratory']);
 $short_description = security_text($_POST['short_description']);
-$awards_competition = security_text($_POST['awards_competition']);
+$company_uid = security_text($_POST['company_uid']);
+$crunchbase_uid = security_text($_POST['crunchbase_uid']);
+$unit_path = security_text($_POST['unit_path']);
+$awards_competitions = security_text($_POST['awards_competitions']);
 $impact_sdg = $_POST['impact_sdg'];
 $sector = $_POST['sector'];
 $ceo_education_level = $_POST['ceo_education_level'];
@@ -54,7 +57,7 @@ $category_id = $db-> query('SELECT id_category FROM category WHERE category ="'.
 $id_category = $category_id -> fetch();
 
 //Insertion des données dans la table startup
-$add_new_startup = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory,short_description,fk_type,fk_ceo_education_level,fk_sectors,fk_category,fk_status) VALUES("'.$company_name.'","'.$web.'","'.$founding_date.'","'.$rc.'","'.$exit_year.'","'.$epfl_grant.'","'.$awards_competition.'","'.$key_words.'","'.$laboratory.'","'.$short_description.'","'.$id_type_startup['id_type_startup'].'","'.$id_ceo_education_level['id_ceo_education_level'].'","'.$id_sectors['id_sectors'].'","'.$id_category['id_category'].'","'.$id_status['id_status'].'")');
+$add_new_startup = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory,short_description,company_uid,crunchbase_uid,unit_path,fk_type,fk_ceo_education_level,fk_sectors,fk_category,fk_status) VALUES("'.$company_name.'","'.$web.'","'.$founding_date.'","'.$rc.'","'.$exit_year.'","'.$epfl_grant.'","'.$awards_competitions.'","'.$key_words.'","'.$laboratory.'","'.$short_description.'","'.$company_uid.'","'.$crunchbase_uid.'","'.$unit_path.'","'.$id_type_startup['id_type_startup'].'","'.$id_ceo_education_level['id_ceo_education_level'].'","'.$id_sectors['id_sectors'].'","'.$id_category['id_category'].'","'.$id_status['id_status'].'")');
 if($add_new_startup -> execute())
 {
     $inserted=true;
@@ -68,7 +71,7 @@ $startup_id = $db->lastInsertId();
 
 //Ecrire les données dans la table logs pour dire que l'utilisateur à fait un ajout d'une nouvelle startup
 $before = "";
-$after = "Startup : ".$company_name.", Founding Date : ".$founding_date.", Web : ".$web.", Rc : ".$rc.", Status : ".$status.", Exit Year : ".$exit_year.", Type of Startup : ".$type_startup.", Category : ".$category.", EPFL Grant : ".$epfl_grant.", Awards Competition : ".$awards_competition.", Impact sdg : ".implode(";",$impact_sdg).", Sector : ".$sector.", Key Words : ".$key_words.", CEO Education Level : ".$ceo_education_level.", Founders Country : ".implode(";",$founders_country).", Faculty Schools : ".implode(";",$faculty_schools).", Short Description : ".$short_description.", Person 1 : ".$person1.", Person Function 1 : ".$function_person1.", Person 2 : ".$person2.", Person Function 2 : ".$function_person2.", Person 3 : ".$person3.", Person Function 3 : ".$function_person3;
+$after = "Startup : ".$company_name.", Founding Date : ".$founding_date.", Web : ".$web.", Rc : ".$rc.", Status : ".$status.", Exit Year : ".$exit_year.", Type of Startup : ".$type_startup.", Category : ".$category.", EPFL Grant : ".$epfl_grant.", Awards Competition : ".$awards_competitions.", Impact sdg : ".implode(";",$impact_sdg).", Sector : ".$sector.", Key Words : ".$key_words.", CEO Education Level : ".$ceo_education_level.", Founders Country : ".implode(";",$founders_country).", Faculty Schools : ".implode(";",$faculty_schools).", Short Description : ".$short_description.", Company UID : ".$company_uid.", Crunchbase UID : ".$crunchbase_uid.", Unit Path : ".$unit_path.", Person 1 : ".$person1.", Person Function 1 : ".$function_person1.", Person 2 : ".$person2.", Person Function 2 : ".$function_person2.", Person 3 : ".$person3.", Person Function 3 : ".$function_person3;
 $action="Add new startup";
 
 add_logs($_SESSION['uniqueid'],$before,$after,$action);
