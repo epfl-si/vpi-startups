@@ -36,11 +36,10 @@ $inserted = false;
 $error_add_new_people = "false";
 
 //Récupérer l'id du status que l'utilisateur a saisi pour écrire dans la table startup
-
 $status_id = $db-> query('SELECT id_status FROM status WHERE status ="'.$status.'"');
 $id_status = $status_id -> fetch();
 
-//Récupérer l'id du type que l'utilisateur a saisi pour écrire dans la table startup
+//Récupérer l'id du type de startup que l'utilisateur a saisi pour écrire dans la table startup
 $type_startup_id = $db-> query('SELECT id_type_startup FROM type_startup WHERE type_startup ="'.$type_startup.'"');
 $id_type_startup = $type_startup_id -> fetch();
 
@@ -48,11 +47,11 @@ $id_type_startup = $type_startup_id -> fetch();
 $sectors_id = $db-> query('SELECT id_sectors FROM sectors WHERE sectors ="'.$sector.'"');
 $id_sectors = $sectors_id -> fetch();
 
-//Récupérer l'id du sector que l'utilisateur a saisi pour écrire dans la table startup
+//Récupérer l'id du ceo education level que l'utilisateur a saisi pour écrire dans la table startup
 $ceo_education_level_id = $db-> query('SELECT id_ceo_education_level FROM ceo_education_level WHERE ceo_education_level ="'.$ceo_education_level.'"');
 $id_ceo_education_level = $ceo_education_level_id -> fetch();
 
-//Récupérer l'id du sector que l'utilisateur a saisi pour écrire dans la table startup
+//Récupérer l'id de la categorie que l'utilisateur a saisi pour écrire dans la table startup
 $category_id = $db-> query('SELECT id_category FROM category WHERE category ="'.$category.'"');
 $id_category = $category_id -> fetch();
 
@@ -67,6 +66,7 @@ else
     $inserted=false;
 }
 
+//Récupère le dernier id insérer dans la base de données
 $startup_id = $db->lastInsertId();
 
 //Ecrire les données dans la table logs pour dire que l'utilisateur à fait un ajout d'une nouvelle startup
@@ -77,17 +77,21 @@ $action="Add new startup";
 add_logs($_SESSION['uniqueid'],$before,$after,$action);
 
 //Traitement des champs multicritère 
-//Compter le nombre de facultés choisies par l'utilisateur
+//Compter le nombre d'impacts choisis par l'utilisateur
 $count_impact_sdg = count($impact_sdg);
 
-//Insérer les nouvelles facultés
+//Faire une boucle pour qu'elle tourne autant de fois que d'impacts
 for ($x=0; $x<$count_impact_sdg; $x++)
 {
+    //Récupérer les impacts par ordre
     $impact = $_POST['impact_sdg'][$x];
+
+    //Récupérer l'id de l'impact saisi
     $id_impacts_sdg = $db -> query('SELECT id_impact_sdg FROM impact_sdg WHERE impact_sdg = "'.$impact.'"');
     $id_impact_sdg = $id_impacts_sdg -> fetch();
     $impact_sdg = $id_impact_sdg['id_impact_sdg'];
 
+    //Insérer dans la table intermediaire, l'impact et la startup
     $add_new_startup_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup,fk_impact_sdg) VALUES("'.$startup_id.'","'.$impact_sdg.'")');
     if($add_new_startup_impact_sdg -> execute())
     {
@@ -99,17 +103,21 @@ for ($x=0; $x<$count_impact_sdg; $x++)
     }
 }
 
-//Compter le nombre de countries choisies par l'utilisateur
+//Compter le nombre de pays choisis par l'utilisateur
 $count_founders_country = count($founders_country);
 
-//Insérer les nouvelles facultés
+//Faire une boucle pour qu'elle tourne autant de fois que de pays
 for ($x=0; $x<$count_founders_country; $x++)
 {
+    //Récupérer les pays par ordre
     $country = $_POST['founders_country'][$x];
+
+    //Récupérer l'id du pays
     $id_founders_countries = $db -> query('SELECT id_founders_country FROM founders_country WHERE founders_country = "'.$country.'"');
     $id_founders_country = $id_founders_countries -> fetch();
     $founders_country = $id_founders_country['id_founders_country'];
 
+    //Insérer dans la table intermediaire le pays et la startup
     $add_new_startup_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup,fk_founders_country) VALUES("'.$startup_id.'","'.$founders_country.'")');
     if($add_new_startup_founders_country -> execute())
     {
@@ -121,17 +129,21 @@ for ($x=0; $x<$count_founders_country; $x++)
     }
 }
 
-//Compter le nombre de countries choisies par l'utilisateur
+//Compter le nombre de facultés choisies par l'utilisateur
 $count_faculty_schools = count($faculty_schools);
 
-//Insérer les nouvelles facultés
+//Faire une boucle pour qu'elle tourne autant de fois que de facultés
 for ($x=0; $x<$count_faculty_schools; $x++)
 {
+    //Récupérer les facultés par ordre
     $faculty = $_POST['faculty_schools'][$x];
+
+    //Récupérer l'id de la faculté
     $id_faculties_schools = $db -> query('SELECT id_faculty_schools FROM faculty_schools WHERE faculty_schools = "'.$faculty.'"');
     $id_faculty_schools = $id_faculties_schools -> fetch();
     $faculty_schools = $id_faculty_schools['id_faculty_schools'];
 
+    //Insérer dans la table intermediaire la faculté et la startup
     $add_new_startup_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup,fk_faculty_schools) VALUES("'.$startup_id.'","'.$faculty_schools.'")');
     if($add_new_startup_faculty_schools -> execute())
     {
@@ -160,16 +172,18 @@ if($error_add_new_people == "false")
     //Insertion des personnes et leurs fonctions
     for ($x = 1; $x <= 3; $x++) {
 
-        //Récupérer l'id de la personne que l'utilisateur a saisi pour écrire dans la table startup
+        //Récupérer l'id de la personne que l'utilisateur a saisi pour écrire dans la table startup par ordre
         $person_id = $db-> query('SELECT id_person FROM person WHERE name ="'.$_POST["person$x"].'"');
         $id_person = $person_id -> fetch();
 
-        //Récupérer l'id du type de personne que l'utilisateur a saisi pour écrire dans la table startup
+        //Récupérer l'id du type de personne que l'utilisateur a saisi pour écrire dans la table startup par ordre
         $type_of_person_id = $db-> query('SELECT id_type_of_person FROM type_of_person WHERE type_of_person ="'.$_POST["function_person$x"].'"');
         $id_type_of_person = $type_of_person_id -> fetch();
 
+        //Condition pour vérifier si l'id de la personne et de la fonction de la personne ne sont pas vides
         if($id_person != "" && $id_type_of_person != "")
         {
+            //Insérer dans la table intermediaire l'id de la startup, l'id de la personne et l'id de la fonction de la personne
             $add_new_startup_person = $db -> prepare('INSERT INTO startup_person(fk_startup,fk_person,fk_type_of_person) VALUES("'.$startup_id.'","'.$id_person['id_person'].'","'.$id_type_of_person['id_type_of_person'].'")');
             if($add_new_startup_person -> execute())
             {
@@ -183,12 +197,15 @@ if($error_add_new_people == "false")
     }
 }
 
+//Si inserted est true, alors il affiche un flash message pour lui avertir l'utilisateur que la startup a été ajouté
 if($inserted)
 {
     $_SESSION['flash_message'] = array();
     $_SESSION['flash_message']['message'] = $_POST['company_name']." was added";
     $_SESSION['flash_message']['type'] = "success";
 }
+
+//Si inserted n'est pas true, alors il affiche à l'utilisateur un flash message pour lui avertir qu'il y a eu un problème
 else
 {
     $_SESSION['flash_message'] = array();
@@ -196,5 +213,6 @@ else
     $_SESSION['flash_message']['type'] = "danger";
 }
 
+//Rediriger l'utilisateur vers la même page pour qu'il puisse voir le flash message
 header("Location: /$controller/$method");
 ?>

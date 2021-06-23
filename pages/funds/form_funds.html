@@ -1,21 +1,23 @@
 <?php
 
+//Condition pour vérifier s'il y a un id dans l'url du site
 if($param != "")
 {
+    //Si oui, il met dans l'action de la base form, la method et le param
     $method_param = $method."/".$param;
 }
 else
 {
+    //Si non, il met seulement la method
     $method_param = $method;
 }
 
 ?>
 
-
+<!-- Formulaire pour additionner ou modifier des fonds -->
 <div class="container">
     <form class="form-horizontal col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" method="POST" action="/funds/<?= $method_param; ?>">
         <fieldset>
-            <!-- Add new company -->
             <legend class="font-weight-bold my-3"> Add new Fund</legend>
             <small class="text-danger my-3 row col-12"> * Fields Required </small>
 
