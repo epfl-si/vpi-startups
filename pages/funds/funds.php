@@ -3,29 +3,16 @@
 require './classes/class.fund.php';
 require './classes/class.startup.php';
 
-if($method == "add" && is_numeric($param) && !empty($param))
+function add_funds($startup, $option_startup, $method, $param="")
 {
     $investment_date=date("Y-m-d");
     $fund = new Fund();
     $option_stage_of_investment = $fund->select_option_stage_of_investment();
     $option_type_of_investment = $fund->select_option_type_of_investment();
 
-    $startup = new Startup();
-    $option_startup = $startup->select_all_startups($param);
-
-    require_once("./pages/funds/form_funds.html");
-}
-elseif($method=="add")
-{
-    $fund = new Fund();
-    $option_stage_of_investment = $fund->select_option_stage_of_investment();
-    $option_type_of_investment = $fund->select_option_type_of_investment();
-
-    $startup = new Startup();
-    $option_startup = $startup->select_all_startups();
-    $investment_date=date("Y-m-d");
     if(isset($_POST['submit_btn_funds']))
     {
+        
         if($fund->insert_new_funds($_POST))
         {
             $type_of_investment = $fund->get_type_of_investment_by_id_type_of_investment($_POST['fk_type_of_investment']);
@@ -37,14 +24,32 @@ elseif($method=="add")
 
             add_logs($_SESSION['uniqueid'],"",$after,$action); 
 
-            $_SESSION['flash_message']['message'] = "The fund was added to startup : ".$startup->get_startup_by_id($_POST['fk_startup'])['company'];
+            $_SESSION['flash_message']['message'] = "The fund was added to startup : ".$startup_name['company'];
             $_SESSION['flash_message']['type'] = "success";
-            header('Location: /funds/add');
+            header("Location: /funds/add/$param");
 
         }
         
     }
     require_once("./pages/funds/form_funds.html");
+}
+
+if($method == "add" && is_numeric($param) && !empty($param))
+{
+    $startup = new Startup();
+    $option_startup = $startup->select_all_startups($param);
+
+    add_funds($startup, $option_startup, $method, $param);
+    
+}
+elseif($method=="add")
+{
+
+    $startup = new Startup();
+    $option_startup = $startup->select_all_startups();
+
+    add_funds($startup, $option_startup, $method);
+    
 }
 elseif($method=="modify")
 {
@@ -99,6 +104,7 @@ elseif($method=="modify")
 else
 {
     require 'pages/funds/funds_table.php';
+
     //Il affiche le menu aux utilisateurs qui ont le droit d'écrire
     if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     {
