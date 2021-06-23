@@ -185,7 +185,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <div class='row'>
                 <div id='search_person' class='text-left col-6 my-5 '></div>
                 <div id='search_sciper_number' class='text-right col-6 my-5 '></div>
-                <div id='table' class='col-12 pr-0'></div>
+                <div id='table' class='col-12 pr-0 mb-5'></div>
             </div>
         </div>
     </div>";

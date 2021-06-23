@@ -441,11 +441,13 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             echo '
             <!-- Champ pour une description de la startup-->
             <button class="btn btn-outline-secondary my-5" id="submit_modify_company" name="submit_modify_company" type="submit">Submit</button>
-        </form>
-    </div>';
+        </form>';
+        require 'pages/funds/funds_table.php';
 
-    require 'tools/disconnection_db.php';
-    require 'footer.php';
+        funds_table($id_startup = $param);
+        require 'tools/disconnection_db.php';
+        require 'footer.php';
+    echo '</div>';
 }
 elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
 {

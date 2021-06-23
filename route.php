@@ -17,7 +17,7 @@ elseif ($controller === 'startup' && $method === 'add' && isset($_POST['company_
 }
 elseif ($controller === 'import' && isset($_POST['import']) && !empty($_FILES['fileToUpload']['name'])) {
 }
-elseif ($controller === 'funds' && $method === 'add' && isset($_POST['amount']) && isset($_POST['amount'])) {
+elseif ($controller === 'funds' && $method === 'add' && isset($_POST['amount']) && !empty($_POST['amount'])) {
 }
 elseif ($controller === 'funds' && $method === 'modify' && is_numeric($param) && isset($_POST['amount']) && isset($_POST['amount'])) {
 }
@@ -83,11 +83,6 @@ elseif($controller === 'charts' && $method === 'startups_by_sectors?header=false
 {
     include_once('./hide_header.php');
     include_once('./startups_by_sectors.php');
-}
-
-//funds
-if ($controller === 'funds') {
-    include_once('./pages/funds/funds.php');
 }
 
 //pour logs_page.php
