@@ -93,7 +93,7 @@ CREATE TABLE `funding` (
   CONSTRAINT `funding_ibfk_1` FOREIGN KEY (`fk_stage_of_investment`) REFERENCES `stage_of_investment` (`id_stage_of_investment`),
   CONSTRAINT `funding_ibfk_2` FOREIGN KEY (`fk_type_of_investment`) REFERENCES `type_of_investment` (`id_type_of_investment`),
   CONSTRAINT `funding_ibfk_3` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,7 +125,7 @@ CREATE TABLE `logs` (
   `after_changes` blob NOT NULL,
   `action` varchar(255) NOT NULL,
   PRIMARY KEY (`id_logs`)
-) ENGINE=InnoDB AUTO_INCREMENT=312 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -444,6 +444,7 @@ DROP TABLE IF EXISTS `view_display_funds`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_display_funds` (
+  `id_funding` tinyint NOT NULL,
   `amount` tinyint NOT NULL,
   `investment_date` tinyint NOT NULL,
   `investors` tinyint NOT NULL,
@@ -687,10 +688,10 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013  SQL SECURITY DEFINER */
-/*!50001 VIEW `view_display_funds` AS select `funding`.`amount` AS `amount`,`funding`.`investment_date` AS `investment_date`,`funding`.`investors` AS `investors`,`funding`.`fk_startup` AS `fk_startup`,`stage_of_investment`.`stage_of_investment` AS `stage_of_investment`,`type_of_investment`.`type_of_investment` AS `type_of_investment`,`startup`.`company` AS `company` from (((`funding` left join `startup` on(`startup`.`id_startup` = `funding`.`fk_startup`)) left join `stage_of_investment` on(`stage_of_investment`.`id_stage_of_investment` = `funding`.`fk_stage_of_investment`)) left join `type_of_investment` on(`type_of_investment`.`id_type_of_investment` = `funding`.`fk_type_of_investment`)) order by `startup`.`company`,`funding`.`investment_date` desc */;
+/*!50001 VIEW `view_display_funds` AS select `funding`.`id_funding` AS `id_funding`,`funding`.`amount` AS `amount`,`funding`.`investment_date` AS `investment_date`,`funding`.`investors` AS `investors`,`funding`.`fk_startup` AS `fk_startup`,`stage_of_investment`.`stage_of_investment` AS `stage_of_investment`,`type_of_investment`.`type_of_investment` AS `type_of_investment`,`startup`.`company` AS `company` from (((`funding` left join `startup` on(`startup`.`id_startup` = `funding`.`fk_startup`)) left join `stage_of_investment` on(`stage_of_investment`.`id_stage_of_investment` = `funding`.`fk_stage_of_investment`)) left join `type_of_investment` on(`type_of_investment`.`id_type_of_investment` = `funding`.`fk_type_of_investment`)) order by `startup`.`company`,`funding`.`investment_date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -913,4 +914,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-22 13:11:28
+-- Dump completed on 2021-06-23  8:51:16
