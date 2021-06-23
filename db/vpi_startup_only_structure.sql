@@ -1,3 +1,25 @@
+-- MariaDB dump 10.19  Distrib 10.5.9-MariaDB, for debian-linux-gnu (aarch64)
+--
+-- Host: localhost    Database: vpi_startup
+-- ------------------------------------------------------
+-- Server version	10.5.9-MariaDB-1:10.5.9+maria~focal
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category` (
@@ -6,6 +28,12 @@ CREATE TABLE `category` (
   PRIMARY KEY (`id_category`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ceo_education_level`
+--
+
+DROP TABLE IF EXISTS `ceo_education_level`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ceo_education_level` (
@@ -14,6 +42,12 @@ CREATE TABLE `ceo_education_level` (
   PRIMARY KEY (`id_ceo_education_level`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `faculty_schools`
+--
+
+DROP TABLE IF EXISTS `faculty_schools`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `faculty_schools` (
@@ -22,6 +56,12 @@ CREATE TABLE `faculty_schools` (
   PRIMARY KEY (`id_faculty_schools`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `founders_country`
+--
+
+DROP TABLE IF EXISTS `founders_country`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `founders_country` (
@@ -30,6 +70,12 @@ CREATE TABLE `founders_country` (
   PRIMARY KEY (`id_founders_country`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `funding`
+--
+
+DROP TABLE IF EXISTS `funding`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `funding` (
@@ -49,6 +95,12 @@ CREATE TABLE `funding` (
   CONSTRAINT `funding_ibfk_3` FOREIGN KEY (`fk_startup`) REFERENCES `startup` (`id_startup`)
 ) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `impact_sdg`
+--
+
+DROP TABLE IF EXISTS `impact_sdg`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `impact_sdg` (
@@ -57,6 +109,12 @@ CREATE TABLE `impact_sdg` (
   PRIMARY KEY (`id_impact_sdg`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logs`
+--
+
+DROP TABLE IF EXISTS `logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `logs` (
@@ -69,6 +127,12 @@ CREATE TABLE `logs` (
   PRIMARY KEY (`id_logs`)
 ) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `person`
+--
+
+DROP TABLE IF EXISTS `person`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `person` (
@@ -83,6 +147,12 @@ CREATE TABLE `person` (
   PRIMARY KEY (`id_person`)
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sectors`
+--
+
+DROP TABLE IF EXISTS `sectors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sectors` (
@@ -91,6 +161,12 @@ CREATE TABLE `sectors` (
   PRIMARY KEY (`id_sectors`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stage_of_investment`
+--
+
+DROP TABLE IF EXISTS `stage_of_investment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stage_of_investment` (
@@ -99,6 +175,12 @@ CREATE TABLE `stage_of_investment` (
   PRIMARY KEY (`id_stage_of_investment`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `startup`
+--
+
+DROP TABLE IF EXISTS `startup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `startup` (
@@ -134,6 +216,12 @@ CREATE TABLE `startup` (
   CONSTRAINT `startup_ibfk_8` FOREIGN KEY (`fk_status`) REFERENCES `status` (`id_status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `startup_faculty_schools`
+--
+
+DROP TABLE IF EXISTS `startup_faculty_schools`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `startup_faculty_schools` (
@@ -147,6 +235,12 @@ CREATE TABLE `startup_faculty_schools` (
   CONSTRAINT `startup_faculty_schools_ibfk_2` FOREIGN KEY (`fk_faculty_schools`) REFERENCES `faculty_schools` (`id_faculty_schools`)
 ) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `startup_founders_country`
+--
+
+DROP TABLE IF EXISTS `startup_founders_country`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `startup_founders_country` (
@@ -160,6 +254,12 @@ CREATE TABLE `startup_founders_country` (
   CONSTRAINT `startup_founders_country_ibfk_2` FOREIGN KEY (`fk_founders_country`) REFERENCES `founders_country` (`id_founders_country`)
 ) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `startup_impact_sdg`
+--
+
+DROP TABLE IF EXISTS `startup_impact_sdg`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `startup_impact_sdg` (
@@ -173,6 +273,12 @@ CREATE TABLE `startup_impact_sdg` (
   CONSTRAINT `startup_impact_sdg_ibfk_2` FOREIGN KEY (`fk_impact_sdg`) REFERENCES `impact_sdg` (`id_impact_sdg`)
 ) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `startup_person`
+--
+
+DROP TABLE IF EXISTS `startup_person`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `startup_person` (
@@ -189,6 +295,12 @@ CREATE TABLE `startup_person` (
   CONSTRAINT `startup_person_ibfk_3` FOREIGN KEY (`fk_type_of_person`) REFERENCES `type_of_person` (`id_type_of_person`)
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `status`
+--
+
+DROP TABLE IF EXISTS `status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `status` (
@@ -197,6 +309,12 @@ CREATE TABLE `status` (
   PRIMARY KEY (`id_status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `type_of_investment`
+--
+
+DROP TABLE IF EXISTS `type_of_investment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `type_of_investment` (
@@ -205,6 +323,12 @@ CREATE TABLE `type_of_investment` (
   PRIMARY KEY (`id_type_of_investment`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `type_of_person`
+--
+
+DROP TABLE IF EXISTS `type_of_person`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `type_of_person` (
@@ -213,6 +337,12 @@ CREATE TABLE `type_of_person` (
   PRIMARY KEY (`id_type_of_person`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `type_startup`
+--
+
+DROP TABLE IF EXISTS `type_startup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `type_startup` (
@@ -221,6 +351,13 @@ CREATE TABLE `type_startup` (
   PRIMARY KEY (`id_type_startup`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `view_detail_startup`
+--
+
+DROP TABLE IF EXISTS `view_detail_startup`;
+/*!50001 DROP VIEW IF EXISTS `view_detail_startup`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_detail_startup` (
@@ -245,6 +382,13 @@ SET character_set_client = utf8;
   `ceo_education_level` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_detail_startup_full`
+--
+
+DROP TABLE IF EXISTS `view_detail_startup_full`;
+/*!50001 DROP VIEW IF EXISTS `view_detail_startup_full`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_detail_startup_full` (
@@ -290,6 +434,13 @@ SET character_set_client = utf8;
   `type_of_person3` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_display_funds`
+--
+
+DROP TABLE IF EXISTS `view_display_funds`;
+/*!50001 DROP VIEW IF EXISTS `view_display_funds`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_display_funds` (
@@ -303,6 +454,13 @@ SET character_set_client = utf8;
   `company` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_funds_by_sector`
+--
+
+DROP TABLE IF EXISTS `view_funds_by_sector`;
+/*!50001 DROP VIEW IF EXISTS `view_funds_by_sector`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_funds_by_sector` (
@@ -310,6 +468,13 @@ SET character_set_client = utf8;
   `amount` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_number_of_startups_by_year`
+--
+
+DROP TABLE IF EXISTS `view_number_of_startups_by_year`;
+/*!50001 DROP VIEW IF EXISTS `view_number_of_startups_by_year`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_number_of_startups_by_year` (
@@ -317,6 +482,13 @@ SET character_set_client = utf8;
   `number_of_companies` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startup_country`
+--
+
+DROP TABLE IF EXISTS `view_startup_country`;
+/*!50001 DROP VIEW IF EXISTS `view_startup_country`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startup_country` (
@@ -324,6 +496,13 @@ SET character_set_client = utf8;
   `country` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startup_faculty_schools`
+--
+
+DROP TABLE IF EXISTS `view_startup_faculty_schools`;
+/*!50001 DROP VIEW IF EXISTS `view_startup_faculty_schools`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startup_faculty_schools` (
@@ -331,6 +510,13 @@ SET character_set_client = utf8;
   `schools` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startup_impact`
+--
+
+DROP TABLE IF EXISTS `view_startup_impact`;
+/*!50001 DROP VIEW IF EXISTS `view_startup_impact`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startup_impact` (
@@ -338,6 +524,13 @@ SET character_set_client = utf8;
   `impact` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startup_with,ty_of_person_id`
+--
+
+DROP TABLE IF EXISTS `view_startup_with,ty_of_person_id`;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with,ty_of_person_id`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startup_with,ty_of_person_id` (
@@ -348,6 +541,13 @@ SET character_set_client = utf8;
   `id_type_of_person3` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startup_with_id_person`
+--
+
+DROP TABLE IF EXISTS `view_startup_with_id_person`;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with_id_person`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startup_with_id_person` (
@@ -361,6 +561,13 @@ SET character_set_client = utf8;
   `id_person3` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startup_with_id_type_of_person`
+--
+
+DROP TABLE IF EXISTS `view_startup_with_id_type_of_person`;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with_id_type_of_person`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startup_with_id_type_of_person` (
@@ -371,6 +578,13 @@ SET character_set_client = utf8;
   `id_type_of_person3` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startup_with_person`
+--
+
+DROP TABLE IF EXISTS `view_startup_with_person`;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with_person`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startup_with_person` (
@@ -390,6 +604,13 @@ SET character_set_client = utf8;
   `firstname3` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startup_with_type_of_person`
+--
+
+DROP TABLE IF EXISTS `view_startup_with_type_of_person`;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with_type_of_person`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startup_with_type_of_person` (
@@ -403,6 +624,13 @@ SET character_set_client = utf8;
   `type_of_person3` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `view_startups_by_sector`
+--
+
+DROP TABLE IF EXISTS `view_startups_by_sector`;
+/*!50001 DROP VIEW IF EXISTS `view_startups_by_sector`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `view_startups_by_sector` (
@@ -410,7 +638,13 @@ SET character_set_client = utf8;
   `company` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `view_detail_startup`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_detail_startup`*/;
+/*!50001 DROP VIEW IF EXISTS `view_detail_startup`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -423,7 +657,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_detail_startup_full`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_detail_startup_full`*/;
+/*!50001 DROP VIEW IF EXISTS `view_detail_startup_full`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -436,7 +676,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_display_funds`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_display_funds`*/;
+/*!50001 DROP VIEW IF EXISTS `view_display_funds`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -449,7 +695,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_funds_by_sector`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_funds_by_sector`*/;
+/*!50001 DROP VIEW IF EXISTS `view_funds_by_sector`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -462,7 +714,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_number_of_startups_by_year`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_number_of_startups_by_year`*/;
+/*!50001 DROP VIEW IF EXISTS `view_number_of_startups_by_year`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -475,7 +733,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startup_country`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startup_country`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startup_country`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -488,7 +752,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startup_faculty_schools`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startup_faculty_schools`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startup_faculty_schools`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -501,7 +771,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startup_impact`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startup_impact`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startup_impact`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -514,7 +790,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startup_with,ty_of_person_id`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startup_with,ty_of_person_id`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with,ty_of_person_id`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -527,7 +809,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startup_with_id_person`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startup_with_id_person`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with_id_person`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -540,7 +828,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startup_with_id_type_of_person`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startup_with_id_type_of_person`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with_id_type_of_person`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -553,7 +847,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startup_with_person`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startup_with_person`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with_person`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -566,7 +866,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startup_with_type_of_person`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startup_with_type_of_person`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startup_with_type_of_person`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -579,7 +885,13 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_startups_by_sector`
+--
+
 /*!50001 DROP TABLE IF EXISTS `view_startups_by_sector`*/;
+/*!50001 DROP VIEW IF EXISTS `view_startups_by_sector`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -592,3 +904,14 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-06-23 12:41:54
