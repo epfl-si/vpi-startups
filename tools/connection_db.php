@@ -1,8 +1,9 @@
 <?php
 
+//Importer la page qui contient les données pour la connection à la base de données
 require 'env.php';
 
-//Permet de faire se connecter à la base de données pour faire les requêtes grace aux variables d'environnement de PHP
+//Permet de se connecter à la base de données, en prennant les variables d'environnement
 $db_name=getenv("DB_NAME");
 $servername = getenv("DB_HOST");
 $username = getenv("DB_USERNAME");
@@ -13,6 +14,7 @@ $password = getenv("DB_PASSWORD");
 //Si la connexion n'est pas réussie, alors il affiche un message de connection failed
 try 
 {
+  //Connection PHP à la base de données avec la méthode PDO
   $db = new PDO("mysql:host=$servername;port=$port;dbname=$db_name;charset=utf8", $username, $password);
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } 
