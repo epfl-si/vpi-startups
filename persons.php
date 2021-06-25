@@ -11,7 +11,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     //Permet de faire appel à l\'API quand elle est rechargée 
     google.charts.setOnLoadCallback(load_person_data);
     
-    //Chercher dans la base de données les données nécessaires pour importer dans la fonction de dessin du tableau (Celle-ci est la même que celles au dessous, la seule différence est que cette partie est pour la checkbox qui est cochée par défaut, donc quand il n'y a pas de changement de checkbox)
+    //Fonction pour récupérer les données nécessaires pour le tableau
     function load_person_data()
     {
         $.ajax
@@ -36,8 +36,10 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     {
         //Mettre dans une variable les données récupérées
         var jsonData = chart_data;
+
         //Initialiser la base d\'un google chart
         var data = new google.visualization.DataTable();
+
         //Initialiser les colonnes pour mettre les données
         data.addColumn('string', 'name');
         data.addColumn('string', 'firstname');
@@ -45,6 +47,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
         data.addColumn('string', 'prof_as_founder');
         data.addColumn('string', 'gender');
         data.addColumn('string', 'sciper_number');
+
         //Mettre les données dans les colonnes
         $.each(jsonData, function(i, jsonData)
         {
@@ -109,7 +112,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             }
         });
         
-        //Permet d'ajouter un evenement pour que quand l\'utilisateur clique sur une ligne, le script cherche le nom de l'entreprise et puisse rediriger l'utilisateur vers la page de details
+        //Permet d'ajouter un evenement pour que quand l\'utilisateur clique sur une ligne, le script cherche le nom de la personne et puisse rediriger l'utilisateur vers la page de details de cette personne
         google.visualization.events.addListener(table, 'ready', function() 
         {
             var container = document.getElementById(table.getContainerId());
