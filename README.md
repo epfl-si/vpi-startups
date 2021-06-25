@@ -60,3 +60,6 @@ Go to docker folder and build the DockerFile (he will build the webserver image)
 After that, execute the docker-compose.yml (he will build the 3 containers for the application) with ``` docker-compose up -d ```.  
 Go to localhost:8888 to access to website and localhost:8081 to access database through phpmyadmin. 
 
+### Database script
+
+You can use the ``` script_export_import_structure_and_data.sh ``` in ``` db ``` folder to autommatically put the local structure of the database in production without touching the production data.
