@@ -224,6 +224,12 @@ function funds_table($id_startup)
       
       });
       
+      //Partie pour télécharger un export de la table funds au format CSV
+      $('#button_export_funds').on('click', function () 
+      {
+          window.location.replace('/funds/export');
+      });
+
       //Permet de transformer les données numeriques du tableau.
       var formatter = new google.visualization.NumberFormat({groupingSymbol:'\'',decimalSymbol:',',fractionDigits:'2'});
       formatter.format(data,1);
@@ -251,10 +257,11 @@ function funds_table($id_startup)
           <div class='row'>";
           if($id_startup == "none")
           {
-              //Div qui contiennent les filtres, le tableau et l'addition des fonds
+              //Div qui contiennent les filtres, le tableau et l'addition des fonds et le bouton pour exporter les funds en csv
               echo "
-              <div id='search_amount' class='text-left col-6 my-5 '></div>
-              <div id='search_startup' class='text-right col-6 my-5 '></div>
+              <div id='search_amount' class='text-left col-4 my-5 ml-auto'></div>
+              <div id='search_startup' class='text-left col-4 my-5'></div>
+              <button id='button_export_funds' class='btn btn-outline-secondary col-4 my-5 '>Download Funds to CSV file</button>
               <div id='table' class='col-12 pr-0 mb-5'></div>
               <div id='sum_amount' class='col-12 pr-0 mb-5 font-weight-bold'></div>";
           }
@@ -264,7 +271,8 @@ function funds_table($id_startup)
             echo "
             <div id='table' class='col-12 pr-0 mb-5 mt-3 mx-auto'></div>
             <div id='sum_amount' class='col-12 pr-0 mb-5 font-weight-bold'></div>
-            <a href='/funds/add/$id_startup' class='btn btn-outline-secondary mb-5' role='button' aria-disabled='true'>Add New Fund to Startup</a>";
+            <a href='/funds/add/$id_startup' class='btn btn-outline-secondary col-2 mb-5 mr-5' role='button' aria-disabled='true'>Add New Fund to Startup</a>
+            <a href='/funds/export/$id_startup' class='btn btn-outline-secondary col-2 mb-5 ml-5' role='button' aria-disabled='true'>Export Startups Funds to CSV</a>";
           }
           echo "
           </div>
