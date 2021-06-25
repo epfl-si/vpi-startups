@@ -24,5 +24,5 @@ git push
 
 #Enter in the server and make it to do the export
 HOSTS="itsidevfsd0008.xaas.epfl.ch"
-SCRIPT='git checkout main; git pull; cd db/; mysqldump --user="vpi_startup_mgmt" --password="$SECRET" --databases vpi_startup -h mysql-scx.epfl.ch -P 33001 --no-create-info > vpi_startup_only_data.sql; mysql -u vpi_startup_mgmt -h mysql-scx.epfl.ch -P 33001 --password="$SECRET" --database vpi_startup < vpi_startup_only_structure.sql; mysql -u vpi_startup_mgmt -h mysql-scx.epfl.ch -P 33001 --password="$SECRET" --database vpi_startup < vpi_startup_only_data.sql;'
+SCRIPT='git checkout main; git pull; cd db/; mysqldump --user="$USER_DB" --password="$SECRET" --databases vpi_startup -h mysql-scx.epfl.ch -P 33001 --no-create-info > vpi_startup_only_data.sql; mysql -u "$USER_DB" -h mysql-scx.epfl.ch -P 33001 --password="$SECRET" --database vpi_startup < vpi_startup_only_structure.sql; mysql -u "$USER_DB" -h mysql-scx.epfl.ch -P 33001 --password="$SECRET" --database vpi_startup < vpi_startup_only_data.sql;'
 ssh -A ${HOSTS} "${SCRIPT}"
