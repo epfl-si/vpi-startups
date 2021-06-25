@@ -1,7 +1,7 @@
 <?php
 
 
-    //Tableau qui affiche quelques informations des startups
+    //Tableau qui affiche quelques données des startups
     ?>
 
     <script type='text/javascript'>
@@ -12,7 +12,7 @@
         //Permet de faire appel à l\'API quand elle est rechargée 
         google.charts.setOnLoadCallback(load_companies_data);
         
-        //Chercher dans la base de données les données nécessaires pour importer dans la fonction de dessin du tableau (Celle-ci est la même que celles au dessous, la seule différence est que cette partie est pour la checkbox qui est cochée par défaut, donc quand il n'y a pas de changement de checkbox)
+        //Fonction pour récupérer les données nécessaires pour le tableau dans la base de données 
         function load_companies_data()
         {
             $.ajax
@@ -20,6 +20,7 @@
                 url:'/tools/companies_list_index_db.php',
                 method:'POST',
                 dataType:'JSON',
+
                 //Si tout se passe bien avec le résultat final du fichier 'companies_list_index_db.php' alors il passe à success et écrire les données dans le tableau
                 success:function(data)
                 {
@@ -33,7 +34,7 @@
             });
         }
 
-        //Mettre les données dans le tableau et le dessiner
+        //Mettre les données dans le tableau et le construire
         function drawChart_companies_data(chart_data)
         {
             //Mettre dans une variable les données récupérées
@@ -59,6 +60,8 @@
                 var rc = jsonData.rc;
                 var status = jsonData.status;
                 var sectors = jsonData.sectors;
+
+                //Initialiser les colonnes du tableau
                 data.addRows([[company, founding_date, web, rc, status, sectors]]);
             });
             
@@ -140,7 +143,7 @@
                 }
             });
 
-            //Permet d'ajouter un evenement pour que quand l\'utilisateur clique sur une ligne, le script cherche le nom de l'entreprise et puisse rediriger l'utilisateur vers la page de details
+            //Permet d'ajouter un evenement pour que quand l\'utilisateur clique sur une ligne, le script cherche le nom de la startup et redirige l'utilisateur vers la page de details de cette startup
             google.visualization.events.addListener(table, 'ready', function() 
             {
                 var container = document.getElementById(table.getContainerId());
@@ -153,6 +156,7 @@
                 {
                     //Récupérer le tableau qui est affiché
                     var tableDataView = table.getDataTable();
+                    
                     //Mettre en variable tous les elements de la ligne que l'utilisateur a cliqué
                     var cell = sender.target;
                     var row = cell.closest('tr');
@@ -164,6 +168,7 @@
                     var e = event || window.event;
                     var cell_e = e.target;
                     var id_cell = cell_e.cellIndex;
+                    
                     //Cette condition permet rediriger l'utilisateur vers la bonne page suivant la celulle cliquée
                     if(id_cell == 0 || id_cell == 1 || id_cell == 2 || id_cell == 3 || id_cell == 4 || id_cell == 5)
                     {
@@ -181,8 +186,7 @@
                             {
                                 str : str,
                             },
-                            /*Si tout est bien, il affiche un pop-up, en disant que les changements
-                            ont été faits et il rafraîchit la page pour montrer à l\'utilisateur les changements*/
+                            //Si tout est bien, il redirige l'utilisateur vers la page de la startup
                             success:function(data)
                             {
                                 //Récupérer l'id de la startup dans la base de données
@@ -191,6 +195,8 @@
                                 //Mettre l'id comme paramètre dans l'url
                                 window.location.replace('/startup/modify/'+id_startup);
                             },
+
+                            //Si non, un pop-up d'avertissement est affiché
                             error:function()
                             {
                                 alert('Something went wrong, please try again.');
@@ -201,7 +207,7 @@
             
             });
 
-            //Partie pour télécharger les données du tableau en format CSV
+            //Partie pour télécharger un export de la table startup au format CSV
             $('.csv-button').on('click', function () 
             {
                 window.location.replace('tools/export_csv.php');

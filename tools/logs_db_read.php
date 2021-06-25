@@ -2,12 +2,12 @@
 
 require 'connection_db.php';
 
-//Chercher les données du nombre de startups par secteur avec une vue SQL
+//Chercher les logs par ordre descendente
 $logs_db= $db ->query('SELECT * FROM logs GROUP BY id_logs DESC');
 $logs = $logs_db ->fetchAll();
 foreach ($logs as $log)
 {
-    //Faire un tableau avec les données nécessaires pour le graphique
+    //Faire un tableau avec les données nécessaires pour le tableau
     $output[] = array 
     (
         'sciper_number'=> $log['sciper_number'],
@@ -18,7 +18,7 @@ foreach ($logs as $log)
     );
 
 }
-//Encoder l'output pour pouvoir prendre les données dans le graphique
+//Envoyer les données
 echo json_encode($output);
 
 

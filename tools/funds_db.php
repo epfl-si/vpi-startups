@@ -2,18 +2,23 @@
 
 require 'connection_db.php';
 
+//Prendre l'id de la startup
 $id_startup = $_POST['id_startup'];
 
+//S'il n'y a pas d'id de startup
 if($id_startup=="none")
 {
+    //Prendre la view general de tous les fonds
     $query = 'SELECT * FROM view_display_funds';
 }
+//S'il y a un id de startup
 else
 {
+    //Prendre la view general, mais chercher seulement les données de la startup
     $query = 'SELECT * FROM view_display_funds WHERE fk_startup = "'.$id_startup.'"';
 }
 
-//Chercher les données du nombre de startups par secteur avec une vue SQL
+//Chercher les données dans la base de données
 $funds_db= $db ->query($query);
 $funds = $funds_db ->fetchAll();
 foreach ($funds as $fund)
@@ -31,7 +36,7 @@ foreach ($funds as $fund)
     );
 
 }
-//Encoder l'output pour pouvoir prendre les données dans le graphique
+//Enovyer les données de l'array
 echo json_encode($output);
 
 ?>

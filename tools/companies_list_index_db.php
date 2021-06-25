@@ -2,13 +2,12 @@
 
 require 'connection_db.php';
 
-//Mettre dans un tableau les données importants d'une startup
-
+//Requête SQL nécessaire pour prendre les données du tableau de la page d'accueil
 $companies_data = $db ->query('SELECT company, founding_date, web, rc, status, sectors FROM startup INNER JOIN status ON startup.fk_status = status.id_status INNER JOIN sectors ON sectors.id_sectors = startup.fk_sectors');
 $company_data = $companies_data ->fetchAll();
 foreach ($company_data as $data_company)
 {
-    //Mettre dans un tableau les données récupérées de la base de données
+    //Mettre dans un array, les données nécessaires pour le tableau de la page d'accueil
     $output[] = array 
     (
         'company'=> $data_company['company'],
@@ -20,6 +19,7 @@ foreach ($company_data as $data_company)
     );
 
 }
+//Envoyer les données de l'array
 echo json_encode($output);
 
 

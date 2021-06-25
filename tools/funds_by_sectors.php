@@ -3,7 +3,7 @@
 require 'connection_db.php';
 
 
-//Chercher les données du nombre de startups par secteur avec une vue SQL
+//Prendre les données des fonds par sectors grace à la view SQL
 $count_companies_year = $db ->query('SELECT * FROM view_funds_by_sector');
 $count_company_year = $count_companies_year ->fetchAll();
 foreach ($count_company_year as $company_year)
@@ -16,7 +16,7 @@ foreach ($count_company_year as $company_year)
     );
 
 }
-//Encoder l'output pour pouvoir prendre les données dans le camembert
+//Envoyer les données de l'array
 echo json_encode($output);
 
 

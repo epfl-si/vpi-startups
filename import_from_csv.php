@@ -4,6 +4,7 @@
 if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
 {
     echo '
+    <!-- Formulaire d\'importation d\'un fichier CSV -->
     <div class="container my-5">
         <form method="post" id="form_csv_upload" class="form_csv_upload col-12 col-sm-12 col-lg-8 col-xl-8 mx-auto" enctype="multipart/form-data" action="'; echo '/'.$controller; echo'">
             <legend class="font-weight-bold my-5 pl-0"> Import from CSV to database </legend>    
@@ -11,6 +12,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <!-- input type="file" permet d\'aller chercher sur le disque de l\'utilisateur, le csv qu\'il veut ajouter-->
                 <input type="file" class="form-control-file border" name="fileToUpload" id="fileToUpload">  
             </div>
+            <!-- Radios pour checker si l\'utilisateur veut tout supprimer et tout réécrire ou s\'il veut écrire seulement les nouvelles données -->
             <div class="form-check mt-5">
                 <input class="form-check-input" type="radio" value="import_new_overwrite_old" name="data_imported" id="identical_data">
                 <label class="form-check-label" for="identical_data">
@@ -35,7 +37,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     require 'footer.php';
 }
 
-//Si l'utilisateur n'a pas le droit d'écrire, un pop-up d'avertissement sera affiché et il sera redirigé vers la page d'accueil
+//Si l'utilisateur n'a pas le droit d'écrire, un flash message d'avertissement sera affiché et il sera redirigé vers la page d'accueil
 elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
 {
     $_SESSION['flash_message'] = array();

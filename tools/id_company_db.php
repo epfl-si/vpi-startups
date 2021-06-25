@@ -2,7 +2,7 @@
 
 require 'connection_db.php';
 
-
+//Prendre la startup qui a été cliqué par l'utilisateur
 $str = $_POST['str'];
 
 //Mettre dans un tableau l'id de la personne cliquée
@@ -14,6 +14,7 @@ $output[] = array
     'id_startup'=> $id_startup['id_startup'],
 );
 
+//Envoyer l'id
 echo json_encode($output);
 
 

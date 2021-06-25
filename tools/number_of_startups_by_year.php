@@ -2,7 +2,7 @@
 
 require 'connection_db.php';
 
-//Chercher les données du nombre de startups par secteur avec une vue SQL
+//Prendre le nombre de startups créées par année 
 $count_companies_year = $db ->query('SELECT * FROM `view_number_of_startups_by_year`');
 $count_company_year = $count_companies_year ->fetchAll();
 foreach ($count_company_year as $company_year)
@@ -15,7 +15,7 @@ foreach ($count_company_year as $company_year)
     );
 
 }
-//Encoder l'output pour pouvoir prendre les données dans le graphique
+//Envoyer les données
 echo json_encode($output);
 
 

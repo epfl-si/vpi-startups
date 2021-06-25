@@ -1,8 +1,12 @@
 <?php
 
+//Condition pour vérifier si l'utilisateur est connecté à l'application via Tequila
 if(isset($_SESSION['user']))
 {
+    //Ignorer les erreurs NOTICE
     error_reporting(E_ALL & ~E_NOTICE);
+
+    //Mettre le sciper de l'utilisateur connecté dans une variable
     $sciper_number = $_SESSION['uniqueid'];
 
     //Initialiser les modules nécessaires pour le site (bootstrap, ajax, google charts)
@@ -43,12 +47,11 @@ if(isset($_SESSION['user']))
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto">';
+                
                 //Il affiche le menu aux utilisateurs qui ont le droit d'écrire
                 if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 {
-                    /*
-                        Menu du site web.
-                    */
+                    //Menu du site web
                     echo '
                     <li class="nav-item">
                         <a class="nav-link text-danger" href="/">Homepage</a>
@@ -108,8 +111,11 @@ if(isset($_SESSION['user']))
         </div>
     </nav>';
 
+    //Affichage des flash messages
     echo do_i_need_to_display_flash_message();
 }
+
+//Si l'utilisateur n'est pas connecté, il le redirige vers la page de login pour que l'utilisateur puisse se connecter
 else
 {
     header('Location: /login');

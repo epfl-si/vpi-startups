@@ -2,14 +2,11 @@
 
 require 'tools/hide_header.php';
 
-//Graphique
+///Graphique avec le nombre de startups par secteur
 echo "
 <script type='text/javascript'>
 
-
 google.charts.load('current', {packages: ['corechart', 'bar']});
-
-
 google.charts.setOnLoadCallback(startups_by_sectors);
 
 //Prendre les données de la base de données
@@ -27,32 +24,29 @@ function startups_by_sectors()
     });
 }
 
-//Mettre les données dans les bonnes colonnes
+//Mettre les données dans les colonnes
 function drawChart_startups_by_sectors(chart_data)
 {
 
     var jsonData = chart_data;
-
-
     var data = new google.visualization.DataTable();
 
-
+    //Initialiser les colonnes
     data.addColumn('string', 'sectors');
     data.addColumn('number', 'company');
 
 
+    //Prendre les données de la base de données et les mettre dans les colonnes
     $.each(jsonData, function(i, jsonData)
     {
         var sectors = jsonData.sectors;
-
-
         var company = parseFloat($.trim(jsonData.company));
 
 
         data.addRows([[sectors, company]]);
     });
 
-
+    //Donner quelques options supplémentaires au graphique
     var options = 
     {
         title:'Startups by Sectors',
@@ -65,10 +59,10 @@ function drawChart_startups_by_sectors(chart_data)
 
     };
 
-
+    //Dire que c'est un graphique du type camembert et le mettre dans la div
     var chart = new google.visualization.PieChart(document.getElementById('chart_pie_startups_by_sectors'));
 
-
+    //Construire et afficher le graphique avec les données et les options supplémentaires
     chart.draw(data, options);
 }
 

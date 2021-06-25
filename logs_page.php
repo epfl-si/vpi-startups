@@ -1,16 +1,15 @@
 <?php
 
-//Il affiche le menu aux utilisateurs qui ont le droit d'écrire
 if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
 {
+    //Tableau avec les logs du site
     echo "
     <script type='text/javascript'>
 
     google.charts.load('current', { 'packages': ['table'] });
-
-
     google.charts.setOnLoadCallback(logs_table);
 
+    //Fonction pour récupérer les logs dans la base de données
     function logs_table()
     {
         $.ajax
@@ -25,16 +24,20 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
         });
     }
 
+    //Fonction pour construire le tableau et mettre les données de la base de données
     function drawChart_logs_table(chart_data)
     {
         var jsonData = chart_data;
         var data = new google.visualization.DataTable();
         
+        //Colonnes du tableau
         data.addColumn('string', 'sciper_number');
         data.addColumn('string', 'date');
         data.addColumn('string', 'before');
         data.addColumn('string', 'after');
         data.addColumn('string', 'action');
+
+        //Ajouter les données aux colonnes
         $.each(jsonData, function(i, jsonData)
         {
             var sciper_number = jsonData.sciper_number;
@@ -43,17 +46,21 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             var before = jsonData.before;
             var action = jsonData.action;
             
+            //Definir l'ordre des données pour qu'il match avec les noms de colonnes
             data.addRows([[sciper_number,date,before,after,action]]);
         });
+
+        //Titre du tableau
         var options = 
         {
             title:'Logs',
         };
         
+        //Dire que c'est un google chart du type tableau et le mettre dans la bonne div
         var table = new google.visualization.Table(document.getElementById('chart_logs_table'));
 
+        //Construire le tableau et ne pas afficher l'id à chaque ligne
         table.draw(data, {showRowNumber: false});
-        //chart.draw(data, options);
     }
 
     
@@ -65,6 +72,8 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     </div>
     ";
 }
+
+//Si l'utilisateur n'a pas le droit, il affiche un flash message d'avertissement
 else
 {
     $_SESSION['flash_message'] = array();

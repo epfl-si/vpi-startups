@@ -2,12 +2,12 @@
 
 require 'connection_db.php';
 
-//Chercher les données du nombre de startups par secteur avec une vue SQL
+//Prendre les données des personnes (table person dans la base de données)
 $person_db= $db ->query('SELECT * FROM person');
 $persons = $person_db ->fetchAll();
 foreach ($persons as $person)
 {
-    //Faire un tableau avec les données nécessaires pour le graphique
+    //Faire un tableau avec les données nécessaires
     $output[] = array 
     (
         'name'=> $person['name'],
@@ -20,7 +20,7 @@ foreach ($persons as $person)
     );
 
 }
-//Encoder l'output pour pouvoir prendre les données dans le graphique
+//Envoyer les données
 echo json_encode($output);
 
 
