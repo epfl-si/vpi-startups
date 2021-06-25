@@ -2,7 +2,7 @@
 
 require 'connection_db.php';
 
-//Chercher les données du nombre de startups par secteur avec une vue SQL
+//Prendre le nombre de startups par secteur
 $startups_by_sectors = $db ->query('SELECT * FROM view_startups_by_sector');
 $startups_by_sector = $startups_by_sectors ->fetchAll();
 foreach ($startups_by_sector as $startup_by_sector)
@@ -16,7 +16,7 @@ foreach ($startups_by_sector as $startup_by_sector)
 
 }
 
-//Encoder l'output pour pouvoir prendre les données dans le camembert
+//Envoyer les données
 echo json_encode($output);
 
 

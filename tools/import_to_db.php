@@ -325,7 +325,6 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
                 }
             }
 
-            //
             //Ouvrir le fichier modifié pour obtenir les données et les mettre dans la base de données
             $file_output = fopen("csv_imported/startups_modified_good_order.csv","r");
             
@@ -336,19 +335,24 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
 
             add_logs($_SESSION['uniqueid'],$before,$after,$action);
             
+            //Lire le fichier qui contient les modifications après analyse du fichier importé par l'utilisateur
             while (($data_import_db = fgetcsv($file_output, 10000, ",")) !== FALSE) 
             {
+                //Requête pour vérifier si la startup existe déjà
                 $add_data = $db->query('SELECT id_startup, company FROM startup WHERE company = "'.$data_import_db[0].'"');
                 $data = $add_data->fetch();
                 
-                //On test si la startup n'existe pas
+                //Si elle n'existe pas
                 if($data['company'] == '')
                 {
+                    //Il insère la nouvelle startup dans la base de données
                     $import_data_to_db_startups = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory, short_description, company_uid, crunchbase_uid, unit_path, fk_type, fk_ceo_education_level, fk_sectors, fk_category, fk_status) VALUES ("'.$data_import_db[0].'","'.$data_import_db[1].'","'.$data_import_db[2].'","'.$data_import_db[3].'","'.$data_import_db[4].'","'.$data_import_db[5].'","'.$data_import_db[6].'","'.$data_import_db[7].'","'.$data_import_db[8].'","'.$data_import_db[9].'","'.$data_import_db[10].'","'.$data_import_db[11].'","'.$data_import_db[12].'",'.$data_import_db[13].','.$data_import_db[14].','.$data_import_db[15].','.$data_import_db[16].','.$data_import_db[17].')');
                     $import_data_to_db_startups -> execute();
 
+                    //Il récupère la dernière id
                     $last_id_startup = $db->lastInsertId();
 
+                    //Il va écrire dans les tables intermediaires pays, facultés et impacts
                     if($data_import_db[18]  != 'NULL')
                     {
                         $id_founders_country_explode= explode(';',$data_import_db[18]);
@@ -387,11 +391,11 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
                     //Si elle existe et l'utilisateur a choisi de réécrire les données
                     if($radio_result == "import_new_overwrite_old")
                     {
-
+                        //Il fait l'update sur la table startup 
                         $update_data = $db -> prepare('UPDATE startup SET web = "'.$data_import_db[1].'", founding_date = "'.$data_import_db[2].'", rc="'.$data_import_db[3].'", exit_year="'.$data_import_db[4].'",epfl_grant="'.$data_import_db[5].'",awards_competitions="'.$data_import_db[6].'", key_words="'.$data_import_db[7].'", laboratory="'.$data_import_db[8].'", short_description="'.$data_import_db[9].'", company_uid="'.$data_import_db[10].'", crunchbase_uid="'.$data_import_db[11].'", unit_path="'.$data_import_db[12].'",fk_type='.$data_import_db[13].',fk_ceo_education_level='.$data_import_db[14].',fk_sectors='.$data_import_db[15].',fk_category='.$data_import_db[16].',fk_status='.$data_import_db[17].' WHERE id_startup='.$data['id_startup'].'');
                         $update_data -> execute();
 
-                        //Supprimer les anciennes valeurs pour cette startup des pays
+                        //Supprimer les anciennes valeurs du pays pour cette startup
                         $delete_data_to_db_startups_founders_country = $db -> prepare('DELETE FROM startup_founders_country WHERE fk_startup='.$data['id_startup'].'');
                         $delete_data_to_db_startups_founders_country -> execute();
 
@@ -401,7 +405,7 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
                             $id_founders_country_explode= explode(';',$data_import_db[18]);
                             foreach ($id_founders_country_explode as $id_founders_country)
                             {
-                                
+                                //Il fait l'insertion sur la table intermediaire
                                 $insert_data_to_db_startups_founders_country = $db -> prepare('INSERT INTO startup_founders_country (fk_startup, fk_founders_country) VALUES ('.$data['id_startup'].', '.$id_founders_country.')');
                                 $insert_data_to_db_startups_founders_country -> execute();
 
@@ -417,7 +421,7 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
                             $id_faculty_schools_explode= explode(';',$data_import_db[19]);
                             foreach ($id_faculty_schools_explode as $id_faculty_schools)
                             {
-                                
+                                //Il fait l'insertion sur la table intermediaire
                                 $import_data_to_db_startups_faculty_schools = $db -> prepare('INSERT INTO startup_faculty_schools(fk_startup, fk_faculty_schools) VALUES ('.$data['id_startup'].','.$id_faculty_schools.')');
                                 $import_data_to_db_startups_faculty_schools -> execute();
 
@@ -433,6 +437,7 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
                             $id_impact_sdg_explode= explode(';',$data_import_db[20]);
                             foreach ($id_impact_sdg_explode as $id_impact_sdg)
                             {
+                                //Il fait l'insertion sur la table intermediaire
                                 $import_data_to_db_startups_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup, fk_impact_sdg) VALUES ('.$data['id_startup'].','.$id_impact_sdg.')');
                                 $import_data_to_db_startups_impact_sdg -> execute();
 
@@ -449,15 +454,16 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
             
             if($error_message == '')
             {
+                //Type de message pour le flash message (success = vert)
                 $type_message = "success";
                 
-                //Pop-up d'avertissement pour dire que le fichier a été importé et que les données ont été importées dans la base de donnée
+                //Message qui sera affiché à l'utilisateur si tout s'est bien passé
                 $error_message = "The file ".basename($_FILES["fileToUpload"]["name"])." has been uploaded and the data was imported in database";
             }
             
         }
         
-        //Pop-up d'avertissement s'il y a eu un problème avec l'importation des données 
+        //Message d'erreur si quelque chose a échoué 
         else 
         {
             $error_message = "Sorry, something went wrong";
@@ -471,6 +477,7 @@ else
     $error_message = "Sorry, your file is not a csv file";
 }
 
+//Condition pour vérifier le type de message (mettre la couleur sur l'avertissement)
 if($type)
 $_SESSION['flash_message'] = array();
 $_SESSION['flash_message']['message'] = $error_message;
