@@ -2,15 +2,17 @@
 
 require 'tools/connection_db.php';
 
-//S'il n'appartient pas au groupe TequilaPHPWrite, alors il n'a pas le droit de regarder le contenu de cette page
+//S'il n'appartient pas au groupe TequilaPHPWrite, alors il n'a pas le droit de voir le contenu de cette page
 if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
 {   
-    //Fonction pour afficher les listes déroulantes des personnes
+    //Fonction pour afficher la liste déroulante des personnes
     function display_people($number_of_person)
     {
         require 'tools/connection_db.php';
         
-        echo '<div class="form-group row">
+        echo '
+        <!-- Liste déroulante des personnes -->
+        <div class="form-group row">
                 <label for="person'.$number_of_person.'" class="col-sm-4 col-form-label">Person '.$number_of_person.'</label>
                 <div class="col-sm-6">
                     <select class="form-control" class="selectpicker" data-dropup-auto="true" name="person'.$number_of_person.'" id="person'.$number_of_person.'">
@@ -27,12 +29,13 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             </div>';
     }
 
-    //Fonction pour afficher les listes déroulantes de la fonction des personnes
+    //Fonction pour afficher la liste déroulante de la fonction des personnes
     function display_people_function($number_of_function)
     {
         require 'tools/connection_db.php';
 
         echo '
+        <!-- Liste déroulante des fonction des personnes -->
         <div class="form-group row">
             <label for="function_person'.$number_of_function.'" class="col-sm-4 col-form-label"> Person Function '.$number_of_function.'</label>
             <div class="col-sm-6">
@@ -49,6 +52,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             </div>
         </div>';
     }
+
     //Formulaire pour ajouter une nouvelle startup
     echo '
     <div class="container">
@@ -76,14 +80,14 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                     <input type="text" class="form-control" name="web" id="web" pattern="((https://)|(http://)).*" title="Your url must begin by &quot;&quot;http://&quot; or &quot;https://&quot;.">
                 </div>
             </div>
-            <!--  -->
+            <!-- Champ pour l\'url de la startup -->
             <div class="form-group row">
                 <label for="rc" class="col-sm-4 col-form-label">RC</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="rc" id="rc" pattern="[A-Za-z0-9[\-\.\] ]{2,300}" title="Minimum 2 characters and maximum 300. Special characters allowed are &quot;-.&quot;">
                 </div>
             </div>
-            <!-- Combobox pour afficher tout les status d\'une startup -->
+            <!-- Combobox pour afficher tous les status d\'une startup -->
             <div class="form-group row">
                 <label for="status" class="col-sm-4 col-form-label">Status <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
@@ -106,7 +110,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                     <input type="number" class="form-control" name="exit_year" id="exit_year" pattern="[0-9]{4}" title="Only numbers, 4 numbers.">
                 </div>
             </div>
-            <!-- Combobox pour afficher tout les types d\'une startup -->
+            <!-- Combobox pour afficher tous les types d\'une startup -->
             <div class="form-group row">
                 <label for="type_startup" class="col-sm-4 col-form-label">Type Startup <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
@@ -122,7 +126,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                     </select>
                 </div>
             </div>
-            <!-- Champ pour la categorie de la startup -->
+            <!-- Champ pour afficher tous les categories de la startup -->
             <div class="form-group row">
                 <label for="category" class="col-sm-4 col-form-label">Category <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
@@ -275,14 +279,14 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 </select>
                 </div>
             </div>';
-
+            
+            //Boucle pour afficher 3 fois la combobox avec les personnes et avec la fonction des personnes
             for ($x = 1; $x <= 3; $x++) {
                 display_people($x);
                 display_people_function($x);
             }
 
             echo '
-            <!-- Champ pour une description de la startup-->
             <button class="btn btn-outline-secondary my-5" id="submit_new_company" name="submit_new_company" type="submit">Submit</button>
         </form>
     </div>';
@@ -290,7 +294,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     require 'tools/disconnection_db.php';
     require 'footer.php';
 }
-//Si l'utilisateur a seulment le droit de lecture alors il n'a pas le droit de voir cette page
+//Si l'utilisateur a seulement le droit de lecture, alors il n'a pas le droit de voir cette page
 elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
 {
     $_SESSION['flash_message'] = array();

@@ -11,6 +11,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
     $startups_data = $db -> query('SELECT * FROM view_detail_startup_full WHERE id_startup="'.$id_startup.'"');
     $startup_data = $startups_data -> fetch();
 
+    //Mettre les données récupérées dans une variable SESSION PHP
     $_SESSION['startup_data'] = $startup_data;
     
     //Fonction pour afficher les listes déroulantes des personnes
@@ -24,11 +25,13 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                     <option value="delete">Delete person</option>';
                     $selected = false;
 
+                    //Chercher dans la base de données, l'id, le nom et le prénom de la personne pour ensuite afficher dans la combobox
                     $all_persons = $db-> query('SELECT id_person, name, firstname FROM person');
                     $all_person = $all_persons -> fetchAll();
 
                     foreach($all_person as $all)
                     {
+                        //Si l'id de personne est égale à l'id enregistré, alors il met selected dans l'option de la combobox et affiche toutes les autres options
                         if($all['id_person'] == $id_person_view)
                         {
                             echo '<option value="'.$id_person_view.'" selected>'.$name_person.'</option>';
@@ -41,6 +44,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                         }
                     }
 
+                    //Permet de dire à l'utilisateur de choisir un personne si aucune est choisie
                     if($selected == false)
                     {
                         echo '<option value="" disabled selected>Select person '.$number_of_person.'</option>';
@@ -63,6 +67,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <select class="form-control" class="selectpicker" data-dropup-auto="true" name="function_type_of_person'.$number_of_function.'" id="function_type_of_person'.$number_of_function.'">
             <option value="delete">Delete type of function</option>';
             
+            //Chercher dans la base de données, l'id et le nom de la fonction de la personne pour ensuite afficher dans la combobox
             $all_type_of_persons = $db-> query('SELECT id_type_of_person, type_of_person FROM type_of_person');
             $all_type_of_person = $all_type_of_persons -> fetchAll();
         
@@ -70,6 +75,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             
             foreach($all_type_of_person as $all) 
             {
+                //Si l'id de la fonction est égale à l'id enregistré, alors il met selected dans l'option de la combobox et affiche toutes les autres options
                 if($all['id_type_of_person'] == $id_type_of_person_view)
                 {
                     echo '<option value="'.$id_type_of_person_view.'" selected>'.$type_of_person.'</option>';
@@ -82,6 +88,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 }
             }
 
+            //Permet de dire à l'utilisateur de choisir une fonction si aucune est choisie
             if($selected == false)
             {
                 echo '<option value="" disabled selected>Select Type of Person '.$number_of_function.'</option>';
@@ -92,6 +99,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             </div>
         </div>';
     }
+
     //Formulaire pour ajouter une nouvelle startup
     echo '
     <div class="container">
@@ -193,7 +201,8 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <label for="category" class="col-sm-4 col-form-label">Category <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="category" id="category" required>';
-
+                            
+                    //Récupérer la categorie de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer la categorie de la startup
                     $category_data_startups = $db-> query('SELECT category FROM category INNER JOIN startup ON category.id_category = startup.fk_category WHERE id_startup = "'.$id_startup.'"');
                     $category_data_startup = $category_data_startups -> fetch();
 
@@ -235,6 +244,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="sectors" id="sectors" required>';
 
+                    //Récupérer le secteur de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer le secteur de la startup
                     $sectors_data_startups = $db-> query('SELECT sectors FROM sectors INNER JOIN startup ON sectors.id_sectors = startup.fk_sectors WHERE id_startup = "'.$id_startup.'"');
                     $sectors_data_startup = $sectors_data_startups -> fetch();
 
@@ -303,6 +313,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="ceo_education_level" id="ceo_education_level" required>';
 
+                    //Récupérer le ceo education level de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer le ceo education level de la startup
                     $ceo_education_level_data_startups = $db-> query('SELECT ceo_education_level FROM ceo_education_level INNER JOIN startup ON ceo_education_level.id_ceo_education_level = startup.fk_ceo_education_level WHERE id_startup = "'.$id_startup.'"');
                     $ceo_education_level_data_startup = $ceo_education_level_data_startups -> fetch();
 
@@ -329,6 +340,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="founders_country[]" id="founders_country" multiple="multiple" required>';
 
+                //Récupérer les pays de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer les pays de la startup
                 $founders_country_data_startups = $db-> query('SELECT founders_country FROM founders_country INNER JOIN startup_founders_country ON founders_country.id_founders_country = startup_founders_country.fk_founders_country WHERE fk_startup = "'.$id_startup.'"');
                 $selected_countries_startup = $founders_country_data_startups -> fetchAll();
                 
@@ -365,9 +377,11 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <label for="faculty_schools" class="col-sm-4 col-form-label">Faculty / Schools <small class="text-danger"> *</small></label>
                 <div class="col-sm-6">
                     <select class="form-control" class="selectpicker" data-dropup-auto="true" name="faculty_schools[]" id="faculty_schools" multiple="multiple" required>';
+                        
+                    
+                        //Récupérer les facultés de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer les facultés de la startup
                         $faculty_schools_data_startups = $db-> query('SELECT faculty_schools FROM faculty_schools INNER JOIN startup_faculty_schools ON faculty_schools.id_faculty_schools = startup_faculty_schools.fk_faculty_schools WHERE fk_startup = "'.$id_startup.'"');
                         $selected_faculty_schools_startup = $faculty_schools_data_startups -> fetchAll();
-                        
                         
                         $faculty_schools_data = $db-> query('SELECT faculty_schools FROM faculty_schools');
                         $all_faculty_schools_startup = $faculty_schools_data -> fetchAll();
@@ -401,6 +415,8 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <label for="impact_sdg" class="col-sm-4 col-form-label">Impact <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="impact_sdg[]" id="impact_sdg" multiple="multiple" required>';
+                    
+                    //Récupérer les impactes de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer les impactes de la startup    
                     $impact_sdg_data_startups = $db-> query('SELECT impact_sdg FROM impact_sdg INNER JOIN startup_impact_sdg ON impact_sdg.id_impact_sdg = startup_impact_sdg.fk_impact_sdg WHERE fk_startup = "'.$id_startup.'"');
                     $selected_impact_sdg_startup = $impact_sdg_data_startups -> fetchAll();
                     
@@ -432,6 +448,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 </div>
             </div>';
 
+            //Boucle pour afficher 3 fois la combobox pour les personnes et pour les fonctions des personnes
             for ($x = 1; $x <= 3; $x++) 
             {
                 display_people($x,$id_startup, $_SESSION['startup_data']["id_person$x"], $_SESSION['startup_data']["name$x"] );
@@ -444,13 +461,17 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
         </form>';
         require 'pages/funds/funds_table.php';
 
+        //Afficher le tableau avec les fonds de la startup
         funds_table($id_startup = $param);
         require 'tools/disconnection_db.php';
         require 'footer.php';
     echo '</div>';
 }
+
+//Si l'utilisateur n'a pas le droit d'écrire
 elseif($_SESSION['TequilaPHPRead'] == "TequilaPHPReadtrue")
 {
+    //Flash message d'avertissement
     $_SESSION['flash_message'] = array();
     $_SESSION['flash_message']['message'] = "You don't have enough rights to access this page";
     $_SESSION['flash_message']['type'] = "warning";

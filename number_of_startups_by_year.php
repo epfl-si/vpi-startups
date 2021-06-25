@@ -3,7 +3,7 @@
 require 'tools/hide_header.php';
 
 
-//Graphique
+//Graphique avec le nombre de startups créées par année (Le graphique ne contient pas l'année courante)
 echo "
 <script type='text/javascript'>
 
@@ -32,19 +32,26 @@ function drawChart_number_of_startups_by_year(chart_data)
 {
     var jsonData = chart_data;
     var data = new google.visualization.DataTable();
+
+    //Ajouter les colonnes
     data.addColumn('string', 'date');
     data.addColumn('number', 'number of startups');
+
+    //Mettre les données dans les colonnées
     $.each(jsonData, function(i, jsonData)
     {
         var founding_date = jsonData.founding_date;
         var number_of_companies = parseFloat($.trim(jsonData.number_of_companies));
         data.addRows([[founding_date, number_of_companies]]);
     });
+
+    //Donner le titre du tableau
     var options = 
     {
         title:'Number of Startups by Year',
     };
     
+    //Dire que le graphique est du type lineaire et le mettre dans la div
     var chart = new google.visualization.LineChart(document.getElementById('chart_line_number_of_startups_by_year'));
     chart.draw(data, options);
 }
