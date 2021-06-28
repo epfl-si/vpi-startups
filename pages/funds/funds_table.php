@@ -227,7 +227,8 @@ function funds_table($id_startup)
       //Partie pour télécharger un export de la table funds au format CSV
       $('#button_export_funds').on('click', function () 
       {
-          window.location.replace('/funds/export');
+        //window.location.replace('/funds/export');
+        window.location.replace('/pages/funds/export_funds_to_csv.php');
       });
 
       //Permet de transformer les données numeriques du tableau.

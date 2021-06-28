@@ -1,19 +1,22 @@
 <?php
 
+session_start();
+
+require '../../tools/connection_db.php';
+require '../../tools/logs_function.php';
+
 //Mettre la date d'aujourd'hui dans le nom du fichier csv
 $today = date("d-m-Y");
 
 //Ouvrir un fichier pour mettre les données de la base de données
-$file = fopen("./csv_imported/csv_funds_".$today.".csv", "w+");
+$file = fopen("../../csv_imported/csv_funds_".$today.".csv", "w+");
 
 //Nom du fichier avec la date courante
 $filename = "csv_funds_".$today.".csv";
 
 //Chemin où se trouve le fichier
-$filepath = "./csv_imported/csv_funds_".$today.".csv";
+$filepath = "../../csv_imported/csv_funds_".$today.".csv";
 
-//Supprimer le code HTML du fichier csv
-ob_end_clean();
 
 //Mettre l'en-tête dans le fichier csv
 $header_csv = array("amount","investment_date","investors","stage_of_investment","type_of_investment","startup");
