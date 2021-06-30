@@ -125,7 +125,7 @@ CREATE TABLE `logs` (
   `after_changes` blob NOT NULL,
   `action` varchar(255) NOT NULL,
   PRIMARY KEY (`id_logs`)
-) ENGINE=InnoDB AUTO_INCREMENT=384 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=391 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,11 +141,11 @@ CREATE TABLE `person` (
   `firstname` varchar(20) DEFAULT NULL,
   `person_function` varchar(30) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `prof_as_founder` tinyint(1) DEFAULT NULL,
-  `gender` tinyint(1) DEFAULT NULL,
+  `prof_as_founder` varchar(15) DEFAULT NULL,
+  `gender` varchar(15) DEFAULT NULL,
   `sciper_number` int(8) DEFAULT NULL,
   PRIMARY KEY (`id_person`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -914,4 +914,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-30  8:46:28
+-- Dump completed on 2021-06-30  9:49:01
