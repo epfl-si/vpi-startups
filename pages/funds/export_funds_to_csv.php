@@ -1,5 +1,8 @@
 <?php
 
+//Initialiser une variable de session à true pour exporter seulement les données de la base de données
+$_SESSION['export_funds'] = "true";
+
 //Mettre la date d'aujourd'hui dans le nom du fichier csv
 $today = date("d-m-Y");
 
