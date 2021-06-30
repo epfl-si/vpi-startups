@@ -7,7 +7,7 @@ function funds_table($id_startup)
   //Le tableau est fait avec la librairie google charts en javascript et jquery
   echo "
   <script type='text/javascript'>
-  
+ 
   //Recharger l\'API et les packages
   google.charts.load('current', {'packages':['table', 'corechart', 'controls', 'gauge'], 'language': 'en'});
   
@@ -227,8 +227,7 @@ function funds_table($id_startup)
       //Partie pour télécharger un export de la table funds au format CSV
       $('#button_export_funds').on('click', function () 
       {
-        //window.location.replace('/funds/export');
-        window.location.replace('/pages/funds/export_funds_to_csv.php');
+        window.location.replace('/funds/export');
       });
 
       //Permet de transformer les données numeriques du tableau.
