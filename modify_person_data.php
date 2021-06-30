@@ -64,18 +64,18 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="prof_as_founder" id="prof_as_founder" required>';
                     
-                    //0 = non professeur ; 1 = professeur
-                    if($person_data['prof_as_founder'] == "0")
+                    //Condition pour selectionner d'abord si la personne est un professeur fondateur et ensuite laisser l'utilisateur le modifier
+                    if($person_data['prof_as_founder'] == "no")
                     {
                         echo '
                         <option name="no" value="'.$person_data['prof_as_founder'].'" selected>No</option>
-                        <option name="yes" value="1">Yes</option>';
+                        <option name="yes" value="yes">Yes</option>';
                     }
                     else
                     {
                         echo ' 
                         <option name="yes" value="'.$person_data['prof_as_founder'].'" selected>Yes</option>
-                        <option name="no" value="0">No</option>';
+                        <option name="no" value="no">No</option>';
                     }
 
                     echo '
@@ -87,19 +87,19 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                 <label for="gender" class="col-sm-4 col-form-label">Gender <small class="text-danger"> *</small> </label>
                 <div class="col-sm-6">
                 <select class="form-control" class="selectpicker" data-dropup-auto="true" name="gender" id="gender" required>';
-                
-                //0 = Homme ; 1 = Femme    
-                if($person_data['gender'] == "0")
+
+                //Condition pour selectionner d'abord le genre de la personne et ensuite laisser l'utilisateur le modifier
+                if($person_data['gender'] == "man")
                 {
                     echo '
                     <option name="no" value="'.$person_data['gender'].'" selected>Man</option>
-                    <option name="yes" value="1">Women</option>';
+                    <option name="yes" value="woman">Women</option>';
                 }
                 else
                 {
                     echo ' 
                     <option name="yes" value="'.$person_data['gender'].'" selected>Woman</option>
-                    <option name="no" value="0">Men</option>';
+                    <option name="no" value="man">Man</option>';
                 }
 
                 echo '
