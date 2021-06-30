@@ -125,7 +125,7 @@ CREATE TABLE `logs` (
   `after_changes` blob NOT NULL,
   `action` varchar(255) NOT NULL,
   PRIMARY KEY (`id_logs`)
-) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=383 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -914,4 +914,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-25 11:45:30
+-- Dump completed on 2021-06-30  8:03:00
