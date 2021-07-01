@@ -147,13 +147,26 @@ elseif($method=="modify")
 //S'il n'y pas de methode, alors il affiche le tableau avec tous les fonds de toutes les startups
 else
 {
-    require 'pages/funds/funds_table.php';
-
-    //Il affiche le tableau si les utilisateurs ont le droit d'écriture sur le site
-    if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
+    /*
+    Condition qui permet de vérifier si l'utisateur a cliquer sur le bouton d'exporter les fonds. 
+    Si la variable est initialisée, il n'importe pas le tableau et permet de télécharger seulement les données de la base de données et va supprimer la variable pour permettre aux utilisateur de voir le tableau des fonds.
+    Si la variable n'est pas initialisé, il affiche le tableau avec les fonds (cela veut dire que l'utilisateur n'a pas cliqué sur le bouton export funds)
+    */
+    if(!isset($_SESSION['export_funds']))
     {
-        //Faire appel à la fonction qui fait et affiche le tableau, en ne passant rien comme id
-        funds_table($id_startup = "none");
+        require 'pages/funds/funds_table.php';
+
+        //Il affiche le tableau si les utilisateurs ont le droit d'écriture sur le site
+        if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
+        {
+            //Faire appel à la fonction qui fait et affiche le tableau, en ne passant rien comme id
+            funds_table($id_startup = "none");
+        }
+    }
+    else
+    {
+        //Supprimer la varaible de SESSION pour l'export des fonds
+        unset($_SESSION['export_funds']);
     }
 
 }
