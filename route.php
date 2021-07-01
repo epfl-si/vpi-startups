@@ -31,6 +31,9 @@ elseif ($controller === 'funds' && $method === 'add' && isset($_POST['amount']) 
 elseif ($controller === 'funds' && $method === 'modify' && is_numeric($param) && isset($_POST['amount']) && isset($_POST['amount'])) 
 {
 }
+elseif ($controller === 'funds' && $method === "export") 
+{
+}
 elseif ($controller === 'logout') 
 {
 }
@@ -54,6 +57,12 @@ if ($controller === 'persons')
 if ($controller === '') 
 {
     include_once('./index.php');
+}
+
+//Route pour les exportation des fonds
+if($controller === "funds" && $method==="export")
+{
+    include_once('./pages/funds/export_funds_to_csv.php');
 }
 
 //Route pour funds.php 
@@ -186,7 +195,5 @@ if ($controller === 'person' && $method === 'add')
         include_once('./add_new_person.php');
     }
 }
-
-require_once 'footer.php';
 
 ?>
