@@ -1,11 +1,16 @@
 <?php
 
-require 'tools/hide_header.php';
 
-///Graphique avec le nombre de startups par secteur
+if($_GET['header'] == "false")
+{
+    //Fonction qui permet d'inclure les librairies nécessaires pour afficher le graphique
+    utils_charts();
+}
+
+//Graphique avec le nombre de startups par secteur
 echo "
-<script type='text/javascript'>
 
+<script>
 google.charts.load('current', {packages: ['corechart', 'bar']});
 google.charts.setOnLoadCallback(startups_by_sectors);
 
@@ -73,6 +78,5 @@ function drawChart_startups_by_sectors(chart_data)
     <div id='chart_pie_startups_by_sectors' class='mx-auto' style='width:1000px;height:500px;'></div>
 </div>
 ";
-require 'footer.php';
 
 ?>
