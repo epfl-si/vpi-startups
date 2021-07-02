@@ -1,5 +1,8 @@
 <?php
 
+//Ignorer les erreurs NOTICE
+error_reporting(E_ALL & ~E_NOTICE);
+
 //Ouvrir une session PHP
 session_start();
 
