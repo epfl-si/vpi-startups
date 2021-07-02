@@ -34,13 +34,27 @@ elseif ($controller === 'funds' && $method === 'modify' && is_numeric($param) &&
 elseif ($controller === 'funds' && $method === "export") 
 {
 }
+
+//Conditions pour faire disparaitre le header des graphiques
+elseif($controller === 'charts' && $method === "startups_by_sectors" && $_GET['header'] === "false")
+{
+    include_once('./startups_by_sectors.php');
+}
+elseif($controller === 'charts' && $method === "funds_by_sector" && $_GET['header'] === "false")
+{
+    include_once('./funds_by_sector.php');
+}
+elseif($controller === 'charts' && $method === "number_of_startups_by_year" && $_GET['header'] === "false")
+{
+    include_once('./number_of_startups_by_year.php');
+}
 elseif ($controller === 'logout') 
 {
 }
 else 
 {
     //Importer le header
-   require_once 'header.php';
+    require_once 'header.php';
 }
 
 //Importer le fichier de connexion à la db et de logs
@@ -88,32 +102,17 @@ if ($controller === 'charts' && $method === 'funds_by_sector')
 {
     include_once('./funds_by_sector.php');
 }
-elseif($controller === 'charts' && $method === 'funds_by_sector?header=false')
-{
-    include_once('./hide_header.php');
-    include_once('./funds_by_sector.php');
-}
-
-//Route pour number_of_startups_by_year.php
-if ($controller === 'charts' && $method === 'number_of_startups_by_year') 
-{
-    include_once('./number_of_startups_by_year.php');
-}
-elseif($controller === 'charts' && $method === 'number_of_startups_by_year?header=false')
-{
-    include_once('./hide_header.php');
-    include_once('./number_of_startups_by_year.php');
-}
 
 //Route pour startups_by_sectors.php
 if ($controller === 'charts' && $method === 'startups_by_sectors') 
 {
     include_once('./startups_by_sectors.php');
 }
-elseif($controller === 'charts' && $method === 'startups_by_sectors?header=false')
+
+//Route pour number_of_startups_by_year.php
+if ($controller === 'charts' && $method === 'number_of_startups_by_year') 
 {
-    include_once('./hide_header.php');
-    include_once('./startups_by_sectors.php');
+    include_once('./number_of_startups_by_year.php');
 }
 
 //Route pour logs_page.php

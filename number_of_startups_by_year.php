@@ -1,8 +1,10 @@
 <?php
 
-require 'tools/hide_header.php';
-
-
+if($_GET['header'] == "false")
+{
+    //Fonction qui permet d'inclure les librairies nécessaires pour afficher le graphique
+    utils_charts();
+}
 //Graphique avec le nombre de startups créées par année (Le graphique ne contient pas l'année courante)
 echo "
 <script type='text/javascript'>
@@ -63,6 +65,6 @@ function drawChart_number_of_startups_by_year(chart_data)
     <div id='chart_line_number_of_startups_by_year' class='mx-auto' style='width:1000px;height:500px;'></div>
 </div>
 ";
-require 'footer.php';
+
 
 ?>
