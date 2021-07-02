@@ -1,7 +1,10 @@
 <?php
 
-require 'tools/hide_header.php';
-
+if($_GET['header'] == "false")
+{
+    //Fonction qui permet d'inclure les librairies nécessaires pour afficher le graphique
+    utils_charts();
+}
 
 //Camembert des fonds par secteur
 echo "
@@ -66,6 +69,6 @@ function drawChart_funds_by_sectors(chart_data)
     <div id='chart_pie_funds_by_sectors' class='mx-auto' style='width:1000px;height:500px;'></div>
 </div>
 ";
-require 'footer.php';
+
 
 ?>
