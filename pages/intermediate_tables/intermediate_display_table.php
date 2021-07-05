@@ -1,10 +1,10 @@
 <?php
 
-
 //Fonction qui contient l'affichage du tableau avec les données de la table funding
 function intermediate_table($filename_queries_db, $type_data)
 {
-  //Le tableau est fait avec la librairie google charts en javascript et jquery
+    //Remplacer les underscore par des espaces pour le titre du tableau
+    $option_title = str_replace ( "_", " ", $type_data);
 
 ?>
 
@@ -37,7 +37,6 @@ function intermediate_table($filename_queries_db, $type_data)
         //Si tout se passe bien avec le résultat final du fichier 'funds_db.php', alors il passe à success et écrire les données dans le tableau
         success:function(data)
         {
-
             drawChart_data(data);
         },
         //En revanche, s'il y a eu problème ou s'il n'y a aucune donnée, il ne met rien sur le tableau
@@ -58,7 +57,7 @@ function intermediate_table($filename_queries_db, $type_data)
         //Recupérer le type de tableau à afficher (Ex: Tableau avec tous les types de startup)
         //Mettre dans une variable les données récupérées
         var jsonData = chart_data;
-
+        
         //Initialiser la table
         var data = new google.visualization.DataTable();
 
@@ -167,16 +166,15 @@ function intermediate_table($filename_queries_db, $type_data)
         dashboard.draw(data);
         }
     
-        if(type_data == "type_startup")
-        {
-            display_data_to_table(chart_data, type_data = "<?= $type_data; ?>")
-        }
+        display_data_to_table(chart_data, type_data = "<?= $type_data; ?>")
+        
     }
   </script>
   <div class='container'>
+  <legend class="font-weight-bold my-3"> <?= $option_title; ?> </legend>
       <div id='dashboard_div'>
           <div class='row'>
-              <div id='search_name' class='text-left col-4 my-5 ml-auto'></div>
+              <div id='search_name' class='text-left col-4 mt-2 mb-5'></div>
               <div id='table' class='col-12 pr-0 mb-5'></div>
           </div>
       </div>
