@@ -34,6 +34,12 @@ elseif ($controller === 'funds' && $method === 'add' && isset($_POST['amount']) 
 elseif ($controller === 'funds' && $method === 'modify' && is_numeric($param) && isset($_POST['amount']) && isset($_POST['amount'])) 
 {
 }
+elseif ($controller === 'type_startup' && $method === 'add' && isset($_POST['add_new_type_startup']) && !empty($_POST['add_new_type_startup']))
+{
+}
+elseif ($controller === 'type_startup' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_type_startup']) && isset($_POST['modify_type_startup'])) 
+{
+}
 elseif ($controller === 'funds' && $method === "export") 
 {
 }
@@ -86,6 +92,12 @@ if($controller === "funds" && $method==="export")
 if ($controller === 'funds') 
 {
     include_once('./pages/funds/funds.php');
+}
+
+//Route pour type_startup.php 
+if ($controller === 'type_startup') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
 }
 
 //Route pour login.php 
