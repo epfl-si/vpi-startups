@@ -85,7 +85,15 @@ if(isset($_SESSION['user']))
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-danger" href="/logs">Logs</a>
-                    </li>';
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-danger dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Admin </a>
+                        <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/type_startup/add">Add New Type of Startup</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/type_startup/modify">Modify Type of Startup</a>
+                        </div>
+                    </li>
+                    ';
                 }  
                 echo '
             </ul>
