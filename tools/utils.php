@@ -323,14 +323,14 @@ function funds_data_has_been_modify($param)
   return false;
 }
 
-function type_startup_data_has_been_modify($param)
+function intermediate_data_has_been_modify($param, $controller)
 {
-  if($_SESSION['type_startup_data']['id_type_startup'] != $param)
+  if($_SESSION["data_$controller"]["id_$controller"] != $param)
   {
     die("hackeur");
   }
 
-  if($_SESSION['type_startup_data']['type_startup'] != $_POST['modify_type_of_startup']) 
+  if($_SESSION["data_$controller"]["$controller"] != $_POST["modify_$controller"]) 
   {
     return true;
   }
