@@ -29,6 +29,11 @@ function intermediate_table($filename_queries_db, $type_data)
         //Il utilise la methode POST pour envoyer des données
         method:'POST',
         dataType:'JSON',
+        data: 
+        {
+            //Envoyer le sciper à la page PHP ci-dessus
+            controller : type_data,
+        },
         //Si tout se passe bien avec le résultat final du fichier 'funds_db.php', alors il passe à success et écrire les données dans le tableau
         success:function(data)
         {
