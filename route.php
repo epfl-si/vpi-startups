@@ -37,7 +37,7 @@ elseif ($controller === 'funds' && $method === 'modify' && is_numeric($param) &&
 elseif ($controller === 'type_startup' && $method === 'add' && isset($_POST['add_new_type_startup']) && !empty($_POST['add_new_type_startup']))
 {
 }
-elseif ($controller === 'type_startup' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_type_startup']) && isset($_POST['modify_type_startup'])) 
+elseif ($controller === 'type_startup' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_type_of_startup']) && !empty($_POST['modify_type_of_startup'])) 
 {
 }
 elseif ($controller === 'funds' && $method === "export") 
