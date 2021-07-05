@@ -323,6 +323,20 @@ function funds_data_has_been_modify($param)
   return false;
 }
 
+function type_startup_data_has_been_modify($param)
+{
+  if($_SESSION['type_startup_data']['id_type_startup'] != $param)
+  {
+    die("hackeur");
+  }
+
+  if($_SESSION['type_startup_data']['type_startup'] != $_POST['modify_type_of_startup']) 
+  {
+    return true;
+  }
+}
+
+
 /**
  * Return a bootstrap flash message
  * @param String $message: the message to be displayed
