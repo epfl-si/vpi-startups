@@ -57,61 +57,44 @@ elseif($method=="modify" && is_numeric($param) && !empty($param))
         $option_type_of_form = "Modify ";
         $option_title = "Type of Startup";
         $option_name_post = "modify_type_of_startup";
-    }
-    
-    /* //Cette partie correspond à l'affichage des données sur les champs du formulaire
-    $fund = new Fund();
-    $get_funds_by_id = $fund->get_funds_by_id($param);
-    $amount = $get_funds_by_id['amount'];
-    $investment_date = $get_funds_by_id['investment_date'];
-    $investors = $get_funds_by_id['investors'];
 
-    $id_stage_of_investment = $fund->get_stage_of_investment_by_id($param);
-    $option_stage_of_investment = $fund->select_option_stage_of_investment($id_stage_of_investment['id_stage_of_investment']);
+        //Récupérer la valeur qui correspond à l'id qui est un paramètre
+        $option_data = $type_startup->get_type_of_startup_by_id($param);
 
-    $id_type_of_investment = $fund->get_type_of_investment_by_id($param);
-    $option_type_of_investment = $fund->select_option_type_of_investment($id_type_of_investment['id_type_of_investment']);
-   
-    $startup = new Startup();
-    $get_startup_id = $startup->get_startup_by_id_funding($param);
-    $option_startup = $startup->select_all_startups($get_startup_id['id_startup']);
-    $get_all_funds_by_id = $fund->get_funds_to_modify($param);
+        //Mettre dans une variable session la valeur déjà existante dans la db pour l'id en paramètre
+        $get_type_of_startup_to_modify = $type_startup->get_type_of_startup_to_modify($param);
 
-    if(isset($_POST['submit_btn_funds']))
-    {
-        //Cette condition permet de vérifier si un champ a été changé
-        if(funds_data_has_been_modify($param))
+        if(isset($_POST['submit_btn_intermediate']))
         {
-            //S'il y a un changement, il fait l'update
-            if($fund->update_funds($_POST, $param))
-            {   
-                //Changer les id par leurs noms pour l'avant dans les logs
-                $type_of_investment_before= $fund->get_type_of_investment_by_id_type_of_investment($get_all_funds_by_id['fk_type_of_investment']);
-                $stage_of_investment_before= $fund->get_stage_of_investment_by_id_stage_of_investment($get_all_funds_by_id['fk_stage_of_investment']);
-                $startup_name_before= $startup->get_startup_by_id_startup($get_all_funds_by_id['fk_startup']);
-                
-                //Changer les id par leurs noms pour l'après dans les logs
-                $type_of_investment_after= $fund->get_type_of_investment_by_id_type_of_investment($_POST['fk_type_of_investment']);
-                $stage_of_investment_after= $fund->get_stage_of_investment_by_id_stage_of_investment($_POST['fk_stage_of_investment']);
-                $startup_name_after= $startup->get_startup_by_id_startup($_POST['fk_startup']);
-    
-                //Texte des logs
-                $before = "amount : ".$get_all_funds_by_id['amount'].", investment date : ".$get_all_funds_by_id['investment_date'].", investors : ".$get_all_funds_by_id['investors'].", stage of investment : ".$stage_of_investment_before['stage_of_investment'].", type_of_investment : ".$type_of_investment_before['type_of_investment'].", startup : ".$startup_name_before['company'];
-                $after = "amount : ".$_POST['amount'].", investment date : ".$_POST['investment_date'].", investors : ".$_POST['investors'].", stage of investment : ".$stage_of_investment_after['stage_of_investment'].", type_of_investment : ".$type_of_investment_after['type_of_investment'].", startup : ".$startup_name_after['company'];
-                $action = "Modify fund";
-                
-                //Ajouter les logs avec l'avant et l'après
-                add_logs($_SESSION['uniqueid'],$before,$after,$action);
+            //Cette condition permet de vérifier si un champ a été changé
+            if(type_startup_data_has_been_modify($param))
+            {
+                //S'il y a un changement, il fait l'update
+                if($type_startup->update_type_of_startup_data($_POST, $param))
+                {   
+                    //Texte des logs
+                    $before = "type_startup : ".$get_type_of_startup_to_modify['type_startup'];
+                    $after = "type_startup : ".$_POST['modify_type_of_startup'];
+                    $action = "Modify type startup";
+                    
+                    //Ajouter les logs avec l'avant et l'après
+                    add_logs($_SESSION['uniqueid'],$before,$after,$action);
 
-                $_SESSION['flash_message']['message'] = "The fund was changed to startup : ".$startup_name_after['company'];
-                $_SESSION['flash_message']['type'] = "success";
-                header("Location: /funds/modify/$param");
+                    $_SESSION['flash_message']['message'] = "The type of startup was changed";
+                    $_SESSION['flash_message']['type'] = "success";
+                    //header("Location: /type_startup/modify/$param");
+                }
             }
         }
-    }
-    
-    require_once("./pages/funds/form_funds.html"); */
 
+
+
+
+
+
+        //Importer le formulaire
+        require_once("./pages/intermediate_tables/form_intermediate_data.html");
+    }
 }
 
 //S'il n'y pas de methode, alors il affiche le tableau avec tous les fonds de toutes les startups
