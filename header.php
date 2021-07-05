@@ -91,6 +91,26 @@ if(isset($_SESSION['user']))
                         <div class="dropdown-menu dropdown-warning" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item dropdown-item-danger text-danger" href="/type_startup/add">Add New Type of Startup</a>
                             <a class="dropdown-item dropdown-item-danger text-danger" href="/type_startup/modify">Modify Type of Startup</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/type_of_person/add">Add New Type of Person</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/type_of_person/modify">Modify Type of Person</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/status/add">Add New Status</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/status/modify">Modify Status</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/sectors/add">Add New Sector</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/sectors/modify">Modify Sector</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/category/add">Add New Category</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/category/modify">Modify Category</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/ceo_education_level/add">Add New Ceo Education Level</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/ceo_education_level/modify">Modify Ceo Education Level</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/stage_of_investment/add">Add New Stage of Invesmtent</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/stage_of_invesment/modify">Modify Stage of Invesmtent</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/type_of_investment/add">Add New Type of Invesmtent</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/type_of_investment/modify">Modify Type of Invesmtent</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/impact_sdg/add">Add New Impact SDG</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/impact_sdg/modify">Modify Impact SDG</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/founders_country/add">Add New Founders Country</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/founders_country/modify">Modify Founders Country</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/faculty_schools/add">Add New Faculty Schools</a>
+                            <a class="dropdown-item dropdown-item-danger text-danger" href="/faculty_schools/modify">Modify Faculty Schools</a>
                         </div>
                     </li>
                     ';
