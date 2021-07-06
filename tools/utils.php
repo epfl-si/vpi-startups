@@ -323,6 +323,23 @@ function funds_data_has_been_modify($param)
   return false;
 }
 
+//Fonction pour vérifier s'il y a eu un changement de valeurs pour les formulaires des tables intermediaires
+function intermediate_data_has_been_modify($param, $controller)
+{
+  if($_SESSION["data_$controller"]["id_$controller"] != $param)
+  {
+    die("hackeur");
+  }
+
+  if($_SESSION["data_$controller"]["$controller"] != $_POST["modify_$controller"]) 
+  {
+    return true;
+  }
+
+  return false;
+}
+
+
 /**
  * Return a bootstrap flash message
  * @param String $message: the message to be displayed
