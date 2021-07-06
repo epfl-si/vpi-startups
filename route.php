@@ -34,6 +34,75 @@ elseif ($controller === 'funds' && $method === 'add' && isset($_POST['amount']) 
 elseif ($controller === 'funds' && $method === 'modify' && is_numeric($param) && isset($_POST['amount']) && isset($_POST['amount'])) 
 {
 }
+elseif ($controller === 'type_startup' && $method === 'add' && isset($_POST['add_new_type_startup']) && !empty($_POST['add_new_type_startup']))
+{
+}
+elseif ($controller === 'type_startup' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_type_of_startup']) && !empty($_POST['modify_type_of_startup'])) 
+{
+}
+elseif ($controller === 'type_of_person' && $method === 'add' && isset($_POST['add_new_type_of_person']) && !empty($_POST['add_new_type_of_person']))
+{
+}
+elseif ($controller === 'type_of_person' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_type_of_person']) && !empty($_POST['modify_type_of_person'])) 
+{
+}
+elseif ($controller === 'type_of_investment' && $method === 'add' && isset($_POST['add_new_type_of_investment']) && !empty($_POST['add_new_type_of_investment']))
+{
+}
+elseif ($controller === 'type_of_investment' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_type_of_investment']) && !empty($_POST['modify_type_of_investment'])) 
+{
+}
+elseif ($controller === 'status' && $method === 'add' && isset($_POST['add_new_status']) && !empty($_POST['add_new_status']))
+{
+}
+elseif ($controller === 'status' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_status']) && !empty($_POST['modify_status'])) 
+{
+}
+elseif ($controller === 'sectors' && $method === 'add' && isset($_POST['add_new_sectors']) && !empty($_POST['add_new_sectors']))
+{
+}
+elseif ($controller === 'sectors' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_sectors']) && !empty($_POST['modify_sectors'])) 
+{
+}
+elseif ($controller === 'stage_of_investment' && $method === 'add' && isset($_POST['add_new_stage_of_investment']) && !empty($_POST['add_new_stage_of_investment']))
+{
+}
+elseif ($controller === 'stage_of_investment' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_stage_of_investment']) && !empty($_POST['modify_stage_of_investment'])) 
+{
+}
+elseif ($controller === 'impact_sdg' && $method === 'add' && isset($_POST['add_new_impact_sdg']) && !empty($_POST['add_new_impact_sdg']))
+{
+}
+elseif ($controller === 'impact_sdg' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_impact_sdg']) && !empty($_POST['modify_impact_sdg'])) 
+{
+}
+elseif ($controller === 'impact_sdg' && $method === 'add' && isset($_POST['add_new_impact_sdg']) && !empty($_POST['add_new_impact_sdg']))
+{
+}
+elseif ($controller === 'founders_country' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_founders_country']) && !empty($_POST['modify_founders_country'])) 
+{
+}
+elseif ($controller === 'founders_country' && $method === 'add' && isset($_POST['add_new_founders_country']) && !empty($_POST['add_new_founders_country']))
+{
+}
+elseif ($controller === 'faculty_schools' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_faculty_schools']) && !empty($_POST['modify_faculty_schools'])) 
+{
+}
+elseif ($controller === 'faculty_schools' && $method === 'add' && isset($_POST['add_new_faculty_schools']) && !empty($_POST['add_new_faculty_schools']))
+{
+}
+elseif ($controller === 'ceo_education_level' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_ceo_education_level']) && !empty($_POST['modify_ceo_education_level'])) 
+{
+}
+elseif ($controller === 'ceo_education_level' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_ceo_education_level']) && !empty($_POST['modify_ceo_education_level'])) 
+{
+}
+elseif ($controller === 'category' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_category']) && !empty($_POST['modify_category'])) 
+{
+}
+elseif ($controller === 'category' && $method === 'modify' && is_numeric($param) && isset($_POST['modify_category']) && !empty($_POST['modify_category'])) 
+{
+}
 elseif ($controller === 'funds' && $method === "export") 
 {
 }
@@ -86,6 +155,72 @@ if($controller === "funds" && $method==="export")
 if ($controller === 'funds') 
 {
     include_once('./pages/funds/funds.php');
+}
+
+//Route pour type_startup.php 
+if ($controller === 'type_startup') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour type_of_person.php 
+if ($controller === 'type_of_person') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour sectors.php 
+if ($controller === 'sectors') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour status.php 
+if ($controller === 'status') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour stage_of_investment.php 
+if ($controller === 'stage_of_investment') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour type_of_investment.php 
+if ($controller === 'type_of_investment') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour impact_sdg.php 
+if ($controller === 'impact_sdg') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour founders_country.php 
+if ($controller === 'founders_country') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour faculty_schools.php 
+if ($controller === 'faculty_schools') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour category.php 
+if ($controller === 'category') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
+}
+
+//Route pour ceo_education_level.php 
+if ($controller === 'ceo_education_level') 
+{
+    include_once('./pages/intermediate_tables/intermediate_data.php');
 }
 
 //Route pour login.php 
