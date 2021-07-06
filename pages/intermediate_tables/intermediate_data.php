@@ -34,7 +34,7 @@ if($method=="add")
                 $_SESSION['flash_message']['type'] = "success";
 
                 //Rediriger l'utilisateur vers la même page pour qu'il puisse voir le flash message
-                //header("Location: /type_startup/add");
+                header("Location: /$controller/add");
 
             }
             
@@ -80,7 +80,7 @@ elseif($method=="modify" && is_numeric($param) && !empty($param))
 
                 $_SESSION['flash_message']['message'] = "The $controller was changed";
                 $_SESSION['flash_message']['type'] = "success";
-                //header("Location: /type_startup/modify/$param");
+                header("Location: /$controller/modify/$param");
             }
         }
     }
