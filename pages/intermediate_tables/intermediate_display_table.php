@@ -1,6 +1,6 @@
 <?php
 
-//Fonction qui contient l'affichage du tableau avec les données de la table funding
+//Fonction qui contient l'affichage du tableau
 function intermediate_table($filename_queries_db, $type_data)
 {
     //Remplacer les underscore par des espaces pour le titre du tableau
@@ -16,7 +16,7 @@ function intermediate_table($filename_queries_db, $type_data)
   //Permet de faire appel à l\'API quand elle est rechargée 
   google.charts.setOnLoadCallback(load_data);
   
-  //Fonction qui va chercher les données de la table funding dans la base de données
+  //Fonction qui va chercher les données  dans la base de données
   function load_data(file_name = "<?= $filename_queries_db; ?>", type_data = "<?= $type_data; ?>")
   {
 
@@ -31,10 +31,10 @@ function intermediate_table($filename_queries_db, $type_data)
         dataType:'JSON',
         data: 
         {
-            //Envoyer le sciper à la page PHP ci-dessus
+            //Envoyer le type de table intermediaire (Ex: Si dans l'url, il y a type_startup, il va envoyer ce controller pour faire la requête SQL)
             controller : type_data,
         },
-        //Si tout se passe bien avec le résultat final du fichier 'funds_db.php', alors il passe à success et écrire les données dans le tableau
+        //Si tout se passe bien avec le résultat final, alors il passe à success et écrire les données dans le tableau
         success:function(data)
         {
             drawChart_data(data);
@@ -48,10 +48,11 @@ function intermediate_table($filename_queries_db, $type_data)
   }
 
  
-  //Fonction pour traiter les données reçus de la base de données et pour construire le tableau
+  //Fonction pour traiter les données reçues de la base de données et pour construire le tableau
   function drawChart_data(chart_data, type_data = "<?= $type_data; ?>")
   {   
 
+    //Fonction qui permet de mettre les données dans le tableau et de le construire de manière automatique avec le controller qui est dans l'url
     function display_data_to_table(chart_data, type_data) 
     {
         //Recupérer le type de tableau à afficher (Ex: Tableau avec tous les types de startup)
@@ -67,10 +68,12 @@ function intermediate_table($filename_queries_db, $type_data)
         //Boucle pour aller récupérer les données qui sont dans jsonData
         $.each(jsonData, function(i, jsonData, type_data = "<?= $type_data; ?>")
         {
-            //Récupérer les données de la db
+           
+            //Initialiser des variables avec les noms des champs dans JSON pour la récupération des données
             var data_id = `id_${type_data}`;
             var type_datas = `${type_data}`;
 
+            //Récupérer les données qui ont été envoyés au format JSON avec les bons noms des champs
             var id_data = jsonData[data_id];
             var data_type= jsonData[type_datas];
 
@@ -78,13 +81,13 @@ function intermediate_table($filename_queries_db, $type_data)
             data.addRows([[id_data, data_type]]);
         });
 
-        //Initialiser les deux champs de recherche d\'une entreprise ou d\'une unité 
+        //Initialiser un champ de recherche 
         var dashboard = new google.visualization.Dashboard
         (
             document.getElementById('dashboard_div')
         );
 
-        //Champ pour trier par fonds
+        //Champ pour trier par nom
         var stringFilter_name = new google.visualization.ControlWrapper
         ({
             //C'est un filtre de texte
@@ -92,6 +95,8 @@ function intermediate_table($filename_queries_db, $type_data)
 
             //Le filtre est placé dans la div search_name
             containerId: 'search_name',
+
+            //Quelques ooptions supplementaires pour le filtre, comme par exemple, il n'est pas sensible à la case
             options: 
             {
                 ui: 
@@ -117,10 +122,10 @@ function intermediate_table($filename_queries_db, $type_data)
             },
         });
 
-        //Permet de masqué la premier colonne qui contient les id de la table funding
+        //Permet de masqué la première colonne qui contient les id de la table intermediaire
         table.setView({'columns': [1]}); 
         
-        //Permet d'ajouter un evenement pour que quand l\'utilisateur clique sur une ligne, l'utilisateur soit redirigé vers la page de modification du fond
+        //Permet d'ajouter un evenement pour que quand l\'utilisateur clique sur une ligne, l'utilisateur soit redirigé vers la page de modification
         google.visualization.events.addListener(table, 'ready', function() 
         {
             var container = document.getElementById(table.getContainerId());
@@ -130,7 +135,7 @@ function intermediate_table($filename_queries_db, $type_data)
             cell.addEventListener('click', selectCell);
             });
             
-            //Fonction qui permet de prendre quelle cellule l'utilisateur à cliquer et de lui rediriger vers la bonne page
+            //Fonction qui permet de prendre la cellule que l'utilisateur a cliqué et de lui rediriger vers la bonne page
             function selectCell(sender) 
             {
                 //Récupérer le tableau qui est affiché
@@ -166,19 +171,23 @@ function intermediate_table($filename_queries_db, $type_data)
         dashboard.draw(data);
         }
     
+        //Faire appel à la fonction de construction et mise en place des données du tableau
         display_data_to_table(chart_data, type_data = "<?= $type_data; ?>")
         
     }
-  </script>
-  <div class='container'>
-  <legend class="font-weight-bold my-3"> <?= $option_title; ?> </legend>
-      <div id='dashboard_div'>
+    </script>
+    <div class='container'>
+        <!-- Titre du tableau -->
+        <legend class="font-weight-bold my-3"> <?= $option_title; ?> </legend>
+        <div id='dashboard_div'>
           <div class='row'>
+              <!-- Filtre -->
               <div id='search_name' class='text-left col-4 mt-2 mb-5'></div>
+              <!-- Tableau -->
               <div id='table' class='col-12 pr-0 mb-5'></div>
           </div>
       </div>
-  </div>
+    </div>
   <?php
 }
 

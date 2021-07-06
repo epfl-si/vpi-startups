@@ -2,6 +2,7 @@
 
 require 'connection_db.php';
 
+//Récupérer la valeur qui est dans l'url pour l'utiliser dans la requête SQL
 $controller = $_POST['controller'];
 
 //Chercher les données dans la base de données

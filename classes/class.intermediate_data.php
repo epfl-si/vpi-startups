@@ -2,6 +2,7 @@
 
 class Intermediate_data
 {
+    //Fonction pour mettre les données de la table intermediaire choisie dans une variable de SESSION pour ensuite vérifier si les données ont été changés
     function get_data_to_modify($id, $controller)
     {
         require './tools/connection_db.php';
@@ -11,6 +12,7 @@ class Intermediate_data
         return $_SESSION["data_$controller"];
     }
 
+    //Fonction pour obtenir les données de la table intermediaire choisie par rapport à son id
     function get_data_by_id($id, $controller)
     {
         require './tools/connection_db.php';
@@ -19,11 +21,13 @@ class Intermediate_data
         return $intermediate_data["$controller"];
     }
 
+    //Fonction pour valider les données reçues des formulaires
     function validate_data($data)
     {
         return $data;
     }
 
+    //Fonction pour insérer une nouvelle donnée 
     function insert_new_data($data, $controller)
     {
         require './tools/connection_db.php';
@@ -33,6 +37,7 @@ class Intermediate_data
         return $data;
     }
 
+    //Fonction pour faire l'update de données dans une table intermediaire
     function update_data($data, $id, $controller)
     {
         require './tools/connection_db.php';

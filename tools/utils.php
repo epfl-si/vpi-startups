@@ -323,6 +323,7 @@ function funds_data_has_been_modify($param)
   return false;
 }
 
+//Fonction pour vérifier s'il y a eu un changement de valeurs pour les formulaires des tables intermediaires
 function intermediate_data_has_been_modify($param, $controller)
 {
   if($_SESSION["data_$controller"]["id_$controller"] != $param)
@@ -334,6 +335,8 @@ function intermediate_data_has_been_modify($param, $controller)
   {
     return true;
   }
+
+  return false;
 }
 
 
