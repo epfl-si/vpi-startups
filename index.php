@@ -44,25 +44,27 @@
             var data = new google.visualization.DataTable();
 
             //Initialiser les colonnes pour mettre les données
-            data.addColumn('string', 'company');
-            data.addColumn('string', 'founding_date');
-            data.addColumn('string', 'web');
-            data.addColumn('string', 'rc');
-            data.addColumn('string', 'status');
-            data.addColumn('string', 'sectors');
+            data.addColumn('string', 'Company Name');
+            data.addColumn('string', 'Founding Date');
+            data.addColumn('string', 'Status');
+            data.addColumn('string', 'Category');
+            data.addColumn('string', 'Sectors');
+            data.addColumn('string', 'Laboratoy');
+            data.addColumn('string', 'Faculty/Schools');
 
             //Mettre les données dans les colonnes
             $.each(jsonData, function(i, jsonData)
             {
                 var company = jsonData.company;
                 var founding_date = jsonData.founding_date;
-                var web = jsonData.web;
-                var rc = jsonData.rc;
+                var category = jsonData.category;
+                var laboratory = jsonData.laboratory;
                 var status = jsonData.status;
                 var sectors = jsonData.sectors;
+                var schools = jsonData.schools;
 
                 //Initialiser les colonnes du tableau
-                data.addRows([[company, founding_date, web, rc, status, sectors]]);
+                data.addRows([[company, founding_date, status, category, sectors, laboratory, schools]]);
             });
             
             //Initialiser les deux champs de recherche d\'une entreprise ou d\'une unité 
@@ -85,7 +87,7 @@
                     }, 
                     matchType: 'any',
                     caseSensitive : 'false',
-                    filterColumnLabel: 'company',
+                    filterColumnLabel: 'Company Name',
                 }
             });
 
@@ -105,7 +107,7 @@
                         allowTyping: false,
                         allowMultiple: true,
                     }, 
-                    'filterColumnLabel': 'status',
+                    'filterColumnLabel': 'Status',
 
                 }
             });
@@ -126,7 +128,7 @@
                         allowTyping: false,
                         allowMultiple: true,
                     }, 
-                    'filterColumnLabel': 'sectors',
+                    'filterColumnLabel': 'Sectors',
 
                 }
             });
