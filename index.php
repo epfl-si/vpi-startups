@@ -12,6 +12,97 @@
         //Permet de faire appel à l\'API quand elle est rechargée 
         google.charts.setOnLoadCallback(load_companies_data);
         
+        
+        
+        function convert_and_copy_to_clipboard(data){
+            
+            navigator.clipboard.writeText(buildTable(data))
+            .then(() => {
+              console.log("Success !");
+              alert("Wordpress table successfully copied!")
+            })
+            .catch(err => {
+              console.log('Something went wrong', err);
+            });
+        }
+        
+        // Créer une Table HTML à partit des données de la DB
+        function buildTable(data){
+            var prefix = `<!-- wp:epfl/table-filter {"largeDisplay":true,"tableHeaderOptions":"header,sort"} -->\n<!-- wp:table {"className":"is-style-stripes"} -->\n<figure class="wp-block-table is-style-stripes">\n`;
+            var suffix = `</figure>\n<!-- /wp:table -->\n<!-- /wp:epfl/table-filter -->`
+            var headers = ["Company Name", "Founding Date", "Status", "Category", "Sectors", "Laboratory", "Faculty/Schools"]
+            
+            var strTable = prefix;
+            strTable += '<Table>';
+            for (var singleRow = 0; singleRow < data.length; singleRow++) {
+                if (singleRow === 0) {
+                    strTable += '<thead>';
+                    strTable += '<tr>';
+                } else {
+                    
+                    strTable += '<tr>';
+                }
+                
+                var rowCells = data[singleRow];
+                if(singleRow === 0){
+                    for(var rowCell = 0; rowCell < headers.length; rowCell++){
+                        strTable += '<th>';
+                        strTable += headers[rowCell];
+                        strTable += '</th>';
+                    }
+                }
+                else {
+                    let i = 0;
+                    for (let [key, value] of Object.entries(rowCells)) {
+                        if(value === null){
+                            value = "";
+                        }
+                        strTable += '<td>';
+                        strTable += value;
+                        strTable += '</td>';
+                    }
+                }
+                
+                if (singleRow === 0) {
+                    strTable += '</tr>';
+                    strTable += '</thead>';
+                    strTable += '<tbody>';
+                } else {
+                    strTable += '</tr>';
+                }
+            }
+            strTable += '</tbody>';
+            strTable += '</Table>';
+            strTable += suffix;
+            return strTable
+            
+            function isNotEmpty(row) {
+                return row !== "";
+            }
+        }
+        
+        //Fonction pour récupérer les données nécessaires pour le tableau dans la base de données 
+        function load_to_clipboard_companies_data()
+        {
+            $.ajax
+            ({
+                url:'/tools/companies_list_index_db.php',
+                method:'POST',
+                dataType:'JSON',
+
+                //Si tout se passe bien avec le résultat final du fichier 'companies_list_index_db.php' alors il passe à success et écrire les données dans le tableau
+                success:function(data)
+                {
+                    convert_and_copy_to_clipboard(data);
+                },
+                //En revanche, s'il y a eu problème ou s'il n'y a aucune donnée, il ne met rien sur le tableau
+                error:function (data) 
+                {
+                    convert_and_copy_to_clipboard();
+                }
+            });
+        }
+        
         //Fonction pour récupérer les données nécessaires pour le tableau dans la base de données 
         function load_companies_data()
         {
@@ -33,7 +124,7 @@
                 }
             });
         }
-
+        
         //Mettre les données dans le tableau et le construire
         function drawChart_companies_data(chart_data)
         {
@@ -214,6 +305,11 @@
             {
                 window.location.replace('tools/export_csv.php');
             });
+            
+            $('.html-button').on('click', async function ()
+            {
+                load_to_clipboard_companies_data()
+            });
 
             //Dessiner les champs et faire appel aux fonctions des filtres
             dashboard.bind([stringFilter, CategoryFilter_status, CategoryFilter_sectors], [table]);
@@ -227,9 +323,10 @@
         <div id='dashboard_div'>
             <div class='row'>
                 <div id='search_company' class='text-left col-3 my-5 '></div>
-                <div id='status_dropdown_menu' class='text-center col-3 my-5 '></div>
-                <div id='sectors_dropdown_menu' class='text-center col-3 my-5 '></div>
+                <div id='status_dropdown_menu' class='text-center col-2 my-5 '></div>
+                <div id='sectors_dropdown_menu' class='text-center col-2 my-5 '></div>
                 <button id='button-csv' class='csv-button btn btn-outline-secondary col-2 my-5 ml-auto'>Download to CSV file</button>
+                <button id='button-html' class='html-button btn btn-outline-secondary col-2 my-5 ml-auto'>Copy WP block</button>
                 <div id='table' class='col-12 pr-0 mb-5'></div>
             </div>
         </div>
