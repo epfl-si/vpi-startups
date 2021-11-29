@@ -35,28 +35,17 @@ $inserted = false;
 //Initialiser une variable à false pour capturer les erreurs
 $error_add_new_people = "false";
 
-//Récupérer l'id du status que l'utilisateur a saisi pour écrire dans la table startup
-$status_id = $db-> query('SELECT id_status FROM status WHERE status ="'.$status.'"');
-$id_status = $status_id -> fetch();
-
-//Récupérer l'id du type de startup que l'utilisateur a saisi pour écrire dans la table startup
-$type_startup_id = $db-> query('SELECT id_type_startup FROM type_startup WHERE type_startup ="'.$type_startup.'"');
-$id_type_startup = $type_startup_id -> fetch();
-
-//Récupérer l'id du sector que l'utilisateur a saisi pour écrire dans la table startup
-$sectors_id = $db-> query('SELECT id_sectors FROM sectors WHERE sectors ="'.$sector.'"');
-$id_sectors = $sectors_id -> fetch();
-
-//Récupérer l'id du ceo education level que l'utilisateur a saisi pour écrire dans la table startup
-$ceo_education_level_id = $db-> query('SELECT id_ceo_education_level FROM ceo_education_level WHERE ceo_education_level ="'.$ceo_education_level.'"');
-$id_ceo_education_level = $ceo_education_level_id -> fetch();
-
 //Récupérer l'id de la categorie que l'utilisateur a saisi pour écrire dans la table startup
 $category_id = $db-> query('SELECT id_category FROM category WHERE category ="'.$category.'"');
 $id_category = $category_id -> fetch();
 
 //Insertion des données dans la table startup
-$add_new_startup = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory,short_description,company_uid,crunchbase_uid,unit_path,fk_type,fk_ceo_education_level,fk_sectors,fk_category,fk_status) VALUES("'.$company_name.'","'.$web.'","'.$founding_date.'","'.$rc.'","'.$exit_year.'","'.$epfl_grant.'","'.$awards_competitions.'","'.$key_words.'","'.$laboratory.'","'.$short_description.'","'.$company_uid.'","'.$crunchbase_uid.'","'.$unit_path.'","'.$id_type_startup['id_type_startup'].'","'.$id_ceo_education_level['id_ceo_education_level'].'","'.$id_sectors['id_sectors'].'","'.$id_category['id_category'].'","'.$id_status['id_status'].'")');
+// echo("type_status".$type_startup);
+// echo("<br>ceo_education_level: ".$ceo_education_level);
+// echo("<br>sector:".$sector);
+// echo("<br>category ".$category);
+// echo("<br>status ".$status);
+$add_new_startup = $db -> prepare('INSERT INTO startup(company,web,founding_date,rc,exit_year,epfl_grant,awards_competitions,key_words,laboratory,short_description,company_uid,crunchbase_uid,unit_path,fk_type,fk_ceo_education_level,fk_sectors,fk_category,fk_status) VALUES("'.$company_name.'","'.$web.'","'.$founding_date.'","'.$rc.'","'.$exit_year.'","'.$epfl_grant.'","'.$awards_competitions.'","'.$key_words.'","'.$laboratory.'","'.$short_description.'","'.$company_uid.'","'.$crunchbase_uid.'","'.$unit_path.'",'.$type_startup.','.$ceo_education_level.','.$sector.','.$category.','.$status.')');
 if($add_new_startup -> execute())
 {
     $inserted=true;
@@ -80,55 +69,51 @@ add_logs($_SESSION['uniqueid'],$before,$after,$action);
 //Compter le nombre d'impacts choisis par l'utilisateur
 $count_impact_sdg = count($impact_sdg);
 
+//condition que si impact_sdg[0] n'est pas égale a 'NULL' ou si le nombre est plus granque 1 et que impact_sdg[0] est égale à 'NULL' alors il vas dans la boucle
+if ($impact_sdg[0] != "NULL" || ($count_impact_sdg>1 && $impact_sdg[0] == "NULL")){
 //Faire une boucle pour qu'elle tourne autant de fois que d'impacts
-for ($x=0; $x<$count_impact_sdg; $x++)
-{
-    //Récupérer les impacts par ordre
-    $impact = $_POST['impact_sdg'][$x];
-
-    //Récupérer l'id de l'impact saisi
-    $id_impacts_sdg = $db -> query('SELECT id_impact_sdg FROM impact_sdg WHERE impact_sdg = "'.$impact.'"');
-    $id_impact_sdg = $id_impacts_sdg -> fetch();
-    $impact_sdg = $id_impact_sdg['id_impact_sdg'];
-
-    //Insérer dans la table intermediaire, l'impact et la startup
-    $add_new_startup_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup,fk_impact_sdg) VALUES("'.$startup_id.'","'.$impact_sdg.'")');
-    if($add_new_startup_impact_sdg -> execute())
+    for ($x=0; $x<$count_impact_sdg; $x++)
     {
+        //condition que si impact_sdg[$x] n'est pas égale à 'NULL' alors il vas dans la boucle
+        if ($impact_sdg[$x] != "NULL"){
+            //Insérer dans la table intermediaire, l'impact et la startup
+            $add_new_startup_impact_sdg = $db -> prepare('INSERT INTO startup_impact_sdg(fk_startup,fk_impact_sdg) VALUES("'.$startup_id.'",'.$impact_sdg[$x].')');
+            if($add_new_startup_impact_sdg -> execute())
+            {
 
-    } 
-    else
-    {
-        $inserted=false;
+            } 
+            else
+            {
+                $inserted=false;
+            }
+        }
     }
 }
 
 //Compter le nombre de pays choisis par l'utilisateur
 $count_founders_country = count($founders_country);
-
-//Faire une boucle pour qu'elle tourne autant de fois que de pays
-for ($x=0; $x<$count_founders_country; $x++)
+//condition que si founders_country[0] n'est pas égale a 'NULL' ou si le nombre est plus granque 1 et que founders_country[0] est égale à 'NULL' alors il vas dans la boucle
+if ($founders_country[0] != "NULL" || ($count_founders_schools>1 && $founders_country[0] == "NULL"))
 {
-    //Récupérer les pays par ordre
-    $country = $_POST['founders_country'][$x];
-
-    //Récupérer l'id du pays
-    $id_founders_countries = $db -> query('SELECT id_founders_country FROM founders_country WHERE founders_country = "'.$country.'"');
-    $id_founders_country = $id_founders_countries -> fetch();
-    $founders_country = $id_founders_country['id_founders_country'];
-
-    //Insérer dans la table intermediaire le pays et la startup
-    $add_new_startup_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup,fk_founders_country) VALUES("'.$startup_id.'","'.$founders_country.'")');
-    if($add_new_startup_founders_country -> execute())
+    //Faire une boucle pour qu'elle tourne autant de fois que de pays
+    for ($x=0; $x<$count_founders_country; $x++)
     {
+        //condition que si founders_country[$x] n'est pas égale à 'NULL' alors il vas dans la boucle
+        if ($founders_country[$x] != "NULL"){
+            //Insérer dans la table intermediaire le pays et la startup
+            $add_new_startup_founders_country = $db -> prepare('INSERT INTO startup_founders_country(fk_startup,fk_founders_country) VALUES("'.$startup_id.'",'.$founders_country[$x].')');
 
-    }
-    else
-    {
-        $inserted=false;
+            if($add_new_startup_founders_country -> execute())
+            {
+
+            }
+            else
+            {
+                $inserted=false;
+            }
+        }
     }
 }
-
 //Compter le nombre de facultés choisies par l'utilisateur
 $count_faculty_schools = count($faculty_schools);
 
