@@ -91,7 +91,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <div class="form-group row">
                 <label for="status" class="col-sm-4 col-form-label">Status</label>
                 <div class="col-sm-6">
-                    <select class="form-control" name="status" id="status">
+                    <select class="form-control" name="status_selectBox" id="status_selectBox">
                     <option value="NULL" selected>Select a status</option>';
                         $status_data = $db-> query('SELECT status,id_status FROM status');
                         $data_status = $status_data -> fetchAll();
@@ -114,7 +114,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <div class="form-group row">
                 <label for="type_startup" class="col-sm-4 col-form-label">Type Startup</label>
                 <div class="col-sm-6">
-                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_startup" id="type_startup" >
+                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_startup_selectBox" id="type_startup_selectBox" >
                     <option value="NULL" selected>Select a type of startup</option>';
                         $type_data = $db-> query('SELECT type_startup, id_type_startup FROM type_startup');
                         $data_type = $type_data -> fetchAll();
@@ -161,7 +161,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <div class="form-group row">
                 <label for="sector" class="col-sm-4 col-form-label">Sectors</label>
                 <div class="col-sm-6">
-                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="sector" id="sector" >
+                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="sector_selectBox" id="sector_selectBox" >
                         <option value="NULL" selected>Select a sector</option>';
                         $sectors_data = $db-> query('SELECT sectors, id_sectors FROM sectors');
                         $data_sectors = $sectors_data -> fetchAll();
@@ -219,7 +219,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <div class="form-group row">
                 <label for="ceo_education_level" class="col-sm-4 col-form-label">CEO Education Level</label>
                 <div class="col-sm-6">
-                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="ceo_education_level" id="ceo_education_level" >
+                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="ceo_education_level_selectBox" id="ceo_education_level_selectBox" >
                         <option value="NULL" selected>Select a ceo education level</option>';
                         $ceo_education_level_data = $db-> query('SELECT ceo_education_level, id_ceo_education_level FROM ceo_education_level');
                         $data_ceo_education_level = $ceo_education_level_data -> fetchAll();
@@ -235,7 +235,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <div class="form-group row">
                 <label for="founders_country" class="col-sm-4 col-form-label">Founders Country</label>
                 <div class="col-sm-6">
-                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="founders_country[]" id="founders_country" multiple="multiple" >
+                    <select class="form-control" class="selectpicker" data-dropup-auto="true" name="founders_country_selectBox[]" id="founders_country_selectBox" multiple="multiple" >
                         <option value="NULL" selected>Select the countries</option>';
                         $founders_country_data = $db-> query('SELECT founders_country,id_founders_country FROM founders_country');
                         $data_founders_country = $founders_country_data -> fetchAll();
@@ -267,7 +267,7 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             <div class="form-group row">
                 <label for="impact_sdg" class="col-sm-4 col-form-label">Impact</label>
                 <div class="col-sm-6">
-                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="impact_sdg[]" id="impact_sdg" multiple="multiple" >
+                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="impact_sdg_selectBox[]" id="impact_sdg_selectBox" multiple="multiple" >
                     <option value="NULL" selected>Select the impacts</option>';
                     $impact_sdg_data = $db-> query('SELECT impact_sdg,id_impact_sdg FROM impact_sdg');
                     $data_impact_sdg = $impact_sdg_data -> fetchAll();
