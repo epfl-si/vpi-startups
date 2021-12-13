@@ -137,25 +137,25 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             </div>
             <!-- Combobox pour afficher tout les status d\'une startup -->
                 <div class="form-group row">
-                    <label for="status" class="col-sm-4 col-form-label">Status<small class="text-danger"> *</small> </label>
+                    <label for="status" class="col-sm-4 col-form-label">Status</label>
                     <div class="col-sm-6">
-                        <select class="form-control" name="status" id="status" required>';
-
+                        <select class="form-control" name="status_selectBox" id="status_selectBox" >;
+                        <option value="NULL" >Select a status</option>';
                             //Récupérer le status de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer le status de la startup
-                            $status_data_startups = $db-> query('SELECT status FROM status INNER JOIN startup ON status.id_status = startup.fk_status WHERE id_startup = "'.$id_startup.'"');
+                            $status_data_startups = $db-> query('SELECT status, id_status FROM status INNER JOIN startup ON status.id_status = startup.fk_status WHERE id_startup = "'.$id_startup.'"');
                             $status_data_startup = $status_data_startups -> fetch();
 
-                            $status_data = $db-> query('SELECT status FROM status');
+                            $status_data = $db-> query('SELECT status,id_status FROM status');
                             $data_status = $status_data -> fetchAll();
                             foreach ($data_status as $status)
                             {
-                                if($status['status'] == $status_data_startup['status'])
+                                if($status['id_status'] == $status_data_startup['id_status'])
                                 {
-                                    echo '<option value="'.$status_data_startup['status'].'" selected>'.$status_data_startup['status'].'</option>';
+                                    echo '<option value="'.$status['id_status'].'" selected>'.$status_data_startup['status'].'</option>';
                                 }
                                 else
                                 {
-                                    echo '<option value="'.$status['status'].'">'.$status['status'].'</option>';
+                                    echo '<option value="'.$status['id_status'].'">'.$status['status'].'</option>';
                                 }
                             }
                         echo '
@@ -171,25 +171,25 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             </div>
             <!-- Combobox pour afficher tout les types d\'une startup -->
                 <div class="form-group row">
-                    <label for="type_startup" class="col-sm-4 col-form-label">Type Startup <small class="text-danger"> *</small> </label>
+                    <label for="type_startup" class="col-sm-4 col-form-label">Type Startup</label>
                     <div class="col-sm-6">
-                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_startup" id="type_startup" required>';
-
+                        <select class="form-control" class="selectpicker" data-dropup-auto="true" name="type_startup_selectBox" id="type_startup_selectBox" >;
+                        <option value="NULL" >Select a type of startup</option>';
                             //Récupérer le type_startup de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer le type_startup de la startup
                             $type_startup_data_startups = $db-> query('SELECT type_startup FROM type_startup INNER JOIN startup ON type_startup.id_type_startup = startup.fk_type WHERE id_startup = "'.$id_startup.'"');
                             $type_startup_data_startup = $type_startup_data_startups -> fetch();
 
-                            $type_startup_data = $db-> query('SELECT type_startup FROM type_startup');
+                            $type_startup_data = $db-> query('SELECT type_startup,id_type_startup FROM type_startup');
                             $data_type_startup = $type_startup_data -> fetchAll();
                             foreach ($data_type_startup as $type_startup)
                             {
                                 if($type_startup['type_startup'] == $type_startup_data_startup['type_startup'])
                                 {
-                                    echo '<option value="'.$type_startup_data_startup['type_startup'].'" selected>'.$type_startup_data_startup['type_startup'].'</option>';
+                                    echo '<option value="'.$type_startup['id_type_startup'].'" selected>'.$type_startup_data_startup['type_startup'].'</option>';
                                 }
                                 else
                                 {
-                                    echo '<option value="'.$type_startup['type_startup'].'">'.$type_startup['type_startup'].'</option>';
+                                    echo '<option value="'.$type_startup['id_type_startup'].'">'.$type_startup['type_startup'].'</option>';
                                 }
                             }
                         echo '
@@ -240,25 +240,25 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             
             <!-- Combobox pour afficher tous les sectors d\'une startup -->
             <div class="form-group row">
-                <label for="sectors" class="col-sm-4 col-form-label">Sectors <small class="text-danger"> *</small> </label>
+                <label for="sectors" class="col-sm-4 col-form-label">Sectors</label>
                 <div class="col-sm-6">
-                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="sectors" id="sectors" required>';
-
+                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="sectors_selectBox" id="sectors_selectBox">;
+                <option value="NULL">Select a sector</option>';
                     //Récupérer le secteur de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer le secteur de la startup
                     $sectors_data_startups = $db-> query('SELECT sectors FROM sectors INNER JOIN startup ON sectors.id_sectors = startup.fk_sectors WHERE id_startup = "'.$id_startup.'"');
                     $sectors_data_startup = $sectors_data_startups -> fetch();
 
-                    $sectors_data = $db-> query('SELECT sectors FROM sectors');
+                    $sectors_data = $db-> query('SELECT sectors, id_sectors FROM sectors');
                     $data_sectors = $sectors_data -> fetchAll();
                     foreach ($data_sectors as $sectors)
                     {
                         if($sectors['sectors'] == $sectors_data_startup['sectors'])
                         {
-                            echo '<option value="'.$sectors_data_startup['sectors'].'" selected>'.$sectors_data_startup['sectors'].'</option>';
+                            echo '<option value="'.$sectors['id_sectors'].'" selected>'.$sectors_data_startup['sectors'].'</option>';
                         }
                         else
                         {
-                            echo '<option value="'.$sectors['sectors'].'">'.$sectors['sectors'].'</option>';
+                            echo '<option value="'.$sectors['id_sectors'].'">'.$sectors['sectors'].'</option>';
                         }
                     }
                 echo '
@@ -309,25 +309,25 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             </div>
             <!-- Champ pour le niveau d\'études du CEO de la startup -->
             <div class="form-group row">
-                <label for="ceo_education_level" class="col-sm-4 col-form-label">CEO Education Level <small class="text-danger"> *</small> </label>
+                <label for="ceo_education_level" class="col-sm-4 col-form-label">CEO Education Level</label>
                 <div class="col-sm-6">
-                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="ceo_education_level" id="ceo_education_level" required>';
-
+                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="ceo_education_level_selectBox" id="ceo_education_level_selectBox" >;
+                <option value="NULL" >Select a ceo education level</option>';
                     //Récupérer le ceo education level de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer le ceo education level de la startup
                     $ceo_education_level_data_startups = $db-> query('SELECT ceo_education_level FROM ceo_education_level INNER JOIN startup ON ceo_education_level.id_ceo_education_level = startup.fk_ceo_education_level WHERE id_startup = "'.$id_startup.'"');
                     $ceo_education_level_data_startup = $ceo_education_level_data_startups -> fetch();
 
-                    $ceo_education_level_data = $db-> query('SELECT ceo_education_level FROM ceo_education_level');
+                    $ceo_education_level_data = $db-> query('SELECT ceo_education_level, id_ceo_education_level FROM ceo_education_level');
                     $data_ceo_education_level = $ceo_education_level_data -> fetchAll();
                     foreach ($data_ceo_education_level as $ceo_education_level)
                     {
                         if($ceo_education_level['ceo_education_level'] == $ceo_education_level_data_startup['ceo_education_level'])
                         {
-                            echo '<option value="'.$ceo_education_level_data_startup['ceo_education_level'].'" selected>'.$ceo_education_level_data_startup['ceo_education_level'].'</option>';
+                            echo '<option value="'.$ceo_education_level['id_ceo_education_level'].'" selected>'.$ceo_education_level_data_startup['ceo_education_level'].'</option>';
                         }
                         else
                         {
-                            echo '<option value="'.$ceo_education_level['ceo_education_level'].'">'.$ceo_education_level['ceo_education_level'].'</option>';
+                            echo '<option value="'.$ceo_education_level['id_ceo_education_level'].'">'.$ceo_education_level['ceo_education_level'].'</option>';
                         }
                     }
                 echo '
@@ -336,16 +336,22 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             </div>
             <!-- Champ pour le pays d\'origine des fondateurs de la startup -->
             <div class="form-group row">
-                <label for="founders_country" class="col-sm-4 col-form-label">Founders country <small class="text-danger"> *</small> </label>
+                <label for="founders_country" class="col-sm-4 col-form-label">Founders country</label>
                 <div class="col-sm-6">
-                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="founders_country[]" id="founders_country" multiple="multiple" required>';
-
+                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="founders_country_selectBox[]" id="founders_country_selectBox" multiple="multiple" >';
+                
                 //Récupérer les pays de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer les pays de la startup
                 $founders_country_data_startups = $db-> query('SELECT founders_country FROM founders_country INNER JOIN startup_founders_country ON founders_country.id_founders_country = startup_founders_country.fk_founders_country WHERE fk_startup = "'.$id_startup.'"');
                 $selected_countries_startup = $founders_country_data_startups -> fetchAll();
+
+                if ($selected_countries_startup[0]['founders_country'] == ""){
+                    echo '<option value="NULL" selected>Select the countries</option>';
+                 }
+                 else{
+                     echo'<option value="NULL" >Select the countries</option>';
+                 }
                 
-                
-                $founders_country_data = $db-> query('SELECT founders_country FROM founders_country');
+                $founders_country_data = $db-> query('SELECT founders_country, id_founders_country FROM founders_country');
                 $all_countries_startup = $founders_country_data -> fetchAll();
                 
                 foreach ($all_countries_startup as $all_countries)
@@ -360,11 +366,11 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                     }
                     if($selected)
                     {
-                        echo '<option value="'.$all_countries['founders_country'].'" selected>'.$all_countries['founders_country'].'</option>';
+                        echo '<option value="'.$all_countries['id_founders_country'].'" selected>'.$all_countries['founders_country'].'</option>';
                     }
                     else
                     {
-                        echo '<option value="'.$all_countries['founders_country'].'">'.$all_countries['founders_country'].'</option>';
+                        echo '<option value="'.$all_countries['id_founders_country'].'">'.$all_countries['founders_country'].'</option>';
                     }
                 }
                     
@@ -412,16 +418,21 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
             </div>
             <!-- Champ pour l\'impact de la startup -->
             <div class="form-group row">
-                <label for="impact_sdg" class="col-sm-4 col-form-label">Impact <small class="text-danger"> *</small> </label>
+                <label for="impact_sdg" class="col-sm-4 col-form-label">Impact</label>
                 <div class="col-sm-6">
-                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="impact_sdg[]" id="impact_sdg" multiple="multiple" required>';
-                    
+                <select class="form-control" class="selectpicker" data-dropup-auto="true" name="impact_sdg_selectBox[]" id="impact_sdg_selectBox" multiple="multiple" >';
+                
                     //Récupérer les impactes de la startup et l'afficher sur la combobox, mais afficher les autres possibilités si l'utilisateur veut changer les impactes de la startup    
                     $impact_sdg_data_startups = $db-> query('SELECT impact_sdg FROM impact_sdg INNER JOIN startup_impact_sdg ON impact_sdg.id_impact_sdg = startup_impact_sdg.fk_impact_sdg WHERE fk_startup = "'.$id_startup.'"');
                     $selected_impact_sdg_startup = $impact_sdg_data_startups -> fetchAll();
+                    if ($selected_impact_sdg_startup[0]['impact_sdg'] == ""){
+                       echo '<option value="NULL" selected>Select the impacts</option>';
+                    }
+                    else{
+                        echo'<option value="NULL">Select the impacts</option>';
+                    }
                     
-                    
-                    $impact_sdg_data = $db-> query('SELECT impact_sdg FROM impact_sdg');
+                    $impact_sdg_data = $db-> query('SELECT impact_sdg, id_impact_sdg FROM impact_sdg');
                     $all_impact_sdg_startup = $impact_sdg_data -> fetchAll();
                     
                     foreach ($all_impact_sdg_startup as $all_impact_sdg)
@@ -436,11 +447,11 @@ if($_SESSION['TequilaPHPWrite'] == "TequilaPHPWritetrue")
                         }
                         if($selected)
                         {
-                            echo '<option value="'.$all_impact_sdg['impact_sdg'].'" selected>'.$all_impact_sdg['impact_sdg'].'</option>';
+                            echo '<option value="'.$all_impact_sdg['id_impact_sdg'].'" selected>'.$all_impact_sdg['impact_sdg'].'</option>';
                         }
                         else
                         {
-                            echo '<option value="'.$all_impact_sdg['impact_sdg'].'">'.$all_impact_sdg['impact_sdg'].'</option>';
+                            echo '<option value="'.$all_impact_sdg['id_impact_sdg'].'">'.$all_impact_sdg['impact_sdg'].'</option>';
                         }
                     }
                 echo '
