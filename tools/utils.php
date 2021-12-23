@@ -246,7 +246,7 @@ function startup_faculty_data_has_been_modify()
 
 function startup_country_data_has_been_modify()
 {
-  if($_SESSION['startup_data']['country'] == implode(";",$_POST['founders_country_selectBox']) || ($_SESSION['startup_data']['country'] == "" && $_POST['founders_country_selectBox'][0] == "NULL")) 
+  if($_SESSION['startup_data']['country'] == implode(";",$_POST['founders_country_selectBox']) || ($_SESSION['startup_data']['country'] == "" && $_POST['founders_country_selectBox'][0] == "NULL") && strlen($_POST['founders_country_selectBox'][1]) < 1 ) 
   {
     return false;
   }
