@@ -35,6 +35,7 @@ $inserted = false;
 //Initialiser une variable à false pour capturer les erreurs
 $error_add_new_people = "false";
 
+
 //Récupérer l'id de la categorie que l'utilisateur a saisi pour écrire dans la table startup
 $category_id = $db-> query('SELECT id_category FROM category WHERE category ="'.$category.'"');
 $id_category = $category_id -> fetch();
@@ -49,17 +50,7 @@ else
 {
     $inserted=false;
 }
-
-//Récupère le dernier id insérer dans la base de données
 $startup_id = $db->lastInsertId();
-
-//Ecrire les données dans la table logs pour dire que l'utilisateur à fait un ajout d'une nouvelle startup
-$before = "";
-$after = "Startup : ".$company_name.", Founding Date : ".$founding_date.", Web : ".$web.", Rc : ".$rc.", Status : ".$status_Post.", Exit Year : ".$exit_year.", Type of Startup : ".$type_startup_Post.", Category : ".$category.", EPFL Grant : ".$epfl_grant.", Awards Competition : ".$awards_competitions.", Impact sdg : ".implode(";",$impact_sdg_Post).", Sector : ".$sector_Post.", Key Words : ".$key_words.", CEO Education Level : ".$ceo_education_level_Post.", Founders Country : ".implode(";",$founders_country_Post).", Faculty Schools : ".implode(";",$faculty_schools).", Short Description : ".$short_description.", Company UID : ".$company_uid.", Crunchbase UID : ".$crunchbase_uid.", Unit Path : ".$unit_path.", Person 1 : ".$person1.", Person Function 1 : ".$function_person1.", Person 2 : ".$person2.", Person Function 2 : ".$function_person2.", Person 3 : ".$person3.", Person Function 3 : ".$function_person3;
-$action="Add new startup";
-
-add_logs($_SESSION['uniqueid'],$before,$after,$action);
-
 //Traitement des champs multicritère 
 //Compter le nombre d'impacts choisis par l'utilisateur
 $count_impact_sdg = count($impact_sdg_Post);
@@ -177,6 +168,20 @@ if($error_add_new_people == "false")
     }
 }
 
+//Récupère le dernier id insérer dans la base de données
+
+$LOG = $db -> query('SELECT status,type_startup,sectors,ceo_education_level,country,impact,category,schools FROM view_detail_startup_full WHERE id_startup ='.$startup_id.'');
+$LOG_statups = $LOG -> fetchAll();
+foreach($LOG_statups as $LOG_statup){
+    //Ecrire les données dans la table logs pour dire que l'utilisateur à fait un ajout d'une nouvelle startup
+   
+    $after = "Startup : ".$company_name.", Founding Date : ".$founding_date.", Web : ".$web.", Rc : ".$rc.", Status : ".$LOG_statup['status'].", Exit Year : ".$exit_year.", Type of Startup : ".$LOG_statup['type_startup'].", Category : ".$LOG_statup['category'].", EPFL Grant : ".$epfl_grant.", Awards Competition : ".$awards_competitions.", Impact sdg : ".$LOG_statup['impact'].", Sector : ".$LOG_statup['sector'].", Key Words : ".$key_words.", CEO Education Level : ".$LOG_statup['ceo_education_level'].", Founders Country : ".$LOG_statup['country'].", Faculty Schools : ".$LOG_statup['schools'].", Short Description : ".$short_description.", Company UID : ".$company_uid.", Crunchbase UID : ".$crunchbase_uid.", Unit Path : ".$unit_path.", Person 1 : ".$person1.", Person Function 1 : ".$function_person1.", Person 2 : ".$person2.", Person Function 2 : ".$function_person2.", Person 3 : ".$person3.", Person Function 3 : ".$function_person3;
+    
+}
+$before = "";
+$action="Add new startup";
+    
+add_logs($_SESSION['uniqueid'],$before,$after,$action);    
 //Si inserted est true, alors il affiche un flash message pour lui avertir l'utilisateur que la startup a été ajouté
 if($inserted)
 {
@@ -192,6 +197,8 @@ else
     $_SESSION['flash_message']['message'] = "An unexpected error occured";
     $_SESSION['flash_message']['type'] = "danger";
 }
+
+
 
 //Rediriger l'utilisateur vers la même page pour qu'il puisse voir le flash message
 header("Location: /$controller/$method");
