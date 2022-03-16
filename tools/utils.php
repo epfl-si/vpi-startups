@@ -120,7 +120,7 @@ function startup_data_has_been_modify($param)
     return true;
   }
 
-  if($_SESSION['startup_data']['status'] != $_POST['status']) 
+  if($_SESSION['startup_data']['status'] != $_POST['status_selectBox']) 
   {
     return true;
   }
@@ -165,17 +165,17 @@ function startup_data_has_been_modify($param)
     return true;
   }
 
-  if($_SESSION['startup_data']['type_startup'] != $_POST['type_startup']) 
+  if($_SESSION['startup_data']['type_startup'] != $_POST['type_startup_selectBox']) 
   {
     return true;
   }
 
-  if($_SESSION['startup_data']['ceo_education_level'] != $_POST['ceo_education_level']) 
+  if($_SESSION['startup_data']['ceo_education_level'] != $_POST['ceo_education_level_selectBox']) 
   {
     return true;
   }
 
-  if($_SESSION['startup_data']['sectors'] != $_POST['sectors']) 
+  if($_SESSION['startup_data']['sectors'] != $_POST['sectors_selectBox']) 
   {
     return true;
   }  
@@ -190,12 +190,12 @@ function startup_data_has_been_modify($param)
     return true;
   }  
 
-  if($_SESSION['startup_data']['impact'] != implode(";",$_POST['impact_sdg'])) 
+  if($_SESSION['startup_data']['impact'] != implode(";",$_POST['impact_sdg_selectBox'])) 
   {
     return true;
   } 
 
-  if($_SESSION['startup_data']['country'] != implode(";",$_POST['founders_country'])) 
+  if($_SESSION['startup_data']['country'] != implode(";",$_POST['founders_country_selectBox'])) 
   {
     return true;
   }  
@@ -236,6 +236,7 @@ function startup_data_has_been_modify($param)
 //Fonctions qui vérifient si un changement a été fait pour les champs multicritère
 function startup_faculty_data_has_been_modify()
 {
+
   if($_SESSION['startup_data']['schools'] != implode(";",$_POST['faculty_schools'])) 
   {
     return true;
@@ -245,20 +246,20 @@ function startup_faculty_data_has_been_modify()
 
 function startup_country_data_has_been_modify()
 {
-  if($_SESSION['startup_data']['country'] != implode(";",$_POST['founders_country'])) 
+  if($_SESSION['startup_data']['country'] == implode(";",$_POST['founders_country_selectBox']) || ($_SESSION['startup_data']['country'] == "" && $_POST['founders_country_selectBox'][0] == "NULL") && strlen($_POST['founders_country_selectBox'][1]) < 1 ) 
   {
-    return true;
+    return false;
   }
-  return false;  
+  return true;  
 }
 
 function startup_impact_data_has_been_modify()
 {
-  if($_SESSION['startup_data']['impact'] != implode(";",$_POST['impact_sdg'])) 
+  if($_SESSION['startup_data']['impact'] == implode(";",$_POST['impact_sdg_selectBox']) || ($_SESSION['startup_data']['impact'] == "" && $_POST['impact_sdg_selectBox'][0] == "NULL")) 
   {
-    return true;
+    return false;
   }
-  return false;  
+  return true;  
 }
 
 //Fonction qui vérifie s'il y a eu un chamgement sur la personne (formulaire de modification des startups)
