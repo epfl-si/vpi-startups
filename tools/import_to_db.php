@@ -309,7 +309,6 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
                         
                         //Remplacer les guillements doubles par des guillements simples
                         $output_replaced = str_replace('"', '\'', $text);
-                        
                         //Mettre les changements dans le fichier output
                         fputcsv($output, $output_replaced);
                     }
@@ -333,7 +332,7 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
             $after = "";
             $action="Import data from CSV to database";
 
-            add_logs($_SESSION['uniqueid'],$before,$after,$action);
+            //add_logs($_SESSION['uniqueid'],$before,$after,$action);
             
             //Lire le fichier qui contient les modifications après analyse du fichier importé par l'utilisateur
             while (($data_import_db = fgetcsv($file_output, 10000, ",")) !== FALSE) 
@@ -341,7 +340,6 @@ if(in_array($_FILES['fileToUpload']['type'],$mimes))
                 //Requête pour vérifier si la startup existe déjà
                 $add_data = $db->query('SELECT id_startup, company FROM startup WHERE company = "'.$data_import_db[0].'"');
                 $data = $add_data->fetch();
-                
                 //Si elle n'existe pas
                 if($data['company'] == '')
                 {
